@@ -8,8 +8,6 @@ import Clients from "./components/clients/Clients";
 
 function App() {
   const [login, setLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState(false);
-
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
 
@@ -31,7 +29,9 @@ function App() {
       .then((result) => {
         if (result.username) {
           setUser(result)
+          setLogin(false)
         } else {
+          setLogin(true)
           setUser(null)
         }
       })
@@ -41,7 +41,6 @@ function App() {
   useEffect(() => {
     getUser();
   }, [token]);
-  console.log(user);
   return (
     <>
       <BrowserRouter>
@@ -50,7 +49,7 @@ function App() {
           login={login}
           setLogin={setLogin}
         />
-        <Navbar setUserInfo={setUserInfo} user={user} setLogin={setLogin} />
+        <Navbar user={user} setLogin={setLogin} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/client/:type" element={<Clients token={token}/>} />

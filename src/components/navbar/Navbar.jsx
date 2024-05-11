@@ -4,7 +4,7 @@ import { FiUser } from "react-icons/fi";
 import { CgDarkMode } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
-function Navbar({ setUserInfo, user, setLogin }) {
+function Navbar({ user, setLogin }) {
   return (
     <nav>
       <div className="container">
