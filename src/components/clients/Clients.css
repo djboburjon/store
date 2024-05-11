@@ -103,3 +103,26 @@
 .editClient_btn svg:hover {
   color: rgb(221, 144, 0);
 }
+
+.paginations {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginations button {
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  background-color: #417690;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.paginations button:hover {
+  background-color: #4696be;
+}

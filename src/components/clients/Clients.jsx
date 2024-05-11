@@ -202,6 +202,11 @@ function Clients({ token }) {
             </tbody>
           </table>
           <div className="client_count">{newClient?.count} Mijozlar</div>
+
+          <div className="paginations">
+            <div className="prev"><button>Ortga</button></div>
+            <div className="next"><button>Keyingi</button></div>
+          </div>
         </div>
       </div>
     </div>
