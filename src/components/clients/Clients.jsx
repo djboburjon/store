@@ -175,16 +175,16 @@ function Clients({ token }) {
           <table className="client_table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>№</th>
                 <th>F.I.Sh</th>
                 <th>Telefon Raqam</th>
               </tr>
             </thead>
             <tbody>
-              {newClient?.results?.map((item) => {
+              {newClient?.results?.slice(0, 25).map((item, index) => {
                 return (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
+                    <td>{index+1}</td>
                     <td>{item.FIO}</td>
                     <td>{item.phone_number}</td>
                     <td className="editClient_btn">
@@ -201,7 +201,7 @@ function Clients({ token }) {
               })}
             </tbody>
           </table>
-          <div className="client_count">{newClient?.count} Mijozlar</div>
+          <div className="client_count">{newClient?.count} ta mijoz</div>
 
           <div className="paginations">
             <div className="prev"><button>Ortga</button></div>
