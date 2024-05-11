@@ -167,8 +167,8 @@ function Clients({ token }) {
               }}
             >
               <FaSearch />
-              <input type="text" onChange={getSearchClient} />
-              <button>Qidiruv</button>
+              <input type="text" onChange={getSearchClient} placeholder="Qidiruv..." />
+              {/* <button>Qidiruv</button> */}
             </form>
           </div>
 
