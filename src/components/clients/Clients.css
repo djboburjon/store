@@ -1,0 +1,105 @@
+.clientSection {
+  padding-top: 20px;
+}
+
+.clientSection .container {
+  display: flex;
+  gap: 20px;
+}
+
+.main_right {
+  width: 85%;
+  position: relative;
+}
+
+.main_right-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.client_add {
+  display: flex;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 30px;
+  border: none;
+  background-color: #747474;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.client_add:hover {
+  background-color: #303030;
+}
+
+.client_search {
+  background-color: #F8F8F8;
+  padding: 8px 8px;
+  margin-bottom: 40px;
+  border-top: 1px solid rgb(209, 209, 209);
+  border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.client_search form {
+  display: flex;
+  align-items: center;
+}
+
+.client_search input {
+  margin-left: 6px;
+  margin-right: 4px;
+  padding: 2px 6px;
+  border: 1px solid rgb(209, 209, 209);
+  border-radius: 4px;
+  width: 250px;
+}
+
+.client_search button {
+  padding: 4px 6px;
+  border: 1px solid rgb(209, 209, 209);
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.client_search button:hover {
+  border: 1px solid #000;
+}
+
+.client_table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.client_table thead th,
+.client_table tbody td {
+  padding: 6px 10px;
+}
+
+.client_table thead tr,
+.client_table tbody tr:nth-child(even) {
+  background-color: #F8F8F8;
+  border-top: 1px solid rgb(209, 209, 209);
+  border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.client_count {
+  padding: 14px 10px;
+  border-top: 1px solid rgb(209, 209, 209);
+  border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.editClient_btn svg {
+  cursor: pointer;
+  color: orange;
+}
+
+.editClient_btn svg:hover {
+  color: rgb(221, 144, 0);
+}

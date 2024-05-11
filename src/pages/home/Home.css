@@ -1,0 +1,44 @@
+main {
+  padding-top: 20px;
+}
+
+main .container {
+  display: flex;
+  gap: 20px;
+}
+
+.main_left {
+  width: 300px;
+  height: 100vh;
+  border: 1px solid #ccc;
+}
+
+.main_left-head {
+  padding: 8px 12px;
+  background-color: #417690;
+  color: #FFFFCC;
+}
+
+.box_link {
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #417690;
+}
+
+.box_link a {
+  color: #417690;
+}
+
+.box_link div {
+  cursor: pointer;
+}
+
+.box_link p {
+  cursor: pointer;
+}
+
+.box_link svg {
+  color: green;
+}
