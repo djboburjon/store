@@ -78,7 +78,7 @@ function EditClients({
             onChange={(e) => {
               setEditNumber(e.target.value);
             }}
-            type="text"
+            type="number"
             placeholder="Raqam kiriting"
           />
           <button>Tahrirlash</button>

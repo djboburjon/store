@@ -6,8 +6,8 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import EditClients from "../editClients/EditClients";
 import AddClients from "../addClients/AddClients";
 function Clients({ token }) {
-  const [editName, setEditName] = useState();
-  const [editNumber, setEditNumber] = useState();
+  const [editName, setEditName] = useState('');
+  const [editNumber, setEditNumber] = useState('');
   const [newClient, setNewClient] = useState([]);
   const [editClient, setEditClient] = useState(false);
   const [itemId, setItemId] = useState(0);
@@ -74,7 +74,6 @@ function Clients({ token }) {
       })
       .catch((error) => console.error(error));
   };
-
   return (
     <div className="clientSection">
       <div className="container">

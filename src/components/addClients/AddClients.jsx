@@ -4,8 +4,8 @@ import { FaTimes } from "react-icons/fa";
 
 function AddClients( {token, setNewClient, setAddClient}) {
 
-  const [name, setName] = useState()
-  const [number, setNumber] = useState()
+  const [name, setName] = useState('')
+  const [number, setNumber] = useState('')
   const createData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -59,7 +59,7 @@ function AddClients( {token, setNewClient, setAddClient}) {
           <h3>Telefon Raqam +998</h3>
           <input onChange={(e) => {
             setNumber(e.target.value)
-          }} type="text" placeholder="91 123 45 67" />
+          }} type="number" placeholder="91 123 45 67" />
           <button>Mijoz Qo'shish</button>
         </form>
       </div>
