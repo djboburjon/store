@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./AddClients.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function AddClients( {token, setNewClient, setAddClient}) {
@@ -28,12 +30,30 @@ function AddClients( {token, setNewClient, setAddClient}) {
 
     fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
       .then((response) => response.json())
-      .then((result) => setNewClient(result))
+      .then((result) => {
+        setNewClient(result)
+        // notifySuccess()
+        setAddClient(false)
+      })
       .catch((error) => console.error(error));
   };
 
+  const notify = () => {
+    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+      position: "top-right",
+      autoClose: 3000
+    });
+  }
+  const notifySuccess = () => {
+    toast.success("Mijoz qo'shildi!", {
+      position: "top-right",
+      autoClose: 3000
+    });
+  }
+
   return (
     <div className="addClient">
+      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -48,8 +68,11 @@ function AddClients( {token, setNewClient, setAddClient}) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            createData()
-            setAddClient(false);
+            if (number.length == 9) {
+              createData()
+            } else {
+              notify()
+            }
           }}
         >
           <h3>F.I.Sh</h3>

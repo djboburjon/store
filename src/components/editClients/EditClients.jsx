@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import "./EditClients.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function EditClients({
@@ -39,12 +41,30 @@ function EditClients({
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setNewClient(result))
+      .then((result) => {
+        setNewClient(result)
+        // notifySuccess()
+        setEditClient(false);
+      })
       .catch((error) => console.error(error));
   };
 
+  const notify = () => {
+    toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
+      position: "top-right",
+      autoClose: 3000
+    });
+  }
+  const notifySuccess = () => {
+    toast.success("Tahrirlandi!", {
+      position: "top-right",
+      autoClose: 3000
+    });
+  }
+
   return (
     <div className="editClient">
+      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -59,8 +79,11 @@ function EditClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            editData();
-            setEditClient(false);
+            if (editNumber.length == 9) {
+              editData();
+            } else {
+              notify()
+            }
           }}
         >
           <h3>F.I.Sh</h3>
@@ -72,7 +95,7 @@ function EditClients({
             type="text"
             placeholder="F.I.Sh kiriting"
           />
-          <h3>Telefon Raqam</h3>
+          <h3>Telefon Raqam +998</h3>
           <input
             value={editNumber}
             onChange={(e) => {

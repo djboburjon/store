@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Clients.css";
 import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import EditClients from "../editClients/EditClients";
