@@ -13,7 +13,8 @@ function EditClients({
   setEditName,
   setEditNumber,
   itemId,
-  setNewClient
+  setNewClient,
+  setChanged
 }) {
   
   const editData = () => {
@@ -42,9 +43,12 @@ function EditClients({
     )
       .then((response) => response.json())
       .then((result) => {
-        setNewClient(result)
-        // notifySuccess()
+        notifySuccess()
+        setTimeout(() => {
         setEditClient(false);
+        setChanged(true)
+          
+        }, 3000);
       })
       .catch((error) => console.error(error));
   };
@@ -58,7 +62,7 @@ function EditClients({
   const notifySuccess = () => {
     toast.success("Tahrirlandi!", {
       position: "top-right",
-      autoClose: 3000
+      autoClose: 2000
     });
   }
 

@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddClients( {token, setNewClient, setAddClient}) {
+function AddClients( {token, setNewClient, setAddClient, setChanged}) {
 
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
@@ -31,9 +31,11 @@ function AddClients( {token, setNewClient, setAddClient}) {
     fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setNewClient(result)
-        // notifySuccess()
-        setAddClient(false)
+        notifySuccess()
+        setTimeout(() => {
+          setAddClient(false)
+          setChanged(true)          
+        }, 3000);
       })
       .catch((error) => console.error(error));
   };
@@ -47,7 +49,7 @@ function AddClients( {token, setNewClient, setAddClient}) {
   const notifySuccess = () => {
     toast.success("Mijoz qo'shildi!", {
       position: "top-right",
-      autoClose: 3000
+      autoClose: 2000
     });
   }
 
