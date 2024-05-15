@@ -9,7 +9,9 @@
 
 .main_right {
   width: 85%;
-  position: relative;
+  position: relative !important;
+  height: 85vh;
+  overflow-y: auto;
 }
 
 .main_right-head {

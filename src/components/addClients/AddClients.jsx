@@ -28,16 +28,30 @@ function AddClients( {token, setNewClient, setAddClient, setChanged}) {
       redirect: "follow",
     };
 
+
+
     fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
+        if(result.phone_number){
+          throw new Error("xatolik")
+        }
         notifySuccess()
         setTimeout(() => {
           setAddClient(false)
           setChanged(true)          
         }, 3000);
-      })
-      .catch((error) => console.error(error));
+      }).catch((error) => {
+        console.error(error)
+        console.log("xatolik");
+        toast.error("Bu Nomer orqali avvaldan ro'yhatdan o'tilgan!", {
+          position: "top-right",
+          autoClose: 2000
+        });
+        
+
+      });
   };
 
   const notify = () => {

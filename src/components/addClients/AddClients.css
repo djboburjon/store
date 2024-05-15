@@ -6,7 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
+	left: 0px;
+	top: 0px;
 }
 
 .addClient .form {
@@ -16,7 +18,6 @@
 	flex-direction: column;
 	border-radius: 8px;
 	width: 400px;
-	transform: translateY(-150px);
 }
 
 .addClient .form input {

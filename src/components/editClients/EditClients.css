@@ -6,9 +6,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+	position: fixed;
+	left: 0px;
+	top: 0px;
 }
-
 
 .editClient .form {
 	background-color: whitesmoke;
@@ -17,7 +18,6 @@
 	flex-direction: column;
 	border-radius: 8px;
 	width: 400px;
-	transform: translateY(-150px);
 }
 
 .editClient .form input {
