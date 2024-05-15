@@ -13,10 +13,7 @@ function App() {
 
   const getUser = () => {
     const myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const requestOptions = {
       method: "GET",
@@ -28,11 +25,11 @@ function App() {
       .then((response) => response.json())
       .then((result) => {
         if (result.username) {
-          setUser(result)
-          setLogin(false)
+          setUser(result);
+          setLogin(false);
         } else {
-          setLogin(true)
-          setUser(null)
+          setLogin(true);
+          setUser(null);
         }
       })
       .catch((error) => console.error(error));
@@ -44,16 +41,17 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Login
-          setToken={setToken}
-          login={login}
-          setLogin={setLogin}
-        />
+        <Login setToken={setToken} login={login} setLogin={setLogin} />
         <Navbar user={user} setLogin={setLogin} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/client/:type" element={<Clients token={token}/>} />
-        </Routes>
+
+        <div>
+          <div>
+          </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/client/:type" element={<Clients token={token} />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </>
   );

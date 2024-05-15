@@ -14,6 +14,7 @@ function Clients({ token }) {
   const [editClient, setEditClient] = useState(false);
   const [itemId, setItemId] = useState(0);
   const [addClient, setAddClient] = useState(false);
+  const [changed, setChanged] = useState(false);
 
   const getClient = () => {
     const myHeaders = new Headers();
@@ -56,7 +57,7 @@ function Clients({ token }) {
 
   useEffect(() => {
     getClient();
-  }, [token]);
+  }, [token, changed]);
 
   const getItemData = (id) => {
     const myHeaders = new Headers();
@@ -76,6 +77,38 @@ function Clients({ token }) {
       })
       .catch((error) => console.error(error));
   };
+
+  const nextData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+
+    fetch("https://telzone.pythonanywhere.com/client/all/?limit=25&offset=25", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setNewClient(result))
+      .catch((error) => console.error(error));
+  }
+
+  const prevData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+
+    fetch("https://telzone.pythonanywhere.com/client/all/?limit=25", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setNewClient(result))
+      .catch((error) => console.error(error));
+  }
   return (
     <div className="clientSection">
       <div className="container">
@@ -132,7 +165,7 @@ function Clients({ token }) {
         </div>
         <div className="main_right">
           {addClient && (
-            <AddClients token={token} setNewClient={setNewClient} addClient={addClient} setAddClient={setAddClient} />
+            <AddClients token={token} setNewClient={setNewClient} addClient={addClient} setAddClient={setAddClient} setChanged={setChanged} />
           )}
           {editClient && (
             <EditClients
@@ -145,6 +178,7 @@ function Clients({ token }) {
               setEditNumber={setEditNumber}
               itemId={itemId}
               setNewClient={setNewClient}
+              setChanged={setChanged}
             />
           )}
           <div className="main_right-head">
@@ -205,8 +239,12 @@ function Clients({ token }) {
           <div className="client_count">{newClient?.count} ta mijoz</div>
 
           <div className="paginations">
-            <div className="prev"><button>Ortga</button></div>
-            <div className="next"><button>Keyingi</button></div>
+            <div className="prev"><button onClick={() => {
+              prevData()
+            }}>Ortga</button></div>
+            <div className="next"><button onClick={() => {
+              nextData()
+            }}>Keyingi</button></div>
           </div>
         </div>
       </div>
