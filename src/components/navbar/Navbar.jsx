@@ -2,9 +2,10 @@ import React from "react";
 import "./Navbar.css";
 import { FiUser } from "react-icons/fi";
 import { CgDarkMode } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Navbar({ user, setLogin }) {
+function Navbar({ user, setLogin, setToken }) {
+  const navigate = useNavigate();
   return (
     <nav>
       <div className="container">
@@ -24,7 +25,10 @@ function Navbar({ user, setLogin }) {
                 <p>{user ? user.username : "Login"}</p>
               </div>
             ) : (
-              ""
+              <div className="log_out" onClick={() => {
+                setToken(localStorage.removeItem('token'))
+                navigate("/login")
+              }}>Log out</div>
             )}
             <li><CgDarkMode /></li>
           </ul>

@@ -42,7 +42,7 @@ function App() {
     <>
       <BrowserRouter>
         <Login token={token} setToken={setToken} login={login} setLogin={setLogin} />
-        <Navbar user={user} setLogin={setLogin} />
+        <Navbar user={user} setLogin={setLogin} setToken={setToken} />
 
         <div>
           <div>

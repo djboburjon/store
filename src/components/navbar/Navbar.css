@@ -30,3 +30,11 @@ nav h1 a {
 .login_icon:hover {
   color: #ffc;
 }
+
+.log_out {
+  cursor: pointer;
+}
+
+.log_out:hover {
+  border-bottom: 1px dashed #f5dd5d;
+}
