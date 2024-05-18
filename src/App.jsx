@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes, redirect } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, redirect } from "react-router-dom";
 import Login from "./components/login/Login";
 import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
@@ -41,14 +41,15 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Login setToken={setToken} login={login} setLogin={setLogin} />
+        <Login token={token} setToken={setToken} login={login} setLogin={setLogin} />
         <Navbar user={user} setLogin={setLogin} />
 
         <div>
           <div>
           </div>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={token ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/login" element={token ? <Navigate to="/" /> : <Login/>}/>
             <Route path="/client/:type" element={<Clients token={token} />} />
           </Routes>
         </div>

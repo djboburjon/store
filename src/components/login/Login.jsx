@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-function Login({ login, setLogin, setToken }) {
+function Login({ login, setLogin, token, setToken }) {
   const [userLogin, setUserLogin] = useState();
   const [userPassword, setUserPassword] = useState();
+  const navigate = useNavigate();
 
   const getToken = () => {
     const myHeaders = new Headers();
@@ -28,6 +30,7 @@ function Login({ login, setLogin, setToken }) {
         if (result.access) {
           setToken(result.access);
           localStorage.setItem("token", result.access)
+          navigate("/")
           setLogin(false)
           setUserLogin("")
           setUserPassword("")
@@ -41,14 +44,6 @@ function Login({ login, setLogin, setToken }) {
   return (
     <>
       <div className={login ? "login active" : "login"}>
-        <div
-          className="exit_btn"
-          onClick={() => {
-            setLogin(false);
-          }}
-        >
-          <FaTimes />
-        </div>
         <div className="container">
           <form
             className="form"
