@@ -38,11 +38,12 @@ function App() {
   useEffect(() => {
     getUser();
   }, [token]);
+
   return (
     <>
       <BrowserRouter>
         <Login token={token} setToken={setToken} login={login} setLogin={setLogin} />
-        <Navbar user={user} setLogin={setLogin} setToken={setToken} />
+        {token != null && <Navbar user={user} setLogin={setLogin} setToken={setToken} />}
 
         <div>
           <div>
