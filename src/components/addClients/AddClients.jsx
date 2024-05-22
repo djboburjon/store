@@ -4,17 +4,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddClients( {token, setNewClient, setAddClient, setChanged}) {
-
-  const [name, setName] = useState('')
-  const [number, setNumber] = useState('')
+function AddClients({
+  token,
+  setNewClient,
+  setAddClient,
+  changed,
+  setChanged,
+}) {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
   const createData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
       FIO: name,
@@ -28,44 +30,39 @@ function AddClients( {token, setNewClient, setAddClient, setChanged}) {
       redirect: "follow",
     };
 
-
-
     fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        if(result.phone_number){
-          throw new Error("xatolik")
+        if (result.phone_number) {
+          throw new Error("xatolik");
         }
-        notifySuccess()
-        setTimeout(() => {
-          setAddClient(false)
-          setChanged(true)          
-        }, 3000);
-      }).catch((error) => {
-        console.error(error)
+        // notifySuccess()
+        setAddClient(false);
+        setChanged(!changed);
+      })
+      .catch((error) => {
+        console.error(error);
         console.log("xatolik");
-        toast.error("Bu Nomer orqali avvaldan ro'yhatdan o'tilgan!", {
+        toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
           position: "top-right",
-          autoClose: 2000
+          autoClose: 2000,
         });
-        
-
       });
   };
 
   const notify = () => {
     toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
       position: "top-right",
-      autoClose: 3000
+      autoClose: 3000,
     });
-  }
+  };
   const notifySuccess = () => {
     toast.success("Mijoz qo'shildi!", {
       position: "top-right",
-      autoClose: 2000
+      autoClose: 2000,
     });
-  }
+  };
 
   return (
     <div className="addClient">
@@ -73,7 +70,7 @@ function AddClients( {token, setNewClient, setAddClient, setChanged}) {
       <div
         className="exit_btn"
         onClick={() => {
-          setAddClient(false)
+          setAddClient(false);
         }}
       >
         <FaTimes />
@@ -85,20 +82,28 @@ function AddClients( {token, setNewClient, setAddClient, setChanged}) {
           onSubmit={(e) => {
             e.preventDefault();
             if (number.length == 9) {
-              createData()
+              createData();
             } else {
-              notify()
+              notify();
             }
           }}
         >
           <h3>F.I.Sh</h3>
-          <input onChange={(e) => {
-            setName(e.target.value)
-          }} type="text" placeholder="F.I.Sh kiriting" />
+          <input
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            type="text"
+            placeholder="F.I.Sh kiriting"
+          />
           <h3>Telefon Raqam +998</h3>
-          <input onChange={(e) => {
-            setNumber(e.target.value)
-          }} type="number" placeholder="91 123 45 67" />
+          <input
+            onChange={(e) => {
+              setNumber(e.target.value);
+            }}
+            type="number"
+            placeholder="91 123 45 67"
+          />
           <button>Mijoz Qo'shish</button>
         </form>
       </div>

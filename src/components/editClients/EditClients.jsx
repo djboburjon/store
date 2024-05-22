@@ -14,16 +14,13 @@ function EditClients({
   setEditNumber,
   itemId,
   setNewClient,
-  setChanged
+  changed,
+  setChanged,
 }) {
-  
   const editData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
       FIO: editName,
@@ -43,28 +40,35 @@ function EditClients({
     )
       .then((response) => response.json())
       .then((result) => {
-        notifySuccess()
-        setTimeout(() => {
+        if (result.phone_number) {
+          throw new Error("xatolik")
+        }
+        // notifySuccess()
         setEditClient(false);
-        setChanged(true)
-          
-        }, 3000);
+        setChanged(!changed);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        console.log("xatolik");
+        toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      });
   };
 
   const notify = () => {
     toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
       position: "top-right",
-      autoClose: 3000
+      autoClose: 3000,
     });
-  }
+  };
   const notifySuccess = () => {
     toast.success("Tahrirlandi!", {
       position: "top-right",
-      autoClose: 2000
+      autoClose: 2000,
     });
-  }
+  };
 
   return (
     <div className="editClient">
@@ -86,7 +90,7 @@ function EditClients({
             if (editNumber.length == 9) {
               editData();
             } else {
-              notify()
+              notify();
             }
           }}
         >

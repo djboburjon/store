@@ -31,7 +31,7 @@
   color: white;
   font-size: 10px;
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .client_add:hover {
@@ -39,7 +39,7 @@
 }
 
 .client_search {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   padding: 8px 8px;
   margin-bottom: 40px;
   border-top: 1px solid rgb(209, 209, 209);
@@ -66,7 +66,7 @@
   font-size: 12px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .client_search button:hover {
@@ -86,7 +86,7 @@
 
 .client_table thead tr,
 .client_table tbody tr:nth-child(even) {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   border-top: 1px solid rgb(209, 209, 209);
   border-bottom: 1px solid rgb(209, 209, 209);
 }
@@ -122,9 +122,14 @@
   color: white;
   background-color: #417690;
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .paginations button:hover {
   background-color: #4696be;
+}
+
+.disabled_btn {
+  cursor: no-drop !important;
+  background-color: #4696be81 !important;
 }

@@ -8,8 +8,8 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import EditClients from "../editClients/EditClients";
 import AddClients from "../addClients/AddClients";
 function Clients({ token }) {
-  const [editName, setEditName] = useState('');
-  const [editNumber, setEditNumber] = useState('');
+  const [editName, setEditName] = useState("");
+  const [editNumber, setEditNumber] = useState("");
   const [newClient, setNewClient] = useState([]);
   const [editClient, setEditClient] = useState(false);
   const [itemId, setItemId] = useState(0);
@@ -29,7 +29,7 @@ function Clients({ token }) {
     fetch("https://telzone.pythonanywhere.com/client/all/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setNewClient(result)
+        setNewClient(result);
       })
       .catch((error) => console.error(error));
   };
@@ -85,14 +85,17 @@ function Clients({ token }) {
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
-      redirect: "follow"
+      redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/client/all/?limit=25&offset=25", requestOptions)
+    fetch(
+      "https://telzone.pythonanywhere.com/client/all/?limit=25&offset=25",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => setNewClient(result))
       .catch((error) => console.error(error));
-  }
+  };
 
   const prevData = () => {
     const myHeaders = new Headers();
@@ -101,14 +104,17 @@ function Clients({ token }) {
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
-      redirect: "follow"
+      redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/client/all/?limit=25", requestOptions)
+    fetch(
+      "https://telzone.pythonanywhere.com/client/all/?limit=25",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => setNewClient(result))
       .catch((error) => console.error(error));
-  }
+  };
   return (
     <div className="clientSection">
       <div className="container">
@@ -165,7 +171,14 @@ function Clients({ token }) {
         </div>
         <div className="main_right">
           {addClient && (
-            <AddClients token={token} setNewClient={setNewClient} addClient={addClient} setAddClient={setAddClient} setChanged={setChanged} />
+            <AddClients
+              token={token}
+              setNewClient={setNewClient}
+              addClient={addClient}
+              setAddClient={setAddClient}
+              changed={changed}
+              setChanged={setChanged}
+            />
           )}
           {editClient && (
             <EditClients
@@ -178,6 +191,7 @@ function Clients({ token }) {
               setEditNumber={setEditNumber}
               itemId={itemId}
               setNewClient={setNewClient}
+              changed={changed}
               setChanged={setChanged}
             />
           )}
@@ -189,7 +203,7 @@ function Clients({ token }) {
                 setAddClient(true);
               }}
             >
-                MIJOZ QO'SH
+              MIJOZ QO'SH
               <TiPlus />
             </button>
           </div>
@@ -202,7 +216,11 @@ function Clients({ token }) {
               }}
             >
               <FaSearch />
-              <input type="text" onChange={getSearchClient} placeholder="Qidiruv..." />
+              <input
+                type="text"
+                onChange={getSearchClient}
+                placeholder="Qidiruv..."
+              />
               {/* <button>Qidiruv</button> */}
             </form>
           </div>
@@ -219,7 +237,7 @@ function Clients({ token }) {
               {newClient?.results?.slice(0, 25).map((item, index) => {
                 return (
                   <tr key={item.id}>
-                    <td>{index+1}</td>
+                    <td>{index + 1}</td>
                     <td>{item.FIO}</td>
                     <td>{item.phone_number}</td>
                     <td className="editClient_btn">
@@ -239,12 +257,36 @@ function Clients({ token }) {
           <div className="client_count">{newClient?.count} ta mijoz</div>
 
           <div className="paginations">
-            <div className="prev"><button onClick={() => {
-              prevData()
-            }}>Ortga</button></div>
-            <div className="next"><button onClick={() => {
-              nextData()
-            }}>Keyingi</button></div>
+            <div className="prev">
+              {newClient.previous ? (
+                <button
+                  onClick={() => {
+                    prevData();
+                  }}
+                >
+                  Ortga
+                </button>
+              ) : (
+                <button className="disabled_btn" disabled>
+                  Ortga
+                </button>
+              )}
+            </div>
+            <div className="next">
+              {newClient.next ? (
+                <button
+                  onClick={() => {
+                    nextData();
+                  }}
+                >
+                  Keyingi
+                </button>
+              ) : (
+                <button className="disabled_btn" disabled>
+                  Keyingi
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
