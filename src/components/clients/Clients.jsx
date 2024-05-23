@@ -141,7 +141,9 @@ function Clients({ token }) {
               </p>
             </div>
             <div className="products box_link">
-              <div>Mahsulotlar</div>
+              <div>
+                <Link to={"/product/all"}>Mahsulotlar</Link>
+              </div>
               <p>
                 <TiPlus />
                 Qo'sh

@@ -1,0 +1,8 @@
+.productSection {
+  padding-top: 20px;
+}
+
+.productSection .container {
+  display: flex;
+  gap: 20px;
+}

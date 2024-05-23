@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes, redirect } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  redirect,
+} from "react-router-dom";
 import Login from "./components/login/Login";
 import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import Clients from "./components/clients/Clients";
+import Products from "./components/products/Products";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -42,16 +49,29 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Login token={token} setToken={setToken} login={login} setLogin={setLogin} />
-        {token != null && <Navbar user={user} setLogin={setLogin} setToken={setToken} />}
+        <Login
+          token={token}
+          setToken={setToken}
+          login={login}
+          setLogin={setLogin}
+        />
+        {token != null && (
+          <Navbar user={user} setLogin={setLogin} setToken={setToken} />
+        )}
 
         <div>
-          <div>
-          </div>
+          <div></div>
           <Routes>
-            <Route path="/" element={token ? <Home /> : <Navigate to="/login" />} />
-            <Route path="/login" element={token ? <Navigate to="/" /> : <Login/>}/>
+            <Route
+              path="/"
+              element={token ? <Home /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/login"
+              element={token ? <Navigate to="/" /> : <Login />}
+            />
             <Route path="/client/:type" element={<Clients token={token} />} />
+            <Route path="/product/:type" element={<Products token={token} />} />
           </Routes>
         </div>
       </BrowserRouter>
