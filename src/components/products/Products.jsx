@@ -8,6 +8,7 @@ import AddProduct from "../addProduct/AddProduct";
 function Products({ token }) {
   const [products, setProducts] = useState([]);
   const [addProduct, setAddProduct] = useState(false);
+  const [changed, setChanged] = useState(false);
 
   const getProduct = () => {
     const myHeaders = new Headers();
@@ -30,7 +31,7 @@ function Products({ token }) {
 
   useEffect(() => {
     getProduct();
-  }, [token]);
+  }, [token, changed]);
   return (
     <div className="productSection">
       <div className="container">
@@ -93,6 +94,8 @@ function Products({ token }) {
               token={token}
               addProduct={addProduct}
               setAddProduct={setAddProduct}
+              changed={changed}
+              setChanged={setChanged}
             />
           )}
           <div className="main_right-head">
@@ -133,7 +136,7 @@ function Products({ token }) {
                     <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.purchase_price}</td>
-                    <td>{item.percent}</td>
+                    <td>{Math.floor(item.percent)}</td>
                     <td>{item.price}</td>
                     <td>{item.count}</td>
                     <td>{item.date}</td>
