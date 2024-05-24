@@ -3,9 +3,11 @@ import "./Products.css";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
+import AddProduct from "../addProduct/AddProduct";
 
 function Products({ token }) {
   const [products, setProducts] = useState([]);
+  const [addProduct, setAddProduct] = useState(false);
 
   const getProduct = () => {
     const myHeaders = new Headers();
@@ -86,9 +88,21 @@ function Products({ token }) {
           </div>
         </div>
         <div className="main_right">
+          {addProduct && (
+            <AddProduct
+              token={token}
+              addProduct={addProduct}
+              setAddProduct={setAddProduct}
+            />
+          )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun mahsulot tanlang</h3>
-            <button className="client_add">
+            <button
+              className="client_add"
+              onClick={() => {
+                setAddProduct(true);
+              }}
+            >
               MAHSULOT QO'SHISH
               <TiPlus />
             </button>
