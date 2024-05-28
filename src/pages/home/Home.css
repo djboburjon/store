@@ -13,32 +13,20 @@ main .container {
   border: 1px solid #ccc;
 }
 
-.main_left-head {
-  padding: 8px 12px;
-  background-color: #417690;
-  color: #FFFFCC;
-}
-
 .box_link {
   padding: 8px 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   color: #417690;
+  background-color: aliceblue;
+  border-bottom: 1px solid grey;
+  transition: all .3s ease;
+}
+
+.box_link:hover {
+  background-color: #fff;
 }
 
 .box_link a {
   color: #417690;
-}
-
-.box_link div {
-  cursor: pointer;
-}
-
-.box_link p {
-  cursor: pointer;
-}
-
-.box_link svg {
-  color: green;
 }

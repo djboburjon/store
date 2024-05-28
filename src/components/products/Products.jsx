@@ -36,57 +36,25 @@ function Products({ token }) {
     <div className="productSection">
       <div className="container">
         <div className="main_left">
-          <div className="client_box">
-            <div className="main_left-head">MIJOZ</div>
-            <div className="clients box_link">
-              <div>
-                <Link to={"/client/all"}>Mijozlar</Link>
-              </div>
-              <p>
-                <TiPlus />
-                Qo'sh
-              </p>
-            </div>
-          </div>
-          <div className="product_box">
-            <div className="main_left-head">MAHSULOT</div>
-            <div className="expenses box_link">
-              <div>Xarajatlar</div>
-              <p>
-                <TiPlus />
-                Qo'sh
-              </p>
-            </div>
-            <div className="products box_link">
-              <div>
-                <Link to={"/product/all"}>Mahsulotlar</Link>
-              </div>
-              <p>
-                <TiPlus />
-                Qo'sh
-              </p>
-            </div>
-          </div>
-          <div className="sale_box">
-            <div className="main_left-head">Chegirma</div>
-            <div className="sales box_link">
-              <div>Chegirmalar</div>
-              <p>
-                <TiPlus />
-                Qo'sh
-              </p>
-            </div>
-          </div>
-          <div className="use_box">
-            <div className="main_left-head">FOYDALANUVCHI</div>
-            <div className="users box_link">
-              <div>Foydalanuvchilar</div>
-              <p>
-                <TiPlus />
-                Qo'sh
-              </p>
-            </div>
-          </div>
+          <Link to={"/client/all"}>
+            <div className="clients box_link">Mijozlar</div>
+          </Link>
+
+          <Link to={"/"}>
+            <div className="expenses box_link">Xarajatlar</div>
+          </Link>
+
+          <Link to={"/product/all"}>
+            <div className="products box_link">Mahsulotlar</div>
+          </Link>
+
+          <Link to={"/"}>
+            <div className="sales box_link">Chegirmalar</div>
+          </Link>
+
+          <Link to={"/"}>
+            <div className="users box_link">Foydalanuvchilar</div>
+          </Link>
         </div>
         <div className="main_right">
           {addProduct && (
