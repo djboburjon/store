@@ -136,7 +136,7 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
               type="number"
               placeholder="123456789"
             />
-            <button>Mijoz Qo'shish</button>
+            <button>Mahsulot Qo'shish</button>
           </div>
         </form>
       </div>
