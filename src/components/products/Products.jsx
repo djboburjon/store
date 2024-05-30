@@ -4,11 +4,20 @@ import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import AddProduct from "../addProduct/AddProduct";
+import EditProduct from "../editProduct/EditProduct";
 
 function Products({ token }) {
   const [products, setProducts] = useState([]);
   const [addProduct, setAddProduct] = useState(false);
   const [changed, setChanged] = useState(false);
+  const [editProduct, setEditProduct] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editPrchPrice, setEditPrchPrice] = useState("");
+  const [editPrecent, setEditPrecent] = useState("");
+  const [editPrice, setEditPrice] = useState("");
+  const [editCount, setEditCount] = useState("");
+  const [editImei, setEditImei] = useState("");
+  const [itemId, setItemId] = useState(0)
 
   const getProduct = () => {
     const myHeaders = new Headers();
@@ -32,6 +41,29 @@ function Products({ token }) {
   useEffect(() => {
     getProduct();
   }, [token, changed]);
+
+  const getItemData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+
+    fetch(`https://telzone.pythonanywhere.com/product/?pk=${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setEditName(result.name);
+        setEditPrchPrice(result.purchase_price);
+        setEditPrecent(result.percent);
+        setEditPrice(result.price);
+        setEditCount(result.count);
+        setEditImei(result.imei);
+      })
+      .catch((error) => console.error(error));
+  }
   return (
     <div className="productSection">
       <div className="container">
@@ -64,6 +96,28 @@ function Products({ token }) {
               setAddProduct={setAddProduct}
               changed={changed}
               setChanged={setChanged}
+            />
+          )}
+          {editProduct && (
+            <EditProduct
+              token={token}
+              changed={changed}
+              setChanged={setChanged}
+              editProduct={editProduct}
+              setEditProduct={setEditProduct}
+              editName={editName}
+              setEditName={setEditName}
+              editPrchPrice={editPrchPrice}
+              setEditPrchPrice={setEditPrchPrice}
+              editPrecent={editPrecent}
+              setEditPrecent={setEditPrecent}
+              editPrice={editPrice}
+              setEditPrice={setEditPrice}
+              editCount={editCount}
+              setEditCount={setEditCount}
+              editImei={editImei}
+              setEditImei={setEditImei}   
+              itemId={itemId}           
             />
           )}
           <div className="main_right-head">
@@ -110,7 +164,11 @@ function Products({ token }) {
                     <td>{item.date}</td>
                     <td>{item.status}</td>
                     <td className="editClient_btn">
-                      <FaEdit />
+                      <FaEdit onClick={() => {
+                        setEditProduct(true);
+                        getItemData(item.id);
+                        setItemId(item.id)
+                      }} />
                     </td>
                   </tr>
                 );
