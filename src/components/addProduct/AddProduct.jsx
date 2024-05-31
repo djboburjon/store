@@ -66,7 +66,7 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (imei.length != 0) {
+            if (imei.length != 0 && name.length != 0) {
               createProduct();
             } else {
               notify()
