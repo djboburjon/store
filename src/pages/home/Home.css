@@ -17,16 +17,17 @@ main .container {
   padding: 8px 12px;
   display: flex;
   align-items: center;
-  color: #417690;
-  background-color: aliceblue;
+  color: #fff;
+  background-color: #007AFF;
   border-bottom: 1px solid grey;
   transition: all .3s ease;
 }
 
 .box_link:hover {
   background-color: #fff;
+  color: #007AFF;
 }
 
 .box_link a {
-  color: #417690;
+  color: #fff;
 }
