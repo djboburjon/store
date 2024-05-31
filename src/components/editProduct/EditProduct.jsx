@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./EditProduct.css";
 import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
@@ -21,15 +21,14 @@ function EditProduct({
   setEditCount,
   editImei,
   setEditImei,
-  itemId
+  itemId,
 }) {
+  const [newPrice, setNewPrice] = useState("0");
+  const [newPrecent, setNewPrecent] = useState("0");
   const editData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
       name: editName,
@@ -54,7 +53,7 @@ function EditProduct({
       .then((response) => response.json())
       .then((result) => {
         if (result.imei) {
-          throw new Error("xatolik")
+          throw new Error("xatolik");
         }
         setEditProduct(false);
         setChanged(!changed);
@@ -91,10 +90,10 @@ function EditProduct({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (imei.length != 0) {
+            if (editImei.length != 0 && editName.length != 0) {
               editData();
             } else {
-              notify()
+              notify();
             }
           }}
         >
@@ -118,36 +117,40 @@ function EditProduct({
               placeholder="100000"
             />
             <h3>Ustama Foiz</h3>
-            <input 
-              value={editPrecent}
-              className={price == 0 ? "" : "percent_inp"}
+            <input
+              className={newPrice == 0 ? "" : "percent_inp"}
               name="percentName"
               onChange={(e) => {
-                if (price == 0) {
+                if (newPrice == 0) {
+                  setNewPrecent(e.target.value);
                   setEditPrecent(e.target.value);
+                  setEditPrice(editPrchPrice * (1 + e.target.value/100))
                 } else {
+                  setNewPrecent("0");
                   setEditPrecent("0");
                 }
               }}
               type="number"
-              placeholder="30"
+              placeholder="0"
             />
           </div>
           <div>
             <h3>Sotish Narxi</h3>
             <input
-              value={editPrice}
-              className={percent == 0 ? "" : "price_inp"}
+              className={newPrecent == 0 ? "" : "price_inp"}
               name="priceName"
               onChange={(e) => {
-                if (percent == 0) {
+                if (newPrecent == 0) {
+                  setNewPrice(e.target.value);
                   setEditPrice(e.target.value);
+                  setEditPrecent((e.target.value / editPrchPrice) * 100 - 100)
                 } else {
+                  setNewPrice("0");
                   setEditPrice("0");
                 }
               }}
               type="number"
-              placeholder="130000"
+              placeholder="0"
             />
             <h3>Mahsulot Soni</h3>
             <input
