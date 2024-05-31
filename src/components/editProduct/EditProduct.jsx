@@ -124,7 +124,7 @@ function EditProduct({
                 if (newPrice == 0) {
                   setNewPrecent(e.target.value);
                   setEditPrecent(e.target.value);
-                  setEditPrice(editPrchPrice * (1 + e.target.value/100))
+                  setEditPrice(Math.round(editPrchPrice * (1 + e.target.value/100)))
                 } else {
                   setNewPrecent("0");
                   setEditPrecent("0");
