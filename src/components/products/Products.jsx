@@ -38,6 +38,22 @@ function Products({ token }) {
       .catch((error) => console.error(error));
   };
 
+  const searchProduct = (e) => {
+    const myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&status=on_sale`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => setProducts(result))
+  .catch((error) => console.error(error));
+  }
+
   useEffect(() => {
     getProduct();
   }, [token, changed]);
@@ -133,9 +149,12 @@ function Products({ token }) {
             </button>
           </div>
           <div className="client_search">
-            <form action="">
+            <form action="" onSubmit={(e) => {
+              e.preventDefault();
+              searchProduct();
+            }}>
               <FaSearch />
-              <input type="text" placeholder="Qidiruv..." />
+              <input type="text" onChange={searchProduct} placeholder="Qidiruv..." />
             </form>
           </div>
           <table className="client_table">

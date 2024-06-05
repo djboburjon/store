@@ -30,6 +30,25 @@ function Credit({ token }) {
       .catch((error) => console.error(error));
   };
 
+  const searchCredit = (e) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/credit_base/all/?search=${e.target.value}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setCredits(result))
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     getCredit();
   }, [token, changed]);
@@ -111,9 +130,15 @@ function Credit({ token }) {
             </button>
           </div>
           <div className="client_search">
-            <form action="">
+            <form
+              action=""
+              onSubmit={(e) => {
+                e.preventDefault();
+                searchCredit();
+              }}
+            >
               <FaSearch />
-              <input type="text" placeholder="Qidiruv..." />
+              <input type="text" onChange={searchCredit} placeholder="Qidiruv..." />
             </form>
           </div>
           <table className="client_table">
