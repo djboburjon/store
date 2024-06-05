@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Credit.css";
 import { TiPlus } from "react-icons/ti";
-import { FaSearch } from "react-icons/fa";
+import { FaEdit, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import AddCredit from "../addCredit/AddCredit";
 
 function Credit({ token }) {
   const [credits, setCredits] = useState([]);
+  const [addCredit, setAddCredit] = useState(false);
+  const [changed, setChanged] = useState(false);
+
   const getCredit = () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -23,7 +27,7 @@ function Credit({ token }) {
   };
   useEffect(() => {
     getCredit();
-  }, [token]);
+  }, [token, changed]);
   return (
     <div className="creditSection">
       <div className="container">
@@ -49,10 +53,21 @@ function Credit({ token }) {
           </Link>
         </div>
         <div className="main_right">
+          {addCredit && (
+            <AddCredit
+              token={token}
+              addCredit={addCredit}
+              setAddCredit={setAddCredit}
+              changed={changed}
+              setChanged={setChanged}
+            />  
+          )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button className="client_add">
-              MAHSULOT QO'SHISH
+            <button className="client_add" onClick={()=>{
+              setAddCredit(true)
+            }}>
+              NASIYA QO'SHISH
               <TiPlus />
             </button>
           </div>
@@ -75,6 +90,9 @@ function Credit({ token }) {
                   <tr key={item.id}>
                     <td>{index + 1}</td>
                     <td>{item.name}</td>
+                    <td className="editClient_btn">
+                      <FaEdit/>
+                    </td>
                   </tr>
                 );
               })}
