@@ -4,11 +4,15 @@ import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import AddCredit from "../addCredit/AddCredit";
+import EditCredit from "../editCredit/EditCredit";
 
 function Credit({ token }) {
   const [credits, setCredits] = useState([]);
   const [addCredit, setAddCredit] = useState(false);
   const [changed, setChanged] = useState(false);
+  const [editCredit, setEditCredit] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [itemId, setItemId] = useState(0);
 
   const getCredit = () => {
     const myHeaders = new Headers();
@@ -25,9 +29,29 @@ function Credit({ token }) {
       .then((result) => setCredits(result))
       .catch((error) => console.error(error));
   };
+
   useEffect(() => {
     getCredit();
   }, [token, changed]);
+
+  const getItemData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/credit_base/?pk=${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setEditName(result.name))
+      .catch((error) => console.error(error));
+  };
   return (
     <div className="creditSection">
       <div className="container">
@@ -60,13 +84,28 @@ function Credit({ token }) {
               setAddCredit={setAddCredit}
               changed={changed}
               setChanged={setChanged}
-            />  
+            />
+          )}
+          {editCredit && (
+            <EditCredit
+              token={token}
+              changed={changed}
+              setChanged={setChanged}
+              editCredit={editCredit}
+              setEditCredit={setEditCredit}
+              editName={editName}
+              setEditName={setEditName}
+              itemId={itemId}
+            />
           )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button className="client_add" onClick={()=>{
-              setAddCredit(true)
-            }}>
+            <button
+              className="client_add"
+              onClick={() => {
+                setAddCredit(true);
+              }}
+            >
               NASIYA QO'SHISH
               <TiPlus />
             </button>
@@ -91,7 +130,13 @@ function Credit({ token }) {
                     <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td className="editClient_btn">
-                      <FaEdit/>
+                      <FaEdit
+                        onClick={() => {
+                          setEditCredit(true);
+                          getItemData(item.id);
+                          setItemId(item.id);
+                        }}
+                      />
                     </td>
                   </tr>
                 );
@@ -102,14 +147,34 @@ function Credit({ token }) {
 
           <div className="paginations">
             <div className="prev">
-              <button className="disabled_btn" disabled>
-                Ortga
-              </button>
+              {credits.previous ? (
+                <button
+                  onClick={() => {
+                    prevData();
+                  }}
+                >
+                  Ortga
+                </button>
+              ) : (
+                <button className="disabled_btn" disabled>
+                  Ortga
+                </button>
+              )}
             </div>
             <div className="next">
-              <button className="disabled_btn" disabled>
-                Keyingi
-              </button>
+              {credits.next ? (
+                <button
+                  onClick={() => {
+                    nextData();
+                  }}
+                >
+                  Keyingi
+                </button>
+              ) : (
+                <button className="disabled_btn" disabled>
+                  Keyingi
+                </button>
+              )}
             </div>
           </div>
         </div>
