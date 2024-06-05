@@ -12,6 +12,7 @@ import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import Clients from "./components/clients/Clients";
 import Products from "./components/products/Products";
+import Credit from "./components/credit/Credit";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -72,6 +73,7 @@ function App() {
             />
             <Route path="/client/:type" element={<Clients token={token} />} />
             <Route path="/product/:type" element={<Products token={token} />} />
+            <Route path="/credit/:type" element={<Credit token={token} />} />
           </Routes>
         </div>
       </BrowserRouter>

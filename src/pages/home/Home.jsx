@@ -12,8 +12,8 @@ function Home() {
             <div className="clients box_link">Mijozlar</div>
           </Link>
 
-          <Link to={"/"}>
-            <div className="expenses box_link">Xarajatlar</div>
+          <Link to={"/credit/all"}>
+            <div className="credit box_link">Credit baza</div>
           </Link>
 
           <Link to={"/product/all"}>
