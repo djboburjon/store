@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Credit.css";
 import { TiPlus } from "react-icons/ti";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-function Credit() {
+function Credit({ token }) {
+  const [credits, setCredits] = useState([]);
+  const getCredit = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch("https://telzone.pythonanywhere.com/credit_base/all/", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setCredits(result))
+      .catch((error) => console.error(error));
+  };
+  useEffect(() => {
+    getCredit();
+  }, [token]);
   return (
     <div className="creditSection">
       <div className="container">
@@ -31,7 +50,7 @@ function Credit() {
         </div>
         <div className="main_right">
           <div className="main_right-head">
-            <h3>O'zgartirish uchun mahsulot tanlang</h3>
+            <h3>O'zgartirish uchun qalamchani tanlang</h3>
             <button className="client_add">
               MAHSULOT QO'SHISH
               <TiPlus />
@@ -51,13 +70,17 @@ function Credit() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Alibaba</td>
-              </tr>
+              {credits?.results?.slice(0, 25).map((item, index) => {
+                return (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{item.name}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
-          <div className="client_count">1 ta mijoz</div>
+          <div className="client_count">{credits?.count} ta mijoz</div>
 
           <div className="paginations">
             <div className="prev">
