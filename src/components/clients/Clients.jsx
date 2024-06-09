@@ -131,7 +131,7 @@ function Clients({ token }) {
             <div className="products box_link">Mahsulotlar</div>
           </Link>
 
-          <Link to={"/"}>
+          <Link to={"/sale/all"}>
             <div className="sales box_link">Chegirmalar</div>
           </Link>
 
@@ -166,7 +166,7 @@ function Clients({ token }) {
             />
           )}
           <div className="main_right-head">
-            <h3>O'zgartirish uchun mijoz tanlang</h3>
+            <h3>O'zgartirish uchun qalamchani tanlang</h3>
             <button
               className="client_add"
               onClick={() => {

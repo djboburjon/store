@@ -87,7 +87,7 @@ function Credit({ token }) {
             <div className="products box_link">Mahsulotlar</div>
           </Link>
 
-          <Link to={"/"}>
+          <Link to={"/sale/all"}>
             <div className="sales box_link">Chegirmalar</div>
           </Link>
 
@@ -138,7 +138,11 @@ function Credit({ token }) {
               }}
             >
               <FaSearch />
-              <input type="text" onChange={searchCredit} placeholder="Qidiruv..." />
+              <input
+                type="text"
+                onChange={searchCredit}
+                placeholder="Qidiruv..."
+              />
             </form>
           </div>
           <table className="client_table">

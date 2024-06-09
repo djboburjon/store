@@ -1,0 +1,8 @@
+.saleSection {
+  padding-top: 20px;
+}
+
+.saleSection .container {
+  display: flex;
+  gap: 20px;
+}

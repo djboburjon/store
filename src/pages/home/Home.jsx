@@ -20,7 +20,7 @@ function Home() {
             <div className="products box_link">Mahsulotlar</div>
           </Link>
 
-          <Link to={"/"}>
+          <Link to={"/sale/all"}>
             <div className="sales box_link">Chegirmalar</div>
           </Link>
 

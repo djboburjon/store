@@ -17,7 +17,7 @@ function Products({ token }) {
   const [editPrice, setEditPrice] = useState("");
   const [editCount, setEditCount] = useState("");
   const [editImei, setEditImei] = useState("");
-  const [itemId, setItemId] = useState(0)
+  const [itemId, setItemId] = useState(0);
 
   const getProduct = () => {
     const myHeaders = new Headers();
@@ -40,19 +40,22 @@ function Products({ token }) {
 
   const searchProduct = (e) => {
     const myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
-const requestOptions = {
-  method: "GET",
-  headers: myHeaders,
-  redirect: "follow"
-};
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
 
-fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&status=on_sale`, requestOptions)
-  .then((response) => response.json())
-  .then((result) => setProducts(result))
-  .catch((error) => console.error(error));
-  }
+    fetch(
+      `https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&status=on_sale`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setProducts(result))
+      .catch((error) => console.error(error));
+  };
 
   useEffect(() => {
     getProduct();
@@ -65,10 +68,13 @@ fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
-      redirect: "follow"
+      redirect: "follow",
     };
 
-    fetch(`https://telzone.pythonanywhere.com/product/?pk=${id}`, requestOptions)
+    fetch(
+      `https://telzone.pythonanywhere.com/product/?pk=${id}`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
         setEditName(result.name);
@@ -79,7 +85,7 @@ fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&
         setEditImei(result.imei);
       })
       .catch((error) => console.error(error));
-  }
+  };
   return (
     <div className="productSection">
       <div className="container">
@@ -96,7 +102,7 @@ fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&
             <div className="products box_link">Mahsulotlar</div>
           </Link>
 
-          <Link to={"/"}>
+          <Link to={"/sale/all"}>
             <div className="sales box_link">Chegirmalar</div>
           </Link>
 
@@ -132,12 +138,12 @@ fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&
               editCount={editCount}
               setEditCount={setEditCount}
               editImei={editImei}
-              setEditImei={setEditImei}   
-              itemId={itemId}           
+              setEditImei={setEditImei}
+              itemId={itemId}
             />
           )}
           <div className="main_right-head">
-            <h3>O'zgartirish uchun mahsulot tanlang</h3>
+            <h3>O'zgartirish uchun qalamchani tanlang</h3>
             <button
               className="client_add"
               onClick={() => {
@@ -149,12 +155,19 @@ fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&
             </button>
           </div>
           <div className="client_search">
-            <form action="" onSubmit={(e) => {
-              e.preventDefault();
-              searchProduct();
-            }}>
+            <form
+              action=""
+              onSubmit={(e) => {
+                e.preventDefault();
+                searchProduct();
+              }}
+            >
               <FaSearch />
-              <input type="text" onChange={searchProduct} placeholder="Qidiruv..." />
+              <input
+                type="text"
+                onChange={searchProduct}
+                placeholder="Qidiruv..."
+              />
             </form>
           </div>
           <table className="client_table">
@@ -183,11 +196,13 @@ fetch(`https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&
                     <td>{item.date}</td>
                     <td>{item.status}</td>
                     <td className="editClient_btn">
-                      <FaEdit onClick={() => {
-                        setEditProduct(true);
-                        getItemData(item.id);
-                        setItemId(item.id)
-                      }} />
+                      <FaEdit
+                        onClick={() => {
+                          setEditProduct(true);
+                          getItemData(item.id);
+                          setItemId(item.id);
+                        }}
+                      />
                     </td>
                   </tr>
                 );
