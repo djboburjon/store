@@ -3,9 +3,13 @@ import "./Sale.css";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
+import AddSale from "../addSale/AddSale";
 
 function Sale({ token }) {
   const [sales, setSales] = useState([]);
+  const [addSale, setAddSale] = useState(false);
+  const [changed, setChanged] = useState(false);
+  const [editSale, setEditSale] = useState(false);
 
   return (
     <div className="saleSection">
@@ -32,9 +36,23 @@ function Sale({ token }) {
           </Link>
         </div>
         <div className="main_right">
+          {addSale && (
+            <AddSale
+              token={token}
+              addSale={addSale}
+              setAddSale={setAddSale}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button className="client_add">
+            <button
+              className="client_add"
+              onClick={() => {
+                setAddSale(true);
+              }}
+            >
               CHEGIRMA QO'SHISH
               <TiPlus />
             </button>
@@ -49,12 +67,27 @@ function Sale({ token }) {
             <thead>
               <tr>
                 <th>№</th>
+                <th>Mahsulot</th>
+                <th>Mijoz</th>
+                <th>Nasiya Baza</th>
+                <th>Summasi</th>
+                <th>Sanasi</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td className="editClient_btn">1</td>
+                <td className="editClient_btn"></td>
+                <td className="editClient_btn"></td>
+                <td className="editClient_btn"></td>
+                <td className="editClient_btn"></td>
+                <td className="editClient_btn"></td>
                 <td className="editClient_btn">
-                  <FaEdit />
+                  <FaEdit
+                    onClick={() => {
+                      setEditSale(true);
+                    }}
+                  />
                 </td>
               </tr>
             </tbody>
