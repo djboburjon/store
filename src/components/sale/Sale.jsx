@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sale.css";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
@@ -11,6 +11,25 @@ function Sale({ token }) {
   const [changed, setChanged] = useState(false);
   const [editSale, setEditSale] = useState(false);
 
+  const getSale = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch("https://telzone.pythonanywhere.com/sale/all/", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setSales(result))
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    getSale();
+  }, [token, changed]);
   return (
     <div className="saleSection">
       <div className="container">
@@ -70,26 +89,38 @@ function Sale({ token }) {
                 <th>Mahsulot</th>
                 <th>Mijoz</th>
                 <th>Nasiya Baza</th>
-                <th>Summasi</th>
+                <th>Narxi</th>
                 <th>Sanasi</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="editClient_btn">1</td>
-                <td className="editClient_btn"></td>
-                <td className="editClient_btn"></td>
-                <td className="editClient_btn"></td>
-                <td className="editClient_btn"></td>
-                <td className="editClient_btn"></td>
-                <td className="editClient_btn">
-                  <FaEdit
-                    onClick={() => {
-                      setEditSale(true);
-                    }}
-                  />
-                </td>
-              </tr>
+              {sales?.results?.slice(0, 25).map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>
+                      {item.product.map((meti) => {
+                        return <span>{meti.name}, </span>;
+                      })}
+                    </td>
+                    <td>{item.client.FIO}-{item.client.phone_number}</td>
+                    <td>
+                    {item.credit_base.map((meti) => {
+                        return <span>{meti.name}, </span>;
+                      })}
+                    </td>
+                    <td>{item.sold_price}</td>
+                    <td></td>
+                    <td className="editClient_btn">
+                      <FaEdit
+                        onClick={() => {
+                          setEditSale(true);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           <div className="client_count"> ta mijoz</div>
