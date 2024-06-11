@@ -12,11 +12,11 @@
 }
 
 .addSale .form {
-  width: 580px;
+  width: 600px;
   background-color: whitesmoke;
   padding: 40px 30px;
   display: flex;
-  gap: 60px;
+  gap: 30px;
   border-radius: 8px;
 }
 
@@ -29,6 +29,17 @@
   border-radius: 8px;
   border: none;
   outline: none;
+  width: 250px;
+}
+
+.css-b62m3t-container {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 250px;
+}
+
+.css-13cymwt-control {
+  border-color: whitesmoke !important;
 }
 
 .addSale .form button {

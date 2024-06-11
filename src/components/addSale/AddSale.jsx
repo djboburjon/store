@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddSale.css";
+import Select from 'react-select';
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
@@ -9,6 +10,62 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
   const [creditBaze, setCreditBaze] = useState([]);
   const [prise, setPrise] = useState("");
   const [info, setInfo] = useState("");
+  const [products, setProducts] = useState([]);
+  const [newClient, setNewClient] = useState([]);
+  const [credits, setCredits] = useState([]);
+
+  const getProduct = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/product/all/?status=on_sale",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setProducts(result))
+      .catch((error) => console.error(error));
+  };
+
+  const getClient = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch("https://telzone.pythonanywhere.com/client/all/", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setNewClient(result);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const getCredit = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch("https://telzone.pythonanywhere.com/credit_base/all/", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setCredits(result))
+      .catch((error) => console.error(error));
+  };
 
   const createSale = () => {};
   const notify = () => {
@@ -17,6 +74,30 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
       autoClose: 3000,
     });
   };
+  
+  const transformDataToOptions = (products) => {
+    return products?.results?.map(item => ({
+      value: item.name.toLowerCase().replace(/\s/g, '-'),
+      label: item.name
+    }))
+  }
+  const transformDataToOptions1 = (newClient) => {
+    return newClient?.results?.map(item => ({
+      value: `${item.FIO.toLowerCase().replace(/\s/g, '-')}-${item.phone_number}`,
+      label: `${item.FIO}-${item.phone_number}`
+    }))
+  }
+  const productOptions = transformDataToOptions(products)
+  const clientOptions = transformDataToOptions1(newClient)
+  const creditOptions = transformDataToOptions(credits)
+  
+
+  useEffect(() => {
+    getProduct()
+    getClient()
+    getCredit()
+  }, [token])
+
   return (
     <div className="addSale">
       <ToastContainer />
@@ -43,28 +124,28 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
         >
           <div>
             <h3>Mahsulot Nomi</h3>
-            <input
-              onChange={(e) => {
-                setProdName(e.target.value);
-              }}
-              type="text"
-              placeholder="Mahsulot Nomi"
+            <Select
+              isMulti
+              name="products"
+              options={productOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
             />
             <h3>Mijoz</h3>
-            <input
-              onChange={(e) => {
-                setClient(e.target.value);
-              }}
-              type="text"
-              placeholder="Mijozlar"
+            <Select
+              isMulti
+              name="clients"
+              options={clientOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
             />
             <h3>Nasiya Baza</h3>
-            <input
-              onChange={(e) => {
-                setCreditBaze(e.target.value);
-              }}
-              type="text"
-              placeholder="Credit Baza"
+            <Select
+              isMulti
+              name="credits"
+              options={creditOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
             />
           </div>
           <div>

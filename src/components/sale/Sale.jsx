@@ -123,7 +123,7 @@ function Sale({ token }) {
               })}
             </tbody>
           </table>
-          <div className="client_count"> ta mijoz</div>
+          <div className="client_count">{sales?.count} ta mijoz</div>
 
           <div className="paginations">
             <div className="prev">
