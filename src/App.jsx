@@ -66,7 +66,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={token ? <Home /> : <Navigate to="/login" />}
+              element={token ? <Home token={token} /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"

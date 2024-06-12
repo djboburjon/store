@@ -31,3 +31,79 @@ main .container {
 .box_link a {
   color: #fff;
 }
+
+.changeDate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+
+.changeDate input {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  outline: none;
+  width: 250px;
+  background-color: rgb(252, 252, 252);
+}
+
+.right_text {
+  display: flex;
+  justify-content: center;
+}
+
+.right_text span {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.saleAndExpense {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+
+.saleAndExpense .sales,
+.saleAndExpense .expenses {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.warehouse h3 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.warehouse .prices {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+.warehouse .purchasePrice,
+.warehouse .price {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
