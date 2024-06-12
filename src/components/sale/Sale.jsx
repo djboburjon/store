@@ -4,12 +4,18 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import AddSale from "../addSale/AddSale";
+import EditSale from "../editSale/EditSale";
 
 function Sale({ token }) {
   const [sales, setSales] = useState([]);
   const [addSale, setAddSale] = useState(false);
   const [changed, setChanged] = useState(false);
   const [editSale, setEditSale] = useState(false);
+  const [editProductName, setEditProductName] = useState("");
+  const [editClientName, setEditClientName] = useState("");
+  const [editCreditName, setEditCreditName] = useState("");
+  const [editSoldPrice, setEditSoldPrice] = useState("");
+  const [editInfo, setEditInfo] = useState("");
 
   const getSale = () => {
     const myHeaders = new Headers();
@@ -64,6 +70,25 @@ function Sale({ token }) {
               setChanged={setChanged}
             />
           )}
+          {editSale && (
+            <EditSale
+              token={token}
+              changed={changed}
+              setChanged={setChanged}
+              editSale={editSale}
+              setEditSale={setEditSale}
+              editProductName={editProductName}
+              setEditProductName={setEditProductName}
+              editClientName={editClientName}
+              setEditClientName={setEditClientName}
+              editCreditName={editCreditName}
+              setEditCreditName={setEditCreditName}
+              editSoldPrice={editSoldPrice}
+              setEditSoldPrice={setEditSoldPrice}
+              editInfo={editInfo}
+              setEditInfo={setEditInfo}
+            />
+          )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
             <button
@@ -96,21 +121,23 @@ function Sale({ token }) {
             <tbody>
               {sales?.results?.slice(0, 25).map((item, index) => {
                 return (
-                  <tr key={index}>
+                  <tr>
                     <td>{index + 1}</td>
                     <td>
                       {item.product.map((meti) => {
                         return <span>{meti.name}, </span>;
                       })}
                     </td>
-                    <td>{item.client.FIO}-{item.client.phone_number}</td>
                     <td>
-                    {item.credit_base.map((meti) => {
+                      {item.client.FIO}-{item.client.phone_number}
+                    </td>
+                    <td>
+                      {item.credit_base.map((meti) => {
                         return <span>{meti.name}, </span>;
                       })}
                     </td>
                     <td>{item.sold_price}</td>
-                    <td></td>
+                    <td>{item.date}</td>
                     <td className="editClient_btn">
                       <FaEdit
                         onClick={() => {
