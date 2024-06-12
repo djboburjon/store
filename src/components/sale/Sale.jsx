@@ -16,6 +16,7 @@ function Sale({ token }) {
   const [editCreditName, setEditCreditName] = useState("");
   const [editSoldPrice, setEditSoldPrice] = useState("");
   const [editInfo, setEditInfo] = useState("");
+  const [itemId, setItemId] = useState("0");
 
   const getSale = () => {
     const myHeaders = new Headers();
@@ -36,6 +37,25 @@ function Sale({ token }) {
   useEffect(() => {
     getSale();
   }, [token, changed]);
+
+  const getItemData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      `Bearer ${token}`
+    );
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`https://telzone.pythonanywhere.com/sale/?pk=${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+  };
   return (
     <div className="saleSection">
       <div className="container">
@@ -87,6 +107,7 @@ function Sale({ token }) {
               setEditSoldPrice={setEditSoldPrice}
               editInfo={editInfo}
               setEditInfo={setEditInfo}
+              itemId={itemId}
             />
           )}
           <div className="main_right-head">
@@ -101,12 +122,12 @@ function Sale({ token }) {
               <TiPlus />
             </button>
           </div>
-          <div className="client_search">
+          {/* <div className="client_search">
             <form action="">
               <FaSearch />
               <input type="text" placeholder="Qidiruv..." />
             </form>
-          </div>
+          </div> */}
           <table className="client_table">
             <thead>
               <tr>
@@ -142,6 +163,8 @@ function Sale({ token }) {
                       <FaEdit
                         onClick={() => {
                           setEditSale(true);
+                          getItemData(item.id)
+                          setItemId(item.id);
                         }}
                       />
                     </td>

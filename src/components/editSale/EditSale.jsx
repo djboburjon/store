@@ -1,6 +1,6 @@
 import React from "react";
 import "./EditSale.css";
-import Select from 'react-select';
+import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
@@ -20,10 +20,37 @@ function EditSale({
   setEditSoldPrice,
   editInfo,
   setEditInfo,
+  itemId,
 }) {
   const editSaleData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append(
+      "Authorization",
+      `Bearer ${token}`
+    );
 
-  }
+    const raw = JSON.stringify({
+      product: [2],
+      client: 2,
+      sold_price: 2800000,
+    });
+
+    const requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/sale/update/?pk=${itemId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+  };
   const notify = () => {
     toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
       position: "top-right",

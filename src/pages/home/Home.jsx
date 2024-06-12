@@ -86,13 +86,13 @@ function Home({ token }) {
                   <div>
                     <p>Qoldiq Narx</p>
                     <div className="purchasePrice">
-                      {/* {dashData.warehouse.purchase_price} */}
+                      {dashData.warehouse?.purchase_price}
                     </div>
                   </div>
                   <div>
                     <p>Qoldiq Sotuv Narx</p>
                     <div className="price">
-                    {/* {dashData.warehouse.price} */}
+                    {dashData.warehouse?.price}
                     </div>
                   </div>
                 </div>
