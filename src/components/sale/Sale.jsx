@@ -53,7 +53,13 @@ function Sale({ token }) {
 
     fetch(`https://telzone.pythonanywhere.com/sale/?pk=${id}`, requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        setEditProductName(result.product)
+        setEditClientName(result.client)
+        setEditCreditName(result.credit_base)
+        setEditSoldPrice(result.sold_price)
+        setEditInfo(result.info)
+      })
       .catch((error) => console.error(error));
   };
   return (
@@ -163,7 +169,7 @@ function Sale({ token }) {
                       <FaEdit
                         onClick={() => {
                           setEditSale(true);
-                          getItemData(item.id)
+                          getItemData(item.id);
                           setItemId(item.id);
                         }}
                       />
