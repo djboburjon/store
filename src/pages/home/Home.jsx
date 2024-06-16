@@ -46,7 +46,7 @@ function Home({ token }) {
           <Link to={"/sale/all"}>
             <div className="sales box_link">Chegirmalar</div>
           </Link>
-          
+
           <Link to={"/expense/all"}>
             <div className="expenses box_link">Xarajatlar</div>
           </Link>
@@ -75,30 +75,25 @@ function Home({ token }) {
                 <span>{dashData.text}</span>
               </div>
               <div className="saleAndExpense">
-                <div>
+                <div className="sale_box">
                   <p>Sotuvlar</p>
                   <div className="sales">{dashData.sales}</div>
                 </div>
-                <div>
+                <div className="expense_box">
                   <p>Chiqimlar</p>
                   <div className="expenses">{dashData.expenses}</div>
                 </div>
               </div>
               <div className="warehouse">
-                <h3>Ombor</h3>
-                <div className="prices">
-                  <div>
-                    <p>Qoldiq Narx</p>
-                    <div className="purchasePrice">
-                      {dashData.warehouse?.purchase_price}
-                    </div>
+                <div className="purchase_box">
+                  <p>Qoldiq Narx</p>
+                  <div className="purchasePrice">
+                    {dashData.warehouse?.purchase_price}
                   </div>
-                  <div>
-                    <p>Qoldiq Sotuv Narx</p>
-                    <div className="price">
-                    {dashData.warehouse?.price}
-                    </div>
-                  </div>
+                </div>
+                <div className="price_box">
+                  <p>Qoldiq Sotuv Narx</p>
+                  <div className="price">{dashData.warehouse?.price}</div>
                 </div>
               </div>
             </div>
