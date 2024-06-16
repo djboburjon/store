@@ -78,7 +78,7 @@ function Expenses({ token }) {
           </Link>
 
           <Link to={"/expense/all"}>
-            <div className="sales box_link">Xarajatlar</div>
+            <div className="expenses box_link">Xarajatlar</div>
           </Link>
 
           <Link to={"/"}>

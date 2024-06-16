@@ -91,6 +91,10 @@ function Credit({ token }) {
             <div className="sales box_link">Chegirmalar</div>
           </Link>
 
+          <Link to={"/expense/all"}>
+            <div className="expenses box_link">Xarajatlar</div>
+          </Link>
+
           <Link to={"/"}>
             <div className="users box_link">Foydalanuvchilar</div>
           </Link>
