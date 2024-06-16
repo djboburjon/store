@@ -142,7 +142,7 @@ function EditSale({
     );
 
     const raw = JSON.stringify({
-      product: selected?.map((item) => {
+      product: editProductName?.map((item) => {
         return item.id;
       }),
       client: selectedClient.id,
@@ -214,6 +214,7 @@ function EditSale({
               onChange={(e) => {
                 setTotalPrice(0);
                 setselected(e);
+                setEditProductName(e)
               }}
               isMulti
               name="products"

@@ -14,6 +14,7 @@ import Clients from "./components/clients/Clients";
 import Products from "./components/products/Products";
 import Credit from "./components/credit/Credit";
 import Sale from "./components/sale/Sale";
+import Expenses from "./components/expenses/Expenses";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -76,6 +77,7 @@ function App() {
             <Route path="/product/:type" element={<Products token={token} />} />
             <Route path="/credit/:type" element={<Credit token={token} />} />
             <Route path="/sale/:type" element={<Sale token={token} />} />
+            <Route path="/expense/:type" element={<Expenses token={token} />} />
           </Routes>
         </div>
       </BrowserRouter>
