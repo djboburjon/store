@@ -31,6 +31,27 @@ function Expenses({ token }) {
       .catch((error) => console.error(error));
   };
 
+  const getSearchExpense = (e) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/expense/all/?search=${e.target.value}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setExpenses(result);
+      })
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     getExpense();
   }, [token, changed]);
@@ -112,9 +133,12 @@ function Expenses({ token }) {
           )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button className="client_add" onClick={() => {
-              setAddExpense(true)
-            }}>
+            <button
+              className="client_add"
+              onClick={() => {
+                setAddExpense(true);
+              }}
+            >
               CHIQIM QO'SHISH
               <TiPlus />
             </button>
@@ -124,10 +148,15 @@ function Expenses({ token }) {
               action=""
               onSubmit={(e) => {
                 e.preventDefault();
+                getSearchExpense();
               }}
             >
               <FaSearch />
-              <input type="text" placeholder="Qidiruv..." />
+              <input
+                onChange={getSearchExpense}
+                type="text"
+                placeholder="Qidiruv..."
+              />
             </form>
           </div>
           <table className="client_table">
