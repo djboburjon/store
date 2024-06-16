@@ -4,6 +4,7 @@ import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import EditExpense from "../editExpenses/EditExpense";
+import AddExpense from "../addExpenses/AddExpense";
 
 function Expenses({ token }) {
   const [expenses, setExpenses] = useState([]);
@@ -85,6 +86,15 @@ function Expenses({ token }) {
           </Link>
         </div>
         <div className="main_right">
+          {addExpense && (
+            <AddExpense
+              token={token}
+              addExpense={addExpense}
+              setAddExpense={setAddExpense}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          )}
           {editExpense && (
             <EditExpense
               token={token}
@@ -102,8 +112,10 @@ function Expenses({ token }) {
           )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button className="client_add" onClick={() => {}}>
-              NASIYA QO'SHISH
+            <button className="client_add" onClick={() => {
+              setAddExpense(true)
+            }}>
+              CHIQIM QO'SHISH
               <TiPlus />
             </button>
           </div>
