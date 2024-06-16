@@ -86,7 +86,7 @@ function Sale({ token }) {
             <div className="expenses box_link">Xarajatlar</div>
           </Link>
 
-          <Link to={"/"}>
+          <Link to={"/user/current"}>
             <div className="users box_link">Foydalanuvchilar</div>
           </Link>
         </div>
@@ -132,12 +132,12 @@ function Sale({ token }) {
               <TiPlus />
             </button>
           </div>
-          {/* <div className="client_search">
+          <div className="client_search">
             <form action="">
               <FaSearch />
               <input type="text" placeholder="Qidiruv..." />
             </form>
-          </div> */}
+          </div>
           <table className="client_table">
             <thead>
               <tr>

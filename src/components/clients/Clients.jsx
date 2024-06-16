@@ -139,7 +139,7 @@ function Clients({ token }) {
             <div className="expeses box_link">Xarajatlar</div>
           </Link>
 
-          <Link to={"/"}>
+          <Link to={"/user/current"}>
             <div className="users box_link">Foydalanuvchilar</div>
           </Link>
         </div>
