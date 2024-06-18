@@ -51,7 +51,7 @@ function Home({ token }) {
             <div className="expenses box_link">Xarajatlar</div>
           </Link>
 
-          <Link to={"/user/current"}>
+          <Link to={"/user/all"}>
             <div className="users box_link">Foydalanuvchilar</div>
           </Link>
         </div>

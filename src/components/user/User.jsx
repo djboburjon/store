@@ -3,9 +3,11 @@ import "./User.css";
 import { Link } from "react-router-dom";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import EditUser from "../editUser/EditUser";
+import { TiPlus } from "react-icons/ti";
 
 function User({ token }) {
   const [user, setUser] = useState();
+  const [addUser, setAddUser] = useState(false);
   const [editUser, setEditUser] = useState(false);
   const [editUsername, setEditUsername] = useState("");
   const [editUserpassword, setEditUserpassword] = useState("");
@@ -22,12 +24,12 @@ function User({ token }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/user/current/", requestOptions)
+    fetch(
+      "https://telzone.pythonanywhere.com/user/all/?enum=admin",
+      requestOptions
+    )
       .then((response) => response.json())
-      .then((result) => {
-        setUser(result);
-        setEditUsername(result.username);
-      })
+      .then((result) => setUser(result))
       .catch((error) => console.error(error));
   };
 
@@ -59,7 +61,7 @@ function User({ token }) {
             <div className="expeses box_link">Xarajatlar</div>
           </Link>
 
-          <Link to={"/user/current"}>
+          <Link to={"/user/all"}>
             <div className="users box_link">Foydalanuvchilar</div>
           </Link>
         </div>
@@ -77,15 +79,15 @@ function User({ token }) {
           )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            {/* <button
+            <button
               className="client_add"
               onClick={() => {
-                setAddClient(true);
+                setAddUser(true);
               }}
             >
-              MIJOZ QO'SH
+              USER QO'SH
               <TiPlus />
-            </button> */}
+            </button>
           </div>
           <div className="client_search">
             <form
@@ -104,24 +106,30 @@ function User({ token }) {
               <tr>
                 <th>№</th>
                 <th>Username</th>
-                <th>Faol/Nofaol</th>
+                <th>Ism</th>
+                <th>Familiya</th>
+                <th>Rol</th>
               </tr>
             </thead>
             <tbody>
-              {user && (
-                <tr>
-                  <td>{user.id}</td>
-                  <td>{user.username}</td>
-                  <td>{user.is_active ? "Faol" : "Nofaol"}</td>
-                  <td className="editClient_btn">
-                    <FaEdit
-                      onClick={() => {
-                        setEditUser(true);
-                      }}
-                    />
-                  </td>
-                </tr>
-              )}
+              {user?.results?.slice(0, 25).map((item, index) => {
+                return (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{item.username}</td>
+                    <td>{item.first_name}</td>
+                    <td>{item.last_name}</td>
+                    <td>{item.role}</td>
+                    <td className="editClient_btn">
+                      <FaEdit
+                        onClick={() => {
+                          setEditUser(true);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
