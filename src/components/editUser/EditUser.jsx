@@ -7,24 +7,29 @@ function EditUser({
   token,
   editUser,
   setEditUser,
-  editUsername,
-  setEditUsername,
   changed,
   setChanged,
+  editUsername,
+  setEditUsername,
+  editName,
+  setEditName,
+  editLastName,
+  setEditLastName,
+  editUserpassword,
+  setEditUserpassword,
+  itemId,
 }) {
   const editData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
-      first_name: "string",
-      last_name: "string",
+      first_name: editName,
+      last_name: editLastName,
       username: editUsername,
-      password: "123",
+      password: editUserpassword,
+      role: "admin",
     });
 
     const requestOptions = {
@@ -34,11 +39,14 @@ function EditUser({
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/user/update/", requestOptions)
-      .then((response) => response.text())
+    fetch(
+      `https://telzone.pythonanywhere.com/user/update/?pk=${itemId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
       .then((result) => {
-        setEditUser(false)
-        setChanged(!changed)
+        setEditUser(false);
+        setChanged(!changed);
       })
       .catch((error) => console.error(error));
   };
@@ -66,7 +74,7 @@ function EditUser({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (editUser.length != 0) {
+            if (editUsername.length != 0) {
               editData();
             } else {
               notify();
@@ -81,6 +89,33 @@ function EditUser({
             }}
             type="text"
             placeholder="Username kiriting"
+          />
+          <h3>Ism</h3>
+          <input
+            value={editName}
+            onChange={(e) => {
+              setEditName(e.target.value);
+            }}
+            type="text"
+            placeholder="Ism kiriting"
+          />
+          <h3>Familiya</h3>
+          <input
+            value={editLastName}
+            onChange={(e) => {
+              setEditLastName(e.target.value);
+            }}
+            type="text"
+            placeholder="Familiya kiriting"
+          />
+          <h3>Parol</h3>
+          <input
+            value={editUserpassword}
+            onChange={(e) => {
+              setEditUserpassword(e.target.value);
+            }}
+            type="text"
+            placeholder="Parol kiriting"
           />
 
           <button>Tahrirlash</button>

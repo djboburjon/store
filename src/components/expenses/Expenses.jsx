@@ -74,7 +74,6 @@ function Expenses({ token }) {
       .then((result) => {
         setEditType(result.type);
         setEditPrice(result.price);
-        console.log(result.id);
       })
       .catch((error) => console.error(error));
   };

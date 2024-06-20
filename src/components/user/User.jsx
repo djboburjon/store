@@ -10,6 +10,8 @@ function User({ token }) {
   const [addUser, setAddUser] = useState(false);
   const [editUser, setEditUser] = useState(false);
   const [editUsername, setEditUsername] = useState("");
+  const [editName, setEditName] = useState("");
+  const [editLastName, setEditLastName] = useState("");
   const [editUserpassword, setEditUserpassword] = useState("");
   const [itemId, setItemId] = useState(0);
   const [changed, setChanged] = useState(false);
@@ -36,6 +38,26 @@ function User({ token }) {
   useEffect(() => {
     getUser();
   }, [token, changed]);
+
+  const getItemData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`https://telzone.pythonanywhere.com/user/?pk=${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setEditUsername(result.username);
+        setEditName(result.first_name);
+        setEditLastName(result.last_name);
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="userSection">
@@ -71,10 +93,17 @@ function User({ token }) {
               token={token}
               editUser={editUser}
               setEditUser={setEditUser}
-              editUsername={editUsername}
-              setEditUsername={setEditUsername}
               changed={changed}
               setChanged={setChanged}
+              editUsername={editUsername}
+              setEditUsername={setEditUsername}
+              editName={editName}
+              setEditName={setEditName}
+              editLastName={editLastName}
+              setEditLastName={setEditLastName}
+              editUserpassword={editUserpassword}
+              setEditUserpassword={setEditUserpassword}
+              itemId={itemId}
             />
           )}
           <div className="main_right-head">
@@ -124,6 +153,8 @@ function User({ token }) {
                       <FaEdit
                         onClick={() => {
                           setEditUser(true);
+                          getItemData(item.id);
+                          setItemId(item.id);
                         }}
                       />
                     </td>
