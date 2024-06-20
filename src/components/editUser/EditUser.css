@@ -14,25 +14,44 @@
 .editUser .form {
 	background-color: whitesmoke;
 	padding: 40px 30px;
-	display: flex;
-	flex-direction: column;
+	gap: 10px;
 	border-radius: 8px;
-	width: 400px;
+	/* width: 400px; */
+}
+
+.editUser .form > div {
+	display: flex;
+	justify-content: space-between;
+	align-items: start;
+	gap: 20px;
+}
+
+.editUser .editBox2,
+.editUser .editBox3 {
+	width: 190px;
+}
+
+.editUser .editBox2 p,
+.editUser .editBox3 p {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .editUser .form input {
 	margin-top: 10px;
-	margin-bottom: 30px;
+	margin-bottom: 16px;
 	padding: 10px 12px;
   font-size: 16px;
 	border-radius: 8px;
 	border: none;
 	outline: none;
+	width: 100%;
 }
 
 .editUser .form button {
-	margin-top: 20px;
-	margin-bottom: 20px;
+	/* margin-top: 10px;
+	margin-bottom: 20px; */
 	border-radius: 5px;
   background: #FCA130;
   color: white;
@@ -41,6 +60,7 @@
   cursor: pointer;
 	font-size: 16px;
 	font-weight: bold;
+	width: 100%;
 }
 
 .editUser .form button:hover {

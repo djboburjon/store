@@ -181,13 +181,13 @@ function EditSale({
     getCredit();
   }, [token]);
 
-  useEffect(() => {
-    var summ = 0;
-    selected.forEach((item) => {
-      summ += item.price;
-      setTotalPrice(summ);
-    });
-  }, [selected]);
+  // useEffect(() => {
+  //   var summ = 0;
+  //   selected.forEach((item) => {
+  //     summ += item.price;
+  //     setTotalPrice(summ);
+  //   });
+  // }, [selected]);
   return (
     <div className="editSale">
       <ToastContainer />
@@ -213,8 +213,8 @@ function EditSale({
             <Select
               onChange={(e) => {
                 setTotalPrice(0);
-                setselected(e);
-                setEditProductName(e)
+                // setselected(e);
+                // setEditProductName(e)
               }}
               isMulti
               name="products"
