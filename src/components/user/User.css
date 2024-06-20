@@ -41,7 +41,7 @@
 .client_search {
   background-color: #f8f8f8;
   padding: 8px 8px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   border-top: 1px solid rgb(209, 209, 209);
   border-bottom: 1px solid rgb(209, 209, 209);
 }
@@ -71,6 +71,17 @@
 
 .client_search button:hover {
   border: 1px solid #000;
+}
+
+.adminOrWorker {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+.css-1i8lvs-MuiButtonBase-root-MuiSwitch-switchBase{
+  color: blue !important;
 }
 
 .client_table {
