@@ -89,15 +89,6 @@ function EditUser({
               }
             }}
           >
-            <h3>Username</h3>
-            <input
-              value={editUsername}
-              onChange={(e) => {
-                setEditUsername(e.target.value);
-              }}
-              type="text"
-              placeholder="Username kiriting"
-            />
             <h3>Ism</h3>
             <input
               value={editName}
@@ -117,13 +108,22 @@ function EditUser({
               placeholder="Familiya kiriting"
             />
             <h3>Rol</h3>
-            <input
-              value={editUserRole}
+            <select
               onChange={(e) => {
                 setEditUserRole(e.target.value);
               }}
+            >
+              <option value="admin">Admin</option>
+              <option value="worker">Ishchi</option>
+            </select>
+            <h3>Username</h3>
+            <input
+              value={editUsername}
+              onChange={(e) => {
+                setEditUsername(e.target.value);
+              }}
               type="text"
-              placeholder="Rol kiriting"
+              placeholder="Username kiriting"
             />
             <h3>Parol</h3>
             <input
@@ -152,15 +152,6 @@ function EditUser({
           >
             <div className="editBox">
               <div className="editBox1">
-                <h3>Username</h3>
-                <input
-                  value={editUsername}
-                  onChange={(e) => {
-                    setEditUsername(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="Username kiriting"
-                />
                 <h3>Ism</h3>
                 <input
                   value={editName}
@@ -180,13 +171,22 @@ function EditUser({
                   placeholder="Familiya kiriting"
                 />
                 <h3>Rol</h3>
-                <input
-                  value={editUserRole}
+                <select
                   onChange={(e) => {
                     setEditUserRole(e.target.value);
                   }}
+                >
+                  <option value="worker">Ishchi</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <h3>Username</h3>
+                <input
+                  value={editUsername}
+                  onChange={(e) => {
+                    setEditUsername(e.target.value);
+                  }}
                   type="text"
-                  placeholder="Rol kiriting"
+                  placeholder="Username kiriting"
                 />
                 <h3>Parol</h3>
                 <input
@@ -208,32 +208,27 @@ function EditUser({
                   <Checkbox {...label} defaultChecked />
                 </p>
                 <p>
-                  <span>Mahsulot tahrir</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Mahsulot tahrir</span> <Checkbox {...label} />
                 </p>
                 <p>
-                  <span>Mahsulot ko'rish</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Mahsulot ko'rish</span> <Checkbox {...label} />
                 </p>
                 <p>
                   <span>Mijoz qo'sh</span>{" "}
                   <Checkbox {...label} defaultChecked />
                 </p>
                 <p>
-                  <span>Mijoz tahrir</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Mijoz tahrir</span> <Checkbox {...label} />
                 </p>
                 <p>
                   <span>Mijoz ko'rish</span>{" "}
                   <Checkbox {...label} defaultChecked />
                 </p>
                 <p>
-                  <span>Chegirma qo'sh</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Chegirma qo'sh</span> <Checkbox {...label} />
                 </p>
                 <p>
-                  <span>Chegirma tahrir</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Chegirma tahrir</span> <Checkbox {...label} />
                 </p>
                 <p>
                   <span>Chegirma ko'rish</span>{" "}
@@ -242,12 +237,10 @@ function EditUser({
               </div>
               <div className="editBox3">
                 <p>
-                  <span>Kredit qo'sh</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Kredit qo'sh</span> <Checkbox {...label} />
                 </p>
                 <p>
-                  <span>Kredit tahrir</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Kredit tahrir</span> <Checkbox {...label} />
                 </p>
                 <p>
                   <span>Kredit ko'rish</span>{" "}
@@ -257,20 +250,17 @@ function EditUser({
                   <span>User qo'sh</span> <Checkbox {...label} />
                 </p>
                 <p>
-                  <span>User tahrir</span>{" "}
-                  <Checkbox {...label} />
+                  <span>User tahrir</span> <Checkbox {...label} />
                 </p>
                 <p>
                   <span>User ko'rish</span>{" "}
                   <Checkbox {...label} defaultChecked />
                 </p>
                 <p>
-                  <span>Xarajat qo'sh</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Xarajat qo'sh</span> <Checkbox {...label} />
                 </p>
                 <p>
-                  <span>Xarajat tahrir</span>{" "}
-                  <Checkbox {...label} />
+                  <span>Xarajat tahrir</span> <Checkbox {...label} />
                 </p>
                 <p>
                   <span>Xarajat ko'rish</span>{" "}
@@ -279,7 +269,6 @@ function EditUser({
                 <button>Tahrirlash</button>
               </div>
             </div>
-
           </form>
         )}
       </div>

@@ -38,7 +38,8 @@
 	align-items: center;
 }
 
-.editUser .form input {
+.editUser .form input,
+.editUser .form select {
 	margin-top: 10px;
 	margin-bottom: 16px;
 	padding: 10px 12px;
