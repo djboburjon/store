@@ -37,7 +37,6 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
     fetch("https://telzone.pythonanywhere.com/product/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         setAddProduct(false);
         setChanged(!changed);
       })

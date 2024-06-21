@@ -5,6 +5,7 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import EditUser from "../editUser/EditUser";
 import { TiPlus } from "react-icons/ti";
 import Switch from "@mui/material/Switch";
+import AddUser from "../addUser/AddUser";
 
 function User({ token }) {
   const [user, setUser] = useState([]);
@@ -129,6 +130,15 @@ function User({ token }) {
               itemId={itemId}
             />
           )}
+          {addUser && (
+            <AddUser
+              token={token}
+              addUser={addUser}
+              setAddUser={setAddUser}
+              changed={changed}
+              setChanged={setChanged}
+            />
+          )}
           <div className="main_right-head">
             <h3>O'zgartirish uchun qalamchani tanlang</h3>
             <button
@@ -137,7 +147,7 @@ function User({ token }) {
                 setAddUser(true);
               }}
             >
-              USER QO'SH
+              USER QO'SHISH
               <TiPlus />
             </button>
           </div>
