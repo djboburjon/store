@@ -72,147 +72,114 @@ function Credit({ token }) {
       .catch((error) => console.error(error));
   };
   return (
-    <div className="creditSection">
-      <div className="container">
-        <div className="main_left">
-          <Link to={"/client/all"}>
-            <div className="clients box_link">Mijozlar</div>
-          </Link>
-
-          <Link to={"/credit/all"}>
-            <div className="credit box_link">Credit baza</div>
-          </Link>
-
-          <Link to={"/product/all"}>
-            <div className="products box_link">Mahsulotlar</div>
-          </Link>
-
-          <Link to={"/sale/all"}>
-            <div className="sales box_link">Chegirmalar</div>
-          </Link>
-
-          <Link to={"/expense/all"}>
-            <div className="expenses box_link">Xarajatlar</div>
-          </Link>
-
-          <Link to={"/user/current"}>
-            <div className="users box_link">Foydalanuvchilar</div>
-          </Link>
-        </div>
-        <div className="main_right">
-          {addCredit && (
-            <AddCredit
-              token={token}
-              addCredit={addCredit}
-              setAddCredit={setAddCredit}
-              changed={changed}
-              setChanged={setChanged}
-            />
-          )}
-          {editCredit && (
-            <EditCredit
-              token={token}
-              changed={changed}
-              setChanged={setChanged}
-              editCredit={editCredit}
-              setEditCredit={setEditCredit}
-              editName={editName}
-              setEditName={setEditName}
-              itemId={itemId}
-            />
-          )}
-          <div className="main_right-head">
-            <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button
-              className="client_add"
-              onClick={() => {
-                setAddCredit(true);
-              }}
-            >
-              NASIYA QO'SHISH
-              <TiPlus />
-            </button>
-          </div>
-          <div className="client_search">
-            <form
-              action=""
-              onSubmit={(e) => {
-                e.preventDefault();
-                searchCredit();
-              }}
-            >
-              <FaSearch />
-              <input
-                type="text"
-                onChange={searchCredit}
-                placeholder="Qidiruv..."
-              />
-            </form>
-          </div>
-          <table className="client_table">
-            <thead>
-              <tr>
-                <th>№</th>
-                <th>Nomi</th>
+    <>
+      {addCredit && (
+        <AddCredit
+          token={token}
+          addCredit={addCredit}
+          setAddCredit={setAddCredit}
+          changed={changed}
+          setChanged={setChanged}
+        />
+      )}
+      {editCredit && (
+        <EditCredit
+          token={token}
+          changed={changed}
+          setChanged={setChanged}
+          editCredit={editCredit}
+          setEditCredit={setEditCredit}
+          editName={editName}
+          setEditName={setEditName}
+          itemId={itemId}
+        />
+      )}
+      <div className="main_right-head">
+        <h3>O'zgartirish uchun qalamchani tanlang</h3>
+        <button
+          className="client_add"
+          onClick={() => {
+            setAddCredit(true);
+          }}
+        >
+          NASIYA QO'SHISH
+          <TiPlus />
+        </button>
+      </div>
+      <div className="client_search">
+        <form
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            searchCredit();
+          }}
+        >
+          <FaSearch />
+          <input type="text" onChange={searchCredit} placeholder="Qidiruv..." />
+        </form>
+      </div>
+      <table className="client_table">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Nomi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {credits?.results?.slice(0, 25).map((item, index) => {
+            return (
+              <tr key={item.id}>
+                <td>{index + 1}</td>
+                <td>{item.name}</td>
+                <td className="editClient_btn">
+                  <FaEdit
+                    onClick={() => {
+                      setEditCredit(true);
+                      getItemData(item.id);
+                      setItemId(item.id);
+                    }}
+                  />
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {credits?.results?.slice(0, 25).map((item, index) => {
-                return (
-                  <tr key={item.id}>
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td className="editClient_btn">
-                      <FaEdit
-                        onClick={() => {
-                          setEditCredit(true);
-                          getItemData(item.id);
-                          setItemId(item.id);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="client_count">{credits?.count} ta mijoz</div>
+            );
+          })}
+        </tbody>
+      </table>
+      <div className="client_count">{credits?.count} ta mijoz</div>
 
-          <div className="paginations">
-            <div className="prev">
-              {credits.previous ? (
-                <button
-                  onClick={() => {
-                    prevData();
-                  }}
-                >
-                  Ortga
-                </button>
-              ) : (
-                <button className="disabled_btn" disabled>
-                  Ortga
-                </button>
-              )}
-            </div>
-            <div className="next">
-              {credits.next ? (
-                <button
-                  onClick={() => {
-                    nextData();
-                  }}
-                >
-                  Keyingi
-                </button>
-              ) : (
-                <button className="disabled_btn" disabled>
-                  Keyingi
-                </button>
-              )}
-            </div>
-          </div>
+      <div className="paginations">
+        <div className="prev">
+          {credits.previous ? (
+            <button
+              onClick={() => {
+                prevData();
+              }}
+            >
+              Ortga
+            </button>
+          ) : (
+            <button className="disabled_btn" disabled>
+              Ortga
+            </button>
+          )}
+        </div>
+        <div className="next">
+          {credits.next ? (
+            <button
+              onClick={() => {
+                nextData();
+              }}
+            >
+              Keyingi
+            </button>
+          ) : (
+            <button className="disabled_btn" disabled>
+              Keyingi
+            </button>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

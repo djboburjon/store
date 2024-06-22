@@ -28,79 +28,50 @@ function Home({ token }) {
     getData();
   }, [token]);
   return (
-    <main>
-      <div className="container">
-        <div className="main_left">
-          <Link to={"/client/all"}>
-            <div className="clients box_link">Mijozlar</div>
-          </Link>
-
-          <Link to={"/credit/all"}>
-            <div className="credit box_link">Credit baza</div>
-          </Link>
-
-          <Link to={"/product/all"}>
-            <div className="products box_link">Mahsulotlar</div>
-          </Link>
-
-          <Link to={"/sale/all"}>
-            <div className="sales box_link">Chegirmalar</div>
-          </Link>
-
-          <Link to={"/expense/all"}>
-            <div className="expenses box_link">Xarajatlar</div>
-          </Link>
-
-          <Link to={"/user/all"}>
-            <div className="users box_link">Foydalanuvchilar</div>
-          </Link>
-        </div>
-        <div className="main_right">
-          <div className="main_right-head">
-            <h3>Saytimizga xush kelibsiz!</h3>
+    <>
+      <div className="main_right-head">
+        <h3>Saytimizga xush kelibsiz!</h3>
+      </div>
+      {dashData && (
+        <div className="main_right-info">
+          <div className="changeDate">
+            <div className="dateFrom">
+              <p>kun-oy-yil</p>
+              <input type="number" placeholder="...dan" />
+            </div>
+            <div className="dateTo">
+              <p>kun-oy-yil</p>
+              <input type="number" placeholder="...gacha" />
+            </div>
           </div>
-          {dashData && (
-            <div className="main_right-info">
-              <div className="changeDate">
-                <div className="dateFrom">
-                  <p>kun-oy-yil</p>
-                  <input type="number" placeholder="...dan" />
-                </div>
-                <div className="dateTo">
-                  <p>kun-oy-yil</p>
-                  <input type="number" placeholder="...gacha" />
-                </div>
-              </div>
-              <div className="right_text">
-                <span>{dashData.text}</span>
-              </div>
-              <div className="saleAndExpense">
-                <div className="sale_box">
-                  <p>Sotuvlar</p>
-                  <div className="sales">{dashData.sales}</div>
-                </div>
-                <div className="expense_box">
-                  <p>Chiqimlar</p>
-                  <div className="expenses">{dashData.expenses}</div>
-                </div>
-              </div>
-              <div className="warehouse">
-                <div className="purchase_box">
-                  <p>Qoldiq Narx</p>
-                  <div className="purchasePrice">
-                    {dashData.warehouse?.purchase_price}
-                  </div>
-                </div>
-                <div className="price_box">
-                  <p>Qoldiq Sotuv Narx</p>
-                  <div className="price">{dashData.warehouse?.price}</div>
-                </div>
+          <div className="right_text">
+            <span>{dashData.text}</span>
+          </div>
+          <div className="saleAndExpense">
+            <div className="sale_box">
+              <p>Sotuvlar</p>
+              <div className="sales">{dashData.sales}</div>
+            </div>
+            <div className="expense_box">
+              <p>Chiqimlar</p>
+              <div className="expenses">{dashData.expenses}</div>
+            </div>
+          </div>
+          <div className="warehouse">
+            <div className="purchase_box">
+              <p>Qoldiq Narx</p>
+              <div className="purchasePrice">
+                {dashData.warehouse?.purchase_price}
               </div>
             </div>
-          )}
+            <div className="price_box">
+              <p>Qoldiq Sotuv Narx</p>
+              <div className="price">{dashData.warehouse?.price}</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </main>
+      )}
+    </>
   );
 }
 

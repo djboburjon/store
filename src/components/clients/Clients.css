@@ -7,20 +7,6 @@
   gap: 20px;
 }
 
-.main_right {
-  width: 85%;
-  position: relative !important;
-  height: 85vh;
-  overflow-y: auto;
-}
-
-.main_right-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
 .client_add {
   display: flex;
   gap: 4px;

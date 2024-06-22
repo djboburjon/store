@@ -116,155 +116,126 @@ function Clients({ token }) {
       .catch((error) => console.error(error));
   };
   return (
-    <div className="clientSection">
-      <div className="container">
-        <div className="main_left">
-          <Link to={"/client/all"}>
-            <div className="clients box_link">Mijozlar</div>
-          </Link>
+    <>
+      {addClient && (
+        <AddClients
+          token={token}
+          setNewClient={setNewClient}
+          addClient={addClient}
+          setAddClient={setAddClient}
+          changed={changed}
+          setChanged={setChanged}
+        />
+      )}
+      {editClient && (
+        <EditClients
+          token={token}
+          editClient={editClient}
+          setEditClient={setEditClient}
+          editName={editName}
+          editNumber={editNumber}
+          setEditName={setEditName}
+          setEditNumber={setEditNumber}
+          itemId={itemId}
+          setNewClient={setNewClient}
+          changed={changed}
+          setChanged={setChanged}
+        />
+      )}
+      <div className="main_right-head">
+        <h3>O'zgartirish uchun qalamchani tanlang</h3>
+        <button
+          className="client_add"
+          onClick={() => {
+            setAddClient(true);
+          }}
+        >
+          MIJOZ QO'SH
+          <TiPlus />
+        </button>
+      </div>
+      <div className="client_search">
+        <form
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            getSearchClient();
+          }}
+        >
+          <FaSearch />
+          <input
+            type="text"
+            onChange={getSearchClient}
+            placeholder="Qidiruv..."
+          />
+          {/* <button>Qidiruv</button> */}
+        </form>
+      </div>
 
-          <Link to={"/credit/all"}>
-            <div className="credit box_link">Credit baza</div>
-          </Link>
-
-          <Link to={"/product/all"}>
-            <div className="products box_link">Mahsulotlar</div>
-          </Link>
-
-          <Link to={"/sale/all"}>
-            <div className="sales box_link">Chegirmalar</div>
-          </Link>
-
-          <Link to={"/expense/all"}>
-            <div className="expeses box_link">Xarajatlar</div>
-          </Link>
-
-          <Link to={"/user/current"}>
-            <div className="users box_link">Foydalanuvchilar</div>
-          </Link>
-        </div>
-        <div className="main_right">
-          {addClient && (
-            <AddClients
-              token={token}
-              setNewClient={setNewClient}
-              addClient={addClient}
-              setAddClient={setAddClient}
-              changed={changed}
-              setChanged={setChanged}
-            />
-          )}
-          {editClient && (
-            <EditClients
-              token={token}
-              editClient={editClient}
-              setEditClient={setEditClient}
-              editName={editName}
-              editNumber={editNumber}
-              setEditName={setEditName}
-              setEditNumber={setEditNumber}
-              itemId={itemId}
-              setNewClient={setNewClient}
-              changed={changed}
-              setChanged={setChanged}
-            />
-          )}
-          <div className="main_right-head">
-            <h3>O'zgartirish uchun qalamchani tanlang</h3>
-            <button
-              className="client_add"
-              onClick={() => {
-                setAddClient(true);
-              }}
-            >
-              MIJOZ QO'SH
-              <TiPlus />
-            </button>
-          </div>
-          <div className="client_search">
-            <form
-              action=""
-              onSubmit={(e) => {
-                e.preventDefault();
-                getSearchClient();
-              }}
-            >
-              <FaSearch />
-              <input
-                type="text"
-                onChange={getSearchClient}
-                placeholder="Qidiruv..."
-              />
-              {/* <button>Qidiruv</button> */}
-            </form>
-          </div>
-
-          <table className="client_table">
-            <thead>
-              <tr>
-                <th>№</th>
-                <th>F.I.Sh</th>
-                <th>Telefon Raqam</th>
+      <table className="client_table">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>F.I.Sh</th>
+            <th>Telefon Raqam</th>
+          </tr>
+        </thead>
+        <tbody>
+          {newClient?.results?.slice(0, 25).map((item, index) => {
+            return (
+              <tr key={item.id}>
+                <td>{index + 1}</td>
+                <td>{item.FIO}</td>
+                <td>{item.phone_number}</td>
+                <td className="editClient_btn">
+                  <FaEdit
+                    onClick={() => {
+                      setEditClient(true);
+                      getItemData(item.id);
+                      setItemId(item.id);
+                    }}
+                  />
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {newClient?.results?.slice(0, 25).map((item, index) => {
-                return (
-                  <tr key={item.id}>
-                    <td>{index + 1}</td>
-                    <td>{item.FIO}</td>
-                    <td>{item.phone_number}</td>
-                    <td className="editClient_btn">
-                      <FaEdit
-                        onClick={() => {
-                          setEditClient(true);
-                          getItemData(item.id);
-                          setItemId(item.id);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="client_count">{newClient?.count} ta mijoz</div>
+            );
+          })}
+        </tbody>
+      </table>
+      <div className="client_count">{newClient?.count} ta mijoz</div>
 
-          <div className="paginations">
-            <div className="prev">
-              {newClient.previous ? (
-                <button
-                  onClick={() => {
-                    prevData();
-                  }}
-                >
-                  Ortga
-                </button>
-              ) : (
-                <button className="disabled_btn" disabled>
-                  Ortga
-                </button>
-              )}
-            </div>
-            <div className="next">
-              {newClient.next ? (
-                <button
-                  onClick={() => {
-                    nextData();
-                  }}
-                >
-                  Keyingi
-                </button>
-              ) : (
-                <button className="disabled_btn" disabled>
-                  Keyingi
-                </button>
-              )}
-            </div>
-          </div>
+      <div className="paginations">
+        <div className="prev">
+          {newClient.previous ? (
+            <button
+              onClick={() => {
+                prevData();
+              }}
+            >
+              Ortga
+            </button>
+          ) : (
+            <button className="disabled_btn" disabled>
+              Ortga
+            </button>
+          )}
+        </div>
+        <div className="next">
+          {newClient.next ? (
+            <button
+              onClick={() => {
+                nextData();
+              }}
+            >
+              Keyingi
+            </button>
+          ) : (
+            <button className="disabled_btn" disabled>
+              Keyingi
+            </button>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

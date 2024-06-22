@@ -1,13 +1,10 @@
-main {
-  padding-top: 20px;
-}
-
-main .container {
+.container {
   display: flex;
   gap: 20px;
 }
 
 .main_left {
+  margin-top: 20px;
   width: 300px;
   height: 85vh;
   border: 1px solid #ccc;
@@ -49,6 +46,21 @@ main .container {
   outline: none;
   width: 250px;
   background-color: rgb(252, 252, 252);
+}
+
+.main_right {
+  margin-top: 20px;
+  width: 85%;
+  position: relative !important;
+  height: 85vh;
+  overflow-y: auto;
+}
+
+.main_right-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .right_text {

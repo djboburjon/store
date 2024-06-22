@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import {
   BrowserRouter,
+  NavLink,
   Navigate,
   Route,
   Routes,
@@ -63,24 +64,57 @@ function App() {
           <Navbar user={user} setLogin={setLogin} setToken={setToken} />
         )}
 
-        <div>
-          <div></div>
-          <Routes>
-            <Route
-              path="/"
-              element={token ? <Home token={token} /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/login"
-              element={token ? <Navigate to="/" /> : <Login />}
-            />
-            <Route path="/client/:type" element={<Clients token={token} />} />
-            <Route path="/product/:type" element={<Products token={token} />} />
-            <Route path="/credit/:type" element={<Credit token={token} />} />
-            <Route path="/sale/:type" element={<Sale token={token} />} />
-            <Route path="/expense/:type" element={<Expenses token={token} />} />
-            <Route path="/user/:type" element={<User token={token} />} />
-          </Routes>
+        <div className="container">
+          <div className="main_left">
+            <NavLink to={"/client/all"}>
+              <div className="clients box_link">Mijozlar</div>
+            </NavLink>
+            <NavLink to={"/credit/all"}>
+              <div className="credit box_link">Credit baza</div>
+            </NavLink>
+
+            <NavLink to={"/product/all"}>
+              <div className="products box_link">Mahsulotlar</div>
+            </NavLink>
+
+            <NavLink to={"/sale/all"}>
+              <div className="sales box_link">Chegirmalar</div>
+            </NavLink>
+
+            <NavLink to={"/expense/all"}>
+              <div className="expenses box_link">Xarajatlar</div>
+            </NavLink>
+
+            <NavLink to={"/user/all"}>
+              <div className="users box_link">Foydalanuvchilar</div>
+            </NavLink>
+          </div>
+          <div className="main_right">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  token ? <Home token={token} /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path="/login"
+                element={token ? <Navigate to="/" /> : <Login />}
+              />
+              <Route path="/client/:type" element={<Clients token={token} />} />
+              <Route
+                path="/product/:type"
+                element={<Products token={token} />}
+              />
+              <Route path="/credit/:type" element={<Credit token={token} />} />
+              <Route path="/sale/:type" element={<Sale token={token} />} />
+              <Route
+                path="/expense/:type"
+                element={<Expenses token={token} />}
+              />
+              <Route path="/user/:type" element={<User token={token} />} />
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     </>
