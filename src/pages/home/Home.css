@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 100px;
+  gap: 50px;
 }
 
 .changeDate input {
@@ -46,6 +46,21 @@
   outline: none;
   width: 250px;
   background-color: rgb(252, 252, 252);
+}
+
+.changeDate .dateBtn {
+  padding: 10px 12px;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #5191b1;
+  color: #fff;
+  transition: all .3s ease;
+}
+.changeDate .dateBtn:hover {
+  background-color: #417690;
 }
 
 .main_right {
