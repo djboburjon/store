@@ -8,7 +8,7 @@ function AddUser({ token, addUser, setAddUser, changed, setChanged }) {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("admin");
 
   const createUser = () => {
     const myHeaders = new Headers();
