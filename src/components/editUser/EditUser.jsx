@@ -25,19 +25,25 @@ function EditUser({
   itemId,
 }) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
   const editData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
 
-    const raw = JSON.stringify({
-      first_name: editName,
-      last_name: editLastName,
-      username: editUsername,
-      password: editUserpassword,
-      role: editUserRole,
-    });
+    const raw = editUserpassword
+      ? JSON.stringify({
+          first_name: editName,
+          last_name: editLastName,
+          username: editUsername,
+          password: editUserpassword,
+          role: editUserRole,
+        })
+      : JSON.stringify({
+          first_name: editName,
+          last_name: editLastName,
+          username: editUsername,
+          role: editUserRole,
+        });
 
     const requestOptions = {
       method: "PUT",
