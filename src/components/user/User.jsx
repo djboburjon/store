@@ -20,6 +20,26 @@ function User({ token }) {
   const [changed, setChanged] = useState(false);
   const [userType, setUserType] = useState("admin");
   const [didHanSoloShootFirst, setDidHanSoloShootFirst] = useState(true);
+  const [dashboardView, setDashboardView] = useState(true);
+  const [prodCreate, setProdCreate] = useState(false);
+  const [prodUpdate, setProdUpdate] = useState(false);
+  const [prodView, setProdView] = useState(true);
+  const [clientCreate, setClientCreate] = useState(false);
+  const [clientUpdate, setClientUpdate] = useState(false);
+  const [clientView, setClientView] = useState(true);
+  const [saleCreate, setSaleCreate] = useState(false);
+  const [saleUpdate, setSaleUpdate] = useState(false);
+  const [saleView, setSaleView] = useState(true);
+  const [creditCreate, setCreditCreate] = useState(false);
+  const [creditUpdate, setCreditUpdate] = useState(false);
+  const [creditView, setCreditView] = useState(true);
+  const [userCreate, setUserCreate] = useState(false);
+  const [userUpdate, setUserUpdate] = useState(false);
+  const [userView, setUserView] = useState(true);
+  const [expenseCreate, setExpenseCreate] = useState(false);
+  const [expenseUpdate, setExpenseUpdate] = useState(false);
+  const [expenseView, setExpenseView] = useState(true);
+  const [lastItem, setLastItem] = useState(null);
 
   const label = { inputProps: { "aria-label": "Color switch demo" } };
 
@@ -38,7 +58,15 @@ function User({ token }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setUser(result))
+      .then((result) => {
+        setUser(result);
+        // if (userType == "worker") {
+        //   setLastItem(result?.count - 1);
+        //   setItemId(result?.results[lastItem]?.id)
+        //   setEditUser(true)
+        //   console.log(itemId);
+        // }
+      })
       .catch((error) => console.error(error));
   };
 
@@ -56,7 +84,7 @@ function User({ token }) {
 
   useEffect(() => {
     getUser();
-  }, [token, changed]);
+  }, [token, changed, lastItem]);
 
   const getItemData = (id) => {
     const myHeaders = new Headers();
@@ -75,6 +103,26 @@ function User({ token }) {
         setEditName(result.first_name);
         setEditLastName(result.last_name);
         setEditUserRole(result.role);
+        if (userType == "worker") {
+          setProdCreate(result.permission_fields.product_can_create);
+          setProdUpdate(result.permission_fields.product_can_update);
+          setProdView(result.permission_fields.product_can_view);
+          setClientCreate(result.permission_fields.client_can_create);
+          setClientUpdate(result.permission_fields.client_can_update);
+          setClientView(result.permission_fields.client_can_view);
+          setSaleCreate(result.permission_fields.sale_can_create);
+          setSaleUpdate(result.permission_fields.sale_can_update);
+          setSaleView(result.permission_fields.sale_can_view);
+          setCreditCreate(result.permission_fields.credit_base_can_create);
+          setCreditUpdate(result.permission_fields.credit_base_can_update);
+          setCreditView(result.permission_fields.credit_base_can_view);
+          setUserCreate(result.permission_fields.user_can_create);
+          setUserUpdate(result.permission_fields.user_can_update);
+          setUserView(result.permission_fields.user_can_view);
+          setExpenseCreate(result.permission_fields.expense_can_create);
+          setExpenseUpdate(result.permission_fields.expense_can_update);
+          setExpenseView(result.permission_fields.expense_can_view);
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -117,6 +165,8 @@ function User({ token }) {
               setEditUser={setEditUser}
               changed={changed}
               setChanged={setChanged}
+              itemId={itemId}
+              userType={userType}
               editUsername={editUsername}
               setEditUsername={setEditUsername}
               editName={editName}
@@ -127,7 +177,44 @@ function User({ token }) {
               setEditUserpassword={setEditUserpassword}
               editUserRole={editUserRole}
               setEditUserRole={setEditUserRole}
-              itemId={itemId}
+              dashboardView={dashboardView}
+              setDashboardView={setDashboardView}
+              prodCreate={prodCreate}
+              setProdCreate={setProdCreate}
+              prodUpdate={prodUpdate}
+              setProdUpdate={setProdUpdate}
+              prodView={prodView}
+              setProdView={setProdView}
+              clientCreate={clientCreate}
+              setClientCreate={setClientCreate}
+              clientUpdate={clientUpdate}
+              setClientUpdate={setClientUpdate}
+              clientView={clientView}
+              setClientView={setClientView}
+              saleCreate={saleCreate}
+              setSaleCreate={setSaleCreate}
+              saleUpdate={saleUpdate}
+              setSaleUpdate={setSaleUpdate}
+              saleView={saleView}
+              setSaleView={setSaleView}
+              creditCreate={creditCreate}
+              setCreditCreate={setCreditCreate}
+              creditUpdate={creditUpdate}
+              setCreditUpdate={setCreditUpdate}
+              creditView={creditView}
+              setCreditView={setCreditView}
+              userCreate={userCreate}
+              setUserCreate={setUserCreate}
+              userUpdate={userUpdate}
+              setUserUpdate={setUserUpdate}
+              userView={userView}
+              setUserView={setUserView}
+              expenseCreate={expenseCreate}
+              setExpenseCreate={setExpenseCreate}
+              expenseUpdate={expenseUpdate}
+              setExpenseUpdate={setExpenseUpdate}
+              expenseView={expenseView}
+              setExpenseView={setExpenseView}
             />
           )}
           {addUser && (

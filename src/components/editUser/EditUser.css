@@ -28,7 +28,7 @@
 
 .editUser .editBox2,
 .editUser .editBox3 {
-	width: 190px;
+	width: 210px;
 }
 
 .editUser .editBox2 p,
@@ -36,6 +36,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.editUser .editBox2 p span,
+.editUser .editBox3 p span {
+	cursor: pointer;
 }
 
 .editUser .form input,
