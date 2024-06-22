@@ -192,7 +192,7 @@ function User({ token }) {
                     <td>{item.username}</td>
                     <td>{item.first_name}</td>
                     <td>{item.last_name}</td>
-                    <td>{item.role}</td>
+                    <td>{item.role == "worker" ? "Ishchi" : "Admin"}</td>
                     <td className="editClient_btn">
                       <FaEdit
                         onClick={() => {
