@@ -204,7 +204,7 @@ function Products({ token }) {
                 <td>{item.price}</td>
                 <td>{item.count}</td>
                 <td>{item.date}</td>
-                <td>{item.status}</td>
+                <td>{item.status == "on_sale" ? "Sotuvda":"Sotilgan"}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
