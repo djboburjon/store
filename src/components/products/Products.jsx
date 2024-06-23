@@ -168,7 +168,11 @@ function Products({ token }) {
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.purchase_price}</td>
-                <td>{Math.floor(item.percent)}</td>
+                <td>
+                  {Number.isInteger(item.percent)
+                    ? item.percent
+                    : item.percent.toFixed(2)}
+                </td>
                 <td>{item.price}</td>
                 <td>{item.count}</td>
                 <td>{item.date}</td>
@@ -187,7 +191,7 @@ function Products({ token }) {
           })}
         </tbody>
       </table>
-      <div className="client_count">{products?.count} ta mijoz</div>
+      <div className="client_count">{products?.count} ta mahsulot</div>
 
       <div className="paginations">
         <div className="prev">
