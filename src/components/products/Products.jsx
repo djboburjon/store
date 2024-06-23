@@ -5,6 +5,7 @@ import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import AddProduct from "../addProduct/AddProduct";
 import EditProduct from "../editProduct/EditProduct";
+import { Switch } from "@mui/material";
 
 function Products({ token }) {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,10 @@ function Products({ token }) {
   const [editCount, setEditCount] = useState("");
   const [editImei, setEditImei] = useState("");
   const [itemId, setItemId] = useState(0);
+  const [prodType, setProdType] = useState("on_sale");
+  const [didHanSoloShootFirst, setDidHanSoloShootFirst] = useState(true);
+
+  const label = { inputProps: { "aria-label": "Color switch demo" } };
 
   const getProduct = () => {
     const myHeaders = new Headers();
@@ -30,7 +35,7 @@ function Products({ token }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/product/all/?status=on_sale",
+      `https://telzone.pythonanywhere.com/product/all/?status=${prodType}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -49,13 +54,25 @@ function Products({ token }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&status=on_sale`,
+      `https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&status=${prodType}`,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => setProducts(result))
       .catch((error) => console.error(error));
   };
+
+  function toggleDidHanSoloShootFirst() {
+    if (didHanSoloShootFirst === true) {
+      setDidHanSoloShootFirst(false);
+      setProdType("sold");
+      setChanged(!changed);
+    } else if (didHanSoloShootFirst === false) {
+      setDidHanSoloShootFirst(true);
+      setProdType("on_sale");
+      setChanged(!changed);
+    }
+  }
 
   useEffect(() => {
     getProduct();
@@ -77,7 +94,6 @@ function Products({ token }) {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         setEditName(result.name);
         setEditPrchPrice(result.purchase_price);
         setEditPrecent(result.percent);
@@ -148,6 +164,18 @@ function Products({ token }) {
           />
         </form>
       </div>
+
+      <div className="adminOrWorker">
+        <span>Sotilganlar</span>
+        <Switch
+          {...label}
+          onClick={toggleDidHanSoloShootFirst}
+          defaultChecked
+          color="default"
+        />{" "}
+        <span>Sotuvdagilar</span>
+      </div>
+
       <table className="client_table">
         <thead>
           <tr>
