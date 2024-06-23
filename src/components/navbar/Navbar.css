@@ -38,3 +38,8 @@ nav h1 a {
 .log_out:hover {
   border-bottom: 1px dashed #f5dd5d;
 }
+
+.userLogo {
+  font-size: 24px;
+  cursor: pointer;
+}
