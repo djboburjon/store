@@ -77,6 +77,7 @@ function Products({ token }) {
     )
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         setEditName(result.name);
         setEditPrchPrice(result.purchase_price);
         setEditPrecent(result.percent);

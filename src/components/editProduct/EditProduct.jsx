@@ -60,8 +60,7 @@ function EditProduct({
       })
       .catch((error) => {
         console.error(error);
-        console.log("xatolik");
-        toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
+        toast.error("Bu imei orqali avval ro'yxatdan o'tilgan!", {
           position: "top-right",
           autoClose: 2000,
         });
@@ -124,7 +123,7 @@ function EditProduct({
                 if (newPrice == 0) {
                   setNewPrecent(e.target.value);
                   setEditPrecent(e.target.value);
-                  setEditPrice(Math.round(editPrchPrice * (1 + e.target.value/100)))
+                  setEditPrice("0");
                 } else {
                   setNewPrecent("0");
                   setEditPrecent("0");
@@ -143,7 +142,7 @@ function EditProduct({
                 if (newPrecent == 0) {
                   setNewPrice(e.target.value);
                   setEditPrice(e.target.value);
-                  setEditPrecent((e.target.value / editPrchPrice) * 100 - 100)
+                  setEditPrecent("0");
                 } else {
                   setNewPrice("0");
                   setEditPrice("0");

@@ -92,14 +92,14 @@ function App() {
           <div className="main_right">
             <Routes>
               <Route
+                path="/login"
+                element={token ? <Navigate to="/" /> : <Login />}
+              />
+              <Route
                 path="/"
                 element={
                   token ? <Home token={token} /> : <Navigate to="/login" />
                 }
-              />
-              <Route
-                path="/login"
-                element={token ? <Navigate to="/" /> : <Login />}
               />
               <Route path="/client/:type" element={<Clients token={token} />} />
               <Route
