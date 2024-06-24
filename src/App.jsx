@@ -20,13 +20,14 @@ import Expenses from "./components/expenses/Expenses";
 import User from "./components/user/User";
 import { ToastContainer } from "react-toastify";
 import Loader from "./components/loader/Loader";
+import CurUser from "./components/curUser/CurUser";
 
 function App() {
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
-
+  const [curUser, setCurUser] = useState(false)
   const getUser = () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -42,9 +43,11 @@ function App() {
       .then((result) => {
         if (result.username) {
           setUser(result);
+          setLoading(false);
           setLogin(false);
         } else {
           setLogin(true);
+          setLoading(false);
           setUser(null);
         }
       })
@@ -67,7 +70,7 @@ function App() {
           setLoading={setLoading}
         />
         {token != null && (
-          <Navbar user={user} setLogin={setLogin} setToken={setToken} />
+          <Navbar user={user} setLogin={setLogin} setToken={setToken} setCurUser={setCurUser} />
         )}
         {loading && <Loader />}
 
@@ -100,7 +103,7 @@ function App() {
             <Routes>
               <Route
                 path="/login"
-                element={token ? <Navigate to="/" /> : <Login />}
+                element={token ? <Navigate to="/" /> : <Navigate to="/login" />}
               />
               <Route
                 path="/"

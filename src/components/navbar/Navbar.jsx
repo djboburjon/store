@@ -4,7 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { CgDarkMode } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 
-function Navbar({ user, setLogin, setToken }) {
+function Navbar({ user, setLogin, setToken, setCurUser }) {
   const navigate = useNavigate();
   return (
     <nav>
@@ -36,7 +36,9 @@ function Navbar({ user, setLogin, setToken }) {
               </div>
             )}
             {user && (
-              <div className="userLogo">
+              <div className="userLogo" onClick={() => {
+                setCurUser(true)
+              }}>
                 <FaUserCircle />
               </div>
             )}
