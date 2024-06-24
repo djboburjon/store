@@ -122,19 +122,19 @@ function Sale({ token }) {
         <tbody>
           {sales?.results?.slice(0, 25).map((item, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
-                  {item.product.map((meti) => {
-                    return <span>{meti.name}, </span>;
+                  {item.product.map((meti, index) => {
+                    return <span key={index} >{meti.name}, </span>;
                   })}
                 </td>
                 <td>
                   {item.client.FIO}-{item.client.phone_number}
                 </td>
                 <td>
-                  {item.credit_base.map((meti) => {
-                    return <span>{meti.name}, </span>;
+                  {item.credit_base.map((meti, index) => {
+                    return <span key={index} >{meti.name}, </span>;
                   })}
                 </td>
                 <td>{item.sold_price}</td>
