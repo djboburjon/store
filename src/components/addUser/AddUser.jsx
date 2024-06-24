@@ -3,7 +3,15 @@ import "./AddUser.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddUser({ token, addUser, setAddUser, changed, setChanged }) {
+function AddUser({
+  token,
+  addUser,
+  setAddUser,
+  changed,
+  setChanged,
+  setEditUser,
+  getItemData,
+}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -33,22 +41,38 @@ function AddUser({ token, addUser, setAddUser, changed, setChanged }) {
     fetch("https://telzone.pythonanywhere.com/user/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setAddUser(false);
-        setChanged(!changed);
+        if (result.response == "Success") {
+          setAddUser(false);
+          setChanged(!changed);
+          notifySuccess();
+
+          // if (role == "worker") {
+          //   getItemData(15);
+          //   setEditUser(true);
+          // }
+        } else {
+          notify("Nimadir xato");
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.log(error));
   };
 
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
   };
 
+  const notifySuccess = () => {
+    toast.success("Ma'lumot qo'shildi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
+
   return (
     <div className="addUser">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -66,7 +90,7 @@ function AddUser({ token, addUser, setAddUser, changed, setChanged }) {
             if (username.length != 0) {
               createUser();
             } else {
-              notify();
+              notify("Ma'lumotlarni to'g'ri kiriting!");
             }
           }}
         >
@@ -87,9 +111,11 @@ function AddUser({ token, addUser, setAddUser, changed, setChanged }) {
             placeholder="Familiya kiriting"
           />
           <h3>Rol</h3>
-          <select onChange={(e)=> {
-             setRole(e.target.value)
-          }}>
+          <select
+            onChange={(e) => {
+              setRole(e.target.value);
+            }}
+          >
             <option value="admin">Admin</option>
             <option value="worker">Ishchi</option>
           </select>

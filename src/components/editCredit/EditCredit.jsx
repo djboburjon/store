@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./EditCredit.css"
+import "./EditCredit.css";
 import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -35,8 +35,13 @@ function EditCredit({
     )
       .then((response) => response.json())
       .then((result) => {
-        setEditCredit(false);
-        setChanged(!changed);
+        if (result.response == "Success") {
+          setEditCredit(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify();
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -46,9 +51,15 @@ function EditCredit({
       autoClose: 3000,
     });
   };
+
+  const notifySuccess = () => {
+    toast.success("Ma'lumot tahrirlandi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="editCredit">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -63,11 +74,7 @@ function EditCredit({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (editName.length != 0) {
-              editData();
-            } else {
-              notify();
-            }
+            editData();
           }}
         >
           <div>

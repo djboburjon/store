@@ -197,6 +197,8 @@ function User({ token }) {
           setAddUser={setAddUser}
           changed={changed}
           setChanged={setChanged}
+          setEditUser={setEditUser}
+          getItemData={getItemData}
         />
       )}
       <div className="main_right-head">

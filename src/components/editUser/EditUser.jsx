@@ -97,12 +97,17 @@ function EditUser({
     )
       .then((response) => response.json())
       .then((result) => {
-        if (userType == "worker") {
-          editPermission()
+        if (result.response == "Success") {
+          if (userType == "worker") {
+            editPermission();
+          }
+          setEditUserpassword("");
+          setEditUser(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify()
         }
-        setEditUserpassword("")
-        setEditUser(false);
-        setChanged(!changed);
       })
       .catch((error) => console.error(error));
   };
@@ -110,10 +115,7 @@ function EditUser({
   const editPermission = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
       product_can_create: prodCreate,
@@ -159,9 +161,14 @@ function EditUser({
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot tahrirlandi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="editUser">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -240,7 +247,7 @@ function EditUser({
               e.preventDefault();
               if (editUsername.length != 0) {
                 editData();
-                editPermission()
+                editPermission();
               } else {
                 notify();
               }

@@ -12,15 +12,12 @@ function EditExpense({
   setEditType,
   editPrice,
   setEditPrice,
-  itemId
+  itemId,
 }) {
   const editData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
       type: editType,
@@ -40,8 +37,13 @@ function EditExpense({
     )
       .then((response) => response.json())
       .then((result) => {
-        setEditExpense(false)
-        setChanged(!changed)
+        if (result.response == "Success") {
+          setEditExpense(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify();
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -51,9 +53,14 @@ function EditExpense({
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot tahrirlandi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="editExpense">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -68,33 +75,28 @@ function EditExpense({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (editType.length != 0 && editPrice.length != 0) {
-              editData();
-            } else {
-              notify();
-            }
+            editData();
           }}
         >
-            <h3>Xarajat Turi</h3>
-            <input
-              value={editType}
-              onChange={(e) => {
-                setEditType(e.target.value);
-              }}
-              type="text"
-              placeholder="Xarajat Turi"
-            />
-            <h3>Narxi</h3>
-            <input
-              value={editPrice}
-              onChange={(e) => {
-                setEditPrice(e.target.value);
-              }}
-              type="number"
-              placeholder="Narxi"
-            />
-            <button>Tahrirlash</button>
-          
+          <h3>Xarajat Turi</h3>
+          <input
+            value={editType}
+            onChange={(e) => {
+              setEditType(e.target.value);
+            }}
+            type="text"
+            placeholder="Xarajat Turi"
+          />
+          <h3>Narxi</h3>
+          <input
+            value={editPrice}
+            onChange={(e) => {
+              setEditPrice(e.target.value);
+            }}
+            type="number"
+            placeholder="Narxi"
+          />
+          <button>Tahrirlash</button>
         </form>
       </div>
     </div>

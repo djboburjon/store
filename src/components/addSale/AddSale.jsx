@@ -94,8 +94,13 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
     fetch("https://telzone.pythonanywhere.com/sale/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setChanged(!changed);
-        setAddSale(false);
+        if (result.response == "Success") {
+          setChanged(!changed);
+          setAddSale(false);
+          notifySuccess();
+        } else {
+          notify();
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -103,6 +108,12 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
     toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
       position: "top-right",
       autoClose: 3000,
+    });
+  };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot qo'shildi!", {
+      position: "top-right",
+      autoClose: 2000,
     });
   };
 
@@ -151,7 +162,6 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
 
   return (
     <div className="addSale">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {

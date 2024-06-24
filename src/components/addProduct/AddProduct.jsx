@@ -37,8 +37,13 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
     fetch("https://telzone.pythonanywhere.com/product/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setAddProduct(false);
-        setChanged(!changed);
+        if (result.response == "Success") {
+          setAddProduct(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify();
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -48,9 +53,14 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot qo'shildi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="addProduct">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -65,11 +75,7 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (imei.length != 0 && name.length != 0) {
-              createProduct();
-            } else {
-              notify()
-            }
+            createProduct();
           }}
         >
           <div>
@@ -90,7 +96,7 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
               placeholder="100000"
             />
             <h3>Ustama Foiz</h3>
-            <input 
+            <input
               className={price == 0 ? "" : "percent_inp"}
               name="percentName"
               onChange={(e) => {

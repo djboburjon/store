@@ -40,16 +40,19 @@ function EditClients({
     )
       .then((response) => response.json())
       .then((result) => {
-        if (result.phone_number) {
-          throw new Error("xatolik")
+        if (result.response == "Success") {
+          if (result.phone_number) {
+            throw new Error("xatolik")
+          }
+          setEditClient(false);
+          setChanged(!changed);
+          notifySuccess()
+        } else {
+          notify()
         }
-        // notifySuccess()
-        setEditClient(false);
-        setChanged(!changed);
       })
       .catch((error) => {
         console.error(error);
-        console.log("xatolik");
         toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
           position: "top-right",
           autoClose: 2000,
@@ -72,7 +75,6 @@ function EditClients({
 
   return (
     <div className="editClient">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -87,11 +89,7 @@ function EditClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (editNumber.length == 9) {
-              editData();
-            } else {
-              notify();
-            }
+            editData();
           }}
         >
           <h3>F.I.Sh</h3>

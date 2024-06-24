@@ -33,17 +33,19 @@ function AddClients({
     fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        if (result.phone_number) {
-          throw new Error("xatolik");
+        if (result.response == "Success") {
+          if (result.phone_number) {
+            throw new Error("xatolik");
+          }
+          setAddClient(false);
+          setChanged(!changed);
+          notifySuccess()
+        } else {
+          notify();
         }
-        // notifySuccess()
-        setAddClient(false);
-        setChanged(!changed);
       })
       .catch((error) => {
         console.error(error);
-        console.log("xatolik");
         toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
           position: "top-right",
           autoClose: 2000,
@@ -66,7 +68,6 @@ function AddClients({
 
   return (
     <div className="addClient">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -81,11 +82,7 @@ function AddClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (number.length == 9) {
-              createData();
-            } else {
-              notify();
-            }
+            createData();
           }}
         >
           <h3>F.I.Sh</h3>

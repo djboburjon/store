@@ -26,8 +26,13 @@ function AddExpense({ token, addExpense, setAddExpense, changed, setChanged }) {
     fetch("https://telzone.pythonanywhere.com/expense/create/", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        setAddExpense(false);
-        setChanged(!changed);
+        if (result.response == "Success") {
+          setAddExpense(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify();
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -37,9 +42,14 @@ function AddExpense({ token, addExpense, setAddExpense, changed, setChanged }) {
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot qo'shildi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="addClient">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {

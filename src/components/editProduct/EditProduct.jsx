@@ -52,11 +52,16 @@ function EditProduct({
     )
       .then((response) => response.json())
       .then((result) => {
-        if (result.imei) {
-          throw new Error("xatolik");
+        if (result.response == "Success") {
+          if (result.imei) {
+            throw new Error("xatolik");
+          }
+          setEditProduct(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify();
         }
-        setEditProduct(false);
-        setChanged(!changed);
       })
       .catch((error) => {
         console.error(error);
@@ -72,9 +77,14 @@ function EditProduct({
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot tahrirlandi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="editProduct">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -89,11 +99,7 @@ function EditProduct({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (editImei.length != 0 && editName.length != 0) {
-              editData();
-            } else {
-              notify();
-            }
+            editData();
           }}
         >
           <div>

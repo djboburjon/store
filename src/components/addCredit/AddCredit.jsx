@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AddCredit.css"
+import "./AddCredit.css";
 import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -28,8 +28,13 @@ function AddCredit({ token, setAddCredit, changed, setChanged }) {
     )
       .then((response) => response.json())
       .then((result) => {
-        setAddCredit(false);
-        setChanged(!changed)
+        if (result.response == "Success") {
+          setAddCredit(false);
+          setChanged(!changed);
+          notifySuccess();
+        } else {
+          notify();
+        }
       })
       .catch((error) => console.error(error));
   };
@@ -39,9 +44,14 @@ function AddCredit({ token, setAddCredit, changed, setChanged }) {
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot qo'shildi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="addCredit">
-      <ToastContainer />
       <div
         className="exit_btn"
         onClick={() => {
@@ -56,11 +66,7 @@ function AddCredit({ token, setAddCredit, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (name.length != 0) {
-              createCredit()
-            } else {
-              notify()
-            }
+            createCredit();
           }}
         >
           <div>

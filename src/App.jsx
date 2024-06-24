@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 import {
   BrowserRouter,
   NavLink,
@@ -17,6 +18,7 @@ import Credit from "./components/credit/Credit";
 import Sale from "./components/sale/Sale";
 import Expenses from "./components/expenses/Expenses";
 import User from "./components/user/User";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -54,6 +56,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <ToastContainer />
         <Login
           token={token}
           setToken={setToken}
