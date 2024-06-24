@@ -71,6 +71,7 @@ function Home({ token }) {
             <div className="dateFrom">
               <p>yil-oy-kun</p>
               <input
+                required
                 onChange={handleFromDate}
                 type="text"
                 placeholder="...dan"
@@ -79,6 +80,7 @@ function Home({ token }) {
             <div className="dateTo">
               <p>yil-oy-kun</p>
               <input
+                required
                 onChange={handleToDate}
                 type="text"
                 placeholder="...gacha"
