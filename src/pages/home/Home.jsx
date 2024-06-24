@@ -3,7 +3,7 @@ import "./Home.css";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
-function Home({ token }) {
+function Home({ token, setLoading }) {
   const [dashData, setDashData] = useState([]);
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -23,7 +23,10 @@ function Home({ token }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setDashData(result))
+      .then((result) => {
+        setDashData(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
   const dateData = () => {
@@ -41,7 +44,10 @@ function Home({ token }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setDashData(result))
+      .then((result) => {
+        setDashData(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
 
@@ -65,6 +71,7 @@ function Home({ token }) {
             className="changeDate"
             onSubmit={(e) => {
               e.preventDefault();
+              setLoading(true);
               dateData();
             }}
           >

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import EditExpense from "../editExpenses/EditExpense";
 import AddExpense from "../addExpenses/AddExpense";
 
-function Expenses({ token }) {
+function Expenses({ token, setLoading }) {
   const [expenses, setExpenses] = useState([]);
   const [addExpense, setAddExpense] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -27,7 +27,9 @@ function Expenses({ token }) {
 
     fetch("https://telzone.pythonanywhere.com/expense/all/", requestOptions)
       .then((response) => response.json())
-      .then((result) => setExpenses(result))
+      .then((result) => {
+        setExpenses(result);
+      })
       .catch((error) => console.error(error));
   };
 
@@ -82,6 +84,7 @@ function Expenses({ token }) {
       {addExpense && (
         <AddExpense
           token={token}
+          setLoading={setLoading}
           addExpense={addExpense}
           setAddExpense={setAddExpense}
           changed={changed}
@@ -91,6 +94,7 @@ function Expenses({ token }) {
       {editExpense && (
         <EditExpense
           token={token}
+          setLoading={setLoading}
           changed={changed}
           setChanged={setChanged}
           editExpense={editExpense}

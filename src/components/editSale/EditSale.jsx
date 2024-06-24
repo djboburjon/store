@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 
 function EditSale({
   token,
+  setLoading,
   changed,
   setChanged,
   editSale,

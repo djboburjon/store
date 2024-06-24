@@ -3,7 +3,7 @@ import "./Login.css";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function Login({ login, setLogin, token, setToken }) {
+function Login({ login, setLogin, token, setToken, setLoading }) {
   const [userLogin, setUserLogin] = useState();
   const [userPassword, setUserPassword] = useState();
   const navigate = useNavigate();
@@ -29,13 +29,15 @@ function Login({ login, setLogin, token, setToken }) {
       .then((result) => {
         if (result.access) {
           setToken(result.access);
-          localStorage.setItem("token", result.access)
-          navigate("/")
-          setLogin(false)
-          setUserLogin("")
-          setUserPassword("")
+          localStorage.setItem("token", result.access);
+          navigate("/");
+          setLogin(false);
+          setUserLogin("");
+          setUserPassword("");
+          setLoading(false);
         } else {
-          alert("There is no information")
+          alert("There is no information");
+          setLoading(false);
         }
       })
       .catch((error) => console.error(error));
@@ -50,6 +52,7 @@ function Login({ login, setLogin, token, setToken }) {
             action=""
             onSubmit={(e) => {
               e.preventDefault();
+              setLoading(true);
               getToken();
             }}
           >

@@ -3,7 +3,7 @@ import "./AddCredit.css";
 import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
-function AddCredit({ token, setAddCredit, changed, setChanged }) {
+function AddCredit({ token, setLoading, setAddCredit, changed, setChanged }) {
   const [name, setName] = useState("");
 
   const createCredit = () => {
@@ -31,8 +31,10 @@ function AddCredit({ token, setAddCredit, changed, setChanged }) {
         if (result.response == "Success") {
           setAddCredit(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
@@ -66,6 +68,7 @@ function AddCredit({ token, setAddCredit, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             createCredit();
           }}
         >

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AddSale from "../addSale/AddSale";
 import EditSale from "../editSale/EditSale";
 
-function Sale({ token }) {
+function Sale({ token, setLoading }) {
   const [sales, setSales] = useState([]);
   const [addSale, setAddSale] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -64,6 +64,7 @@ function Sale({ token }) {
       {addSale && (
         <AddSale
           token={token}
+          setLoading={setLoading}
           addSale={addSale}
           setAddSale={setAddSale}
           changed={changed}
@@ -73,6 +74,7 @@ function Sale({ token }) {
       {editSale && (
         <EditSale
           token={token}
+          setLoading={setLoading}
           changed={changed}
           setChanged={setChanged}
           editSale={editSale}

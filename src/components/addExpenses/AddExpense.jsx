@@ -3,7 +3,7 @@ import "./AddExpense.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddExpense({ token, addExpense, setAddExpense, changed, setChanged }) {
+function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, setChanged }) {
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
   const createData = () => {
@@ -29,8 +29,10 @@ function AddExpense({ token, addExpense, setAddExpense, changed, setChanged }) {
         if (result.response == "Success") {
           setAddExpense(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
@@ -64,11 +66,8 @@ function AddExpense({ token, addExpense, setAddExpense, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (type.length != 0 && price.length != 0) {
-              createData();
-            } else {
-              notify();
-            }
+            setLoading(true)
+            createData();
           }}
         >
           <h3>Maxsulot Turi</h3>

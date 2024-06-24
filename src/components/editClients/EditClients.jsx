@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 
 function EditClients({
   token,
+  setLoading,
   editClient,
   setEditClient,
   editName,
@@ -46,8 +47,10 @@ function EditClients({
           }
           setEditClient(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess()
         } else {
+          setLoading(false)
           notify()
         }
       })
@@ -57,6 +60,7 @@ function EditClients({
           position: "top-right",
           autoClose: 2000,
         });
+        setLoading(false)
       });
   };
 
@@ -89,6 +93,7 @@ function EditClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             editData();
           }}
         >

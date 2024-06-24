@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 
 function AddUser({
   token,
+  setLoading,
   addUser,
   setAddUser,
   changed,
@@ -44,6 +45,7 @@ function AddUser({
         if (result.response == "Success") {
           setAddUser(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
 
           // if (role == "worker") {
@@ -51,6 +53,7 @@ function AddUser({
           //   setEditUser(true);
           // }
         } else {
+          setLoading(false)
           notify("Nimadir xato");
         }
       })
@@ -87,11 +90,8 @@ function AddUser({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            if (username.length != 0) {
-              createUser();
-            } else {
-              notify("Ma'lumotlarni to'g'ri kiriting!");
-            }
+            setLoading(true)
+            createUser();
           }}
         >
           <h3>Ism</h3>

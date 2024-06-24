@@ -7,7 +7,7 @@ import AddProduct from "../addProduct/AddProduct";
 import EditProduct from "../editProduct/EditProduct";
 import { Switch } from "@mui/material";
 
-function Products({ token }) {
+function Products({ token, setLoading }) {
   const [products, setProducts] = useState([]);
   const [addProduct, setAddProduct] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -108,6 +108,7 @@ function Products({ token }) {
       {addProduct && (
         <AddProduct
           token={token}
+          setLoading={setLoading}
           addProduct={addProduct}
           setAddProduct={setAddProduct}
           changed={changed}
@@ -117,6 +118,7 @@ function Products({ token }) {
       {editProduct && (
         <EditProduct
           token={token}
+          setLoading={setLoading}
           changed={changed}
           setChanged={setChanged}
           editProduct={editProduct}

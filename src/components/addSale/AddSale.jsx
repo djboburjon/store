@@ -4,7 +4,14 @@ import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
+function AddSale({
+  token,
+  setLoading,
+  addSale,
+  setAddSale,
+  changed,
+  setChanged,
+}) {
   const [prodName, setProdName] = useState([]);
   const [client, setClient] = useState("");
   const [creditBaze, setCreditBaze] = useState([]);
@@ -31,7 +38,10 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setProducts(result))
+      .then((result) => {
+        setProducts(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
 
@@ -49,6 +59,7 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -65,7 +76,10 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
 
     fetch("https://telzone.pythonanywhere.com/credit_base/all/", requestOptions)
       .then((response) => response.json())
-      .then((result) => setCredits(result))
+      .then((result) => {
+        setCredits(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
   const createSale = () => {
@@ -97,8 +111,10 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
         if (result.response == "Success") {
           setChanged(!changed);
           setAddSale(false);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
@@ -176,6 +192,7 @@ function AddSale({ token, addSale, setAddSale, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             createSale();
           }}
         >

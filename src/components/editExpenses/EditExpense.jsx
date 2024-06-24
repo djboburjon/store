@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 
 function EditExpense({
   token,
+  setLoading,
   changed,
   setChanged,
   setEditExpense,
@@ -40,8 +41,10 @@ function EditExpense({
         if (result.response == "Success") {
           setEditExpense(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
@@ -75,6 +78,7 @@ function EditExpense({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             editData();
           }}
         >

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 function EditCredit({
   token,
+  setLoading,
   changed,
   setChanged,
   editCredit,
@@ -38,8 +39,10 @@ function EditCredit({
         if (result.response == "Success") {
           setEditCredit(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
@@ -74,6 +77,7 @@ function EditCredit({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             editData();
           }}
         >

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 function EditProduct({
   token,
+  setLoading,
   changed,
   setChanged,
   editProduct,
@@ -58,13 +59,16 @@ function EditProduct({
           }
           setEditProduct(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
       .catch((error) => {
         console.error(error);
+        setLoading(false)
         toast.error("Bu imei orqali avval ro'yxatdan o'tilgan!", {
           position: "top-right",
           autoClose: 2000,
@@ -99,6 +103,7 @@ function EditProduct({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             editData();
           }}
         >

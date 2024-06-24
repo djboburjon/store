@@ -7,7 +7,7 @@ import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import EditClients from "../editClients/EditClients";
 import AddClients from "../addClients/AddClients";
-function Clients({ token }) {
+function Clients({ token, setLoading }) {
   const [editName, setEditName] = useState("");
   const [editNumber, setEditNumber] = useState("");
   const [newClient, setNewClient] = useState([]);
@@ -120,6 +120,7 @@ function Clients({ token }) {
       {addClient && (
         <AddClients
           token={token}
+          setLoading={setLoading}
           setNewClient={setNewClient}
           addClient={addClient}
           setAddClient={setAddClient}
@@ -130,6 +131,7 @@ function Clients({ token }) {
       {editClient && (
         <EditClients
           token={token}
+          setLoading={setLoading}
           editClient={editClient}
           setEditClient={setEditClient}
           editName={editName}

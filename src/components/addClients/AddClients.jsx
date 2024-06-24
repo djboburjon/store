@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 
 function AddClients({
   token,
+  setLoading,
   setNewClient,
   setAddClient,
   changed,
@@ -40,8 +41,10 @@ function AddClients({
           setAddClient(false);
           setChanged(!changed);
           notifySuccess()
+          setLoading(false)
         } else {
           notify();
+          setLoading(false)
         }
       })
       .catch((error) => {
@@ -50,6 +53,7 @@ function AddClients({
           position: "top-right",
           autoClose: 2000,
         });
+        setLoading(false)
       });
   };
 
@@ -82,6 +86,7 @@ function AddClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             createData();
           }}
         >

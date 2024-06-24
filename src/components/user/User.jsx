@@ -7,7 +7,7 @@ import { TiPlus } from "react-icons/ti";
 import Switch from "@mui/material/Switch";
 import AddUser from "../addUser/AddUser";
 
-function User({ token }) {
+function User({ token, setLoading }) {
   const [user, setUser] = useState([]);
   const [addUser, setAddUser] = useState(false);
   const [editUser, setEditUser] = useState(false);
@@ -132,6 +132,7 @@ function User({ token }) {
       {editUser && (
         <EditUser
           token={token}
+          setLoading={setLoading}
           user={user}
           setUser={setUser}
           editUser={editUser}
@@ -193,6 +194,7 @@ function User({ token }) {
       {addUser && (
         <AddUser
           token={token}
+          setLoading={setLoading}
           addUser={addUser}
           setAddUser={setAddUser}
           changed={changed}

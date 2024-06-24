@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 
 function EditUser({
   token,
+  setLoading,
   user,
   setUser,
   editUser,
@@ -104,8 +105,10 @@ function EditUser({
           setEditUserpassword("");
           setEditUser(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify()
         }
       })
@@ -184,6 +187,7 @@ function EditUser({
             action=""
             onSubmit={(e) => {
               e.preventDefault();
+              setLoading(true)
               if (editUsername.length != 0) {
                 editData();
               } else {
@@ -245,6 +249,7 @@ function EditUser({
             action=""
             onSubmit={(e) => {
               e.preventDefault();
+              setLoading(true)
               if (editUsername.length != 0) {
                 editData();
                 editPermission();

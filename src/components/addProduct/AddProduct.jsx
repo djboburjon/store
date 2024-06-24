@@ -3,7 +3,7 @@ import "./AddProduct.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddProduct({ token, setAddProduct, changed, setChanged }) {
+function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
   const [name, setName] = useState("");
   const [prchPrice, setPrchPrice] = useState("");
   const [percent, setPercent] = useState("0");
@@ -40,8 +40,10 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
         if (result.response == "Success") {
           setAddProduct(false);
           setChanged(!changed);
+          setLoading(false)
           notifySuccess();
         } else {
+          setLoading(false)
           notify();
         }
       })
@@ -75,6 +77,7 @@ function AddProduct({ token, setAddProduct, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            setLoading(true)
             createProduct();
           }}
         >

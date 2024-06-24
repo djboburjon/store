@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AddCredit from "../addCredit/AddCredit";
 import EditCredit from "../editCredit/EditCredit";
 
-function Credit({ token }) {
+function Credit({ token, setLoading }) {
   const [credits, setCredits] = useState([]);
   const [addCredit, setAddCredit] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -76,6 +76,7 @@ function Credit({ token }) {
       {addCredit && (
         <AddCredit
           token={token}
+          setLoading={setLoading}
           addCredit={addCredit}
           setAddCredit={setAddCredit}
           changed={changed}
@@ -85,6 +86,7 @@ function Credit({ token }) {
       {editCredit && (
         <EditCredit
           token={token}
+          setLoading={setLoading}
           changed={changed}
           setChanged={setChanged}
           editCredit={editCredit}

@@ -19,8 +19,10 @@ import Sale from "./components/sale/Sale";
 import Expenses from "./components/expenses/Expenses";
 import User from "./components/user/User";
 import { ToastContainer } from "react-toastify";
+import Loader from "./components/loader/Loader";
 
 function App() {
+  const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
@@ -56,16 +58,18 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <ToastContainer />
+        <ToastContainer />
         <Login
           token={token}
           setToken={setToken}
           login={login}
           setLogin={setLogin}
+          setLoading={setLoading}
         />
         {token != null && (
           <Navbar user={user} setLogin={setLogin} setToken={setToken} />
         )}
+        {loading && <Loader />}
 
         <div className="container">
           <div className="main_left">
@@ -101,21 +105,37 @@ function App() {
               <Route
                 path="/"
                 element={
-                  token ? <Home token={token} /> : <Navigate to="/login" />
+                  token ? (
+                    <Home token={token} setLoading={setLoading} />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
                 }
               />
-              <Route path="/client/:type" element={<Clients token={token} />} />
+              <Route
+                path="/client/:type"
+                element={<Clients token={token} setLoading={setLoading} />}
+              />
               <Route
                 path="/product/:type"
-                element={<Products token={token} />}
+                element={<Products token={token} setLoading={setLoading} />}
               />
-              <Route path="/credit/:type" element={<Credit token={token} />} />
-              <Route path="/sale/:type" element={<Sale token={token} />} />
+              <Route
+                path="/credit/:type"
+                element={<Credit token={token} setLoading={setLoading} />}
+              />
+              <Route
+                path="/sale/:type"
+                element={<Sale token={token} setLoading={setLoading} />}
+              />
               <Route
                 path="/expense/:type"
-                element={<Expenses token={token} />}
+                element={<Expenses token={token} setLoading={setLoading} />}
               />
-              <Route path="/user/:type" element={<User token={token} />} />
+              <Route
+                path="/user/:type"
+                element={<User token={token} setLoading={setLoading} />}
+              />
             </Routes>
           </div>
         </div>
