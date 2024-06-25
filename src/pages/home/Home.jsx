@@ -101,23 +101,31 @@ function Home({ token, setLoading }) {
           <div className="saleAndExpense">
             <div className="sale_box">
               <p>Sotuvlar</p>
-              <div className="sales">{dashData.sales}</div>
+              <div className="sales">
+                {Number.isInteger(dashData?.sales)
+                  ? dashData?.sales
+                  : dashData?.sales?.toFixed(2)}
+              </div>
             </div>
             <div className="expense_box">
               <p>Chiqimlar</p>
-              <div className="expenses">{dashData.expenses}</div>
+              <div className="expenses">
+                {Number.isInteger(dashData?.expenses)
+                  ? dashData?.expenses
+                  : dashData?.expenses?.toFixed(2)}
+              </div>
             </div>
           </div>
           <div className="warehouse">
             <div className="purchase_box">
               <p>Qoldiq Narx</p>
               <div className="purchasePrice">
-                {dashData.warehouse?.purchase_price}
+                {Number.isInteger(dashData.warehouse?.purchase_price) ? dashData.warehouse?.purchase_price : dashData.warehouse?.purchase_price.toFixed(2)}
               </div>
             </div>
             <div className="price_box">
               <p>Qoldiq Sotuv Narx</p>
-              <div className="price">{dashData.warehouse?.price}</div>
+              <div className="price">{Number.isInteger(dashData.warehouse?.price) ? dashData.warehouse?.price : dashData.warehouse?.price.toFixed(2)}</div>
             </div>
           </div>
         </div>
