@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "./EditSale.css";
 import Select from "react-select";
@@ -30,23 +31,29 @@ function EditSale({
   const [selectedClient, setSelectedClient] = useState([]);
   const [creditBaze, setCreditBaze] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const [editedNames, setEditedname] = useState(null);
+
   var oldNames;
   if (editProductName) {
     oldNames = editProductName?.map((item) => {
-      return { label: item.name };
+      return { label: item.name, value: item.name, price: item.price, id:item.id };
     });
   } else {
     oldNames = [];
   }
-  var oldClient = [
-    {
-      label: editClientName?.FIO,
-    },
-  ];
+
+
+
   var oldCredit;
   if (editCreditName) {
     oldCredit = editCreditName?.map((item) => {
-      return { label: item.name };
+      return {
+        label: item.name,
+        value: item.name,
+        price: item.price,
+        id: item.id,
+      };
     });
   } else {
     oldCredit = [];
@@ -134,24 +141,35 @@ function EditSale({
   const clientOptions = transformDataToOptions1(newClient);
   const creditOptions = transformDataToOptions(credits);
 
-  const editSaleData = () => {
-    const myHeaders = new Headers();
+  
+
+  useEffect(() => {
+    getProduct();
+    getClient();
+    getCredit();
+  }, [token]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
       "Authorization",
       `Bearer ${token}`
     );
 
+
     const raw = JSON.stringify({
-      product: editProductName?.map((item) => {
-        return item.id;
-      }),
-      client: selectedClient.id,
-      sold_price: totalPrice,
-      credit_base: creditBaze?.map((item) => {
-        return item.id;
-      }),
-      info: info,
+      product: editProductName.map((item)=>{
+      return item.id
+    }),
+      client: editClientName.id,
+      sold_price: editSoldPrice,
+      credit_base: editCreditName.map((item)=>{
+      return item.id
+    }),
+      info: editInfo,
     });
 
     const requestOptions = {
@@ -162,120 +180,136 @@ function EditSale({
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/sale/update/?pk=2",
+      `https://telzone.pythonanywhere.com/sale/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result);
+        if (result.response == "Success") {
+          notifySuccess();
+          setChanged(!changed);
+          setEditSale(false);
+        } else {
+          notify();
+        }
+        
+
+      })
       .catch((error) => console.error(error));
   };
+
   const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
+    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
       position: "top-right",
       autoClose: 3000,
     });
   };
+  const notifySuccess = () => {
+    toast.success("Ma'lumot tahrirlandi!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
 
-  useEffect(() => {
-    getProduct();
-    getClient();
-    getCredit();
-  }, [token]);
 
-  // useEffect(() => {
-  //   var summ = 0;
-  //   selected.forEach((item) => {
-  //     summ += item.price;
-  //     setTotalPrice(summ);
-  //   });
-  // }, [selected]);
   return (
-    <div className="editSale">
-      <ToastContainer />
-      <div
-        className="exit_btn"
-        onClick={() => {
-          setEditSale(false);
-        }}
-      >
-        <FaTimes />
-      </div>
-      <div className="container">
-        <form
-          className="form"
-          action=""
-          onSubmit={(e) => {
-            e.preventDefault();
-            editSaleData();
-          }}
-        >
-          <div>
-            <h3>Mahsulot Nomi</h3>
-            <Select
-              onChange={(e) => {
-                setTotalPrice(0);
-                // setselected(e);
-                // setEditProductName(e)
-              }}
-              isMulti
-              name="products"
-              options={productOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              value={oldNames}
-            />
-            <h3>Mijoz</h3>
-            <Select
-              onChange={(e) => {
-                setSelectedClient(e[e.length - 1]);
-              }}
-              isMulti
-              name="clients"
-              options={clientOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              value={oldClient}
-            />
-            <h3>Nasiya Baza</h3>
-            <Select
-              onChange={(e) => {
-                setCreditBaze(e);
-              }}
-              isMulti
-              name="credits"
-              options={creditOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              value={oldCredit}
-            />
+    <>
+      {editProductName ? (
+        <div className="editSale">
+          <div
+            className="exit_btn"
+            onClick={() => {
+              setEditSale(false);
+            }}
+          >
+            <FaTimes />
           </div>
-          <div>
-            <h3>Narxi</h3>
-            <input
-              value={editSoldPrice}
-              name="priceName"
-              onChange={(e) => {
-                setEditSoldPrice(e.target.value);
-              }}
-              type="number"
-              placeholder="Mahsulot Narxi"
-            />
-            <h3>Izoh</h3>
-            <textarea
-              value={editInfo}
-              className="addSaleInfo"
-              rows={6}
-              onChange={(e) => {
-                setEditInfo(e.target.value);
-              }}
-              type="textarea"
-              placeholder="Izohingizni kiriting..."
-            />
-            <button>Tahrirlash</button>
+          <div className="container">
+            <form className="form" action="" onSubmit={handleSubmit}>
+              <div>
+                <h3>Mahsulot Nomi</h3>
+                <Select
+                  onChange={(e) => {
+                    setTotalPrice(0);
+                    setEditProductName(e);
+
+var price = 0;
+                    e.forEach((item) => {
+                      price += item.price;
+                    });
+                    setEditSoldPrice(price);
+                  }}
+                  isMulti
+                  name="products"
+                  options={productOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  defaultValue={oldNames}
+                />
+                <h3>Mijoz</h3>
+                <Select
+                  onChange={(e) => {
+                    setEditClientName({
+                      FIO: e[e.length - 1].value,
+                    });
+                  }}
+                  isMulti
+                  name="clients"
+                  options={clientOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  value={[
+                    {
+                      label: editClientName?.FIO,
+                    },
+                  ]}
+                />
+                <h3>Nasiya Baza</h3>
+                <Select
+                  onChange={(e) => {
+                    setCreditBaze(e);
+                    setEditCreditName(e);
+                  }}
+                  isMulti
+                  name="credits"
+                  options={creditOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  defaultValue={oldCredit}
+                />
+              </div>
+              <div>
+                <h3>Narxi</h3>
+                <input
+                  value={editSoldPrice}
+                  name="priceName"
+                  onChange={(e) => {
+                    setEditSoldPrice(e.target.value);
+                  }}
+                  type="number"
+                  placeholder="Mahsulot Narxi"
+                />
+                <h3>Izoh</h3>
+                <textarea
+                  value={editInfo}
+                  className="addSaleInfo"
+                  rows={6}
+                  onChange={(e) => {
+                    setEditInfo(e.target.value);
+                  }}
+                  type="textarea"
+                  placeholder="Izohingizni kiriting..."
+                />
+                <button>Tahrirlash</button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      ) : (
+        <h1>Loading...</h1>
+      )}
+    </>
   );
 }
 

@@ -33,6 +33,7 @@ function Sale({ token, setLoading }) {
       .then((result) => setSales(result))
       .catch((error) => console.error(error));
   };
+  console.log(sales);
 
   useEffect(() => {
     getSale();

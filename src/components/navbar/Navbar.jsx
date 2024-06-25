@@ -14,7 +14,7 @@ function Navbar({ user, setLogin, setToken, setCurUser }) {
         </h1>
         <div className="nav_left">
           <ul>
-            <li>Welcome, {user ? user.username : "to site"}</li>
+            <li>{user ? user.username : "to site"}</li>
             {!user ? (
               <div
                 className="login_icon"
@@ -42,9 +42,6 @@ function Navbar({ user, setLogin, setToken, setCurUser }) {
                 <FaUserCircle />
               </div>
             )}
-            <li>
-              <CgDarkMode />
-            </li>
           </ul>
         </div>
       </div>
