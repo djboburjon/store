@@ -36,11 +36,15 @@ function Login({ login, setLogin, token, setToken, setLoading }) {
           setUserPassword("");
           setLoading(false);
         } else {
-          alert("There is no information");
+          alert("Ma'lumot topilmadi");
           setLoading(false);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+        alert("Nimadir xato");
+      });
   };
 
   return (

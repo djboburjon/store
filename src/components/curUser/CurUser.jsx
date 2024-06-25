@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./CurUser.css";
 import { FaTimes } from "react-icons/fa";
+import EditCurUser from "../editCurUser/EditCurUser";
 
 function CurUser({ token, setLoading, curUser, setCurUser }) {
   const [curData, setCurData] = useState([]);
-  const [addCurUser, setAddCurUser] = useState(false);
   const [editCurUser, setEditCurUser] = useState(false);
   const [changed, setChanged] = useState(false);
+  const [editCurUserFirstname, setEditCurUserFirstname] = useState("");
+  const [editCurUserLastname, setEditCurUserLastname] = useState("");
+  const [editCurUsername, setEditCurUsername] = useState("");
+  const [editCurUserRole, setEditCurUserRole] = useState("");
+  const [editCurUserPassword, setEditCurUserPassword] = useState("");
 
   const getData = () => {
     const myHeaders = new Headers();
@@ -20,18 +25,41 @@ function CurUser({ token, setLoading, curUser, setCurUser }) {
 
     fetch("https://telzone.pythonanywhere.com/user/current/", requestOptions)
       .then((response) => response.json())
-      .then((result) => setCurData(result))
+      .then((result) => {
+        setCurData(result);
+        setEditCurUserFirstname(result.first_name);
+        setEditCurUserLastname(result.last_name);
+        setEditCurUsername(result.username);
+        setEditCurUserRole(result.role);
+      })
       .catch((error) => console.error(error));
   };
-
-  console.log(curUser);
-  console.log(curData);
 
   useEffect(() => {
     getData();
   }, [token, changed]);
   return (
     <div className="getCurrentUser">
+      {editCurUser && (
+        <EditCurUser
+          token={token}
+          setLoading={setLoading}
+          editCurUser={editCurUser}
+          setEditCurUser={setEditCurUser}
+          editCurUserFirstname={editCurUserFirstname}
+          setEditCurUserFirstname={setEditCurUserFirstname}
+          editCurUserLastname={editCurUserLastname}
+          setEditCurUserLastname={setEditCurUserLastname}
+          editCurUsername={editCurUsername}
+          setEditCurUsername={setEditCurUsername}
+          editCurUserPassword={editCurUserPassword}
+          setEditCurUserPassword={setEditCurUserPassword}
+          editCurUserRole={editCurUserRole}
+          setEditCurUserRole={setEditCurUserRole}
+          setCurUser={setCurUser}
+          curData={curData}
+        />
+      )}
       <div
         className="exit_btn"
         onClick={() => {
@@ -47,7 +75,26 @@ function CurUser({ token, setLoading, curUser, setCurUser }) {
             <p>{curData.first_name}</p>
             <h3>Familiya</h3>
             <p>{curData.last_name}</p>
-            <button>Tahrirlash</button>
+            <h3>Username</h3>
+            <p>{curData.username}</p>
+            <h3>Rol</h3>
+            <p>{curData.role}</p>
+            <div className="form_btn">
+              <button
+                onClick={() => {
+                  setCurUser(false);
+                }}
+              >
+                Ok
+              </button>
+              <button
+                onClick={() => {
+                  setEditCurUser(true);
+                }}
+              >
+                Tahrirlash
+              </button>
+            </div>
           </div>
         )}
       </div>

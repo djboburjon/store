@@ -27,7 +27,7 @@ function App() {
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
-  const [curUser, setCurUser] = useState(false)
+  const [curUser, setCurUser] = useState(false);
   const getUser = () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -70,9 +70,15 @@ function App() {
           setLoading={setLoading}
         />
         {token != null && (
-          <Navbar user={user} setLogin={setLogin} setToken={setToken} setCurUser={setCurUser} />
+          <Navbar
+            user={user}
+            setLogin={setLogin}
+            setToken={setToken}
+            setCurUser={setCurUser}
+          />
         )}
         {loading && <Loader />}
+        {curUser && <CurUser token={token} setLoading={setLoading} curUser={curUser} setCurUser={setCurUser} />}
 
         <div className="container">
           <div className="main_left">
