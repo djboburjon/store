@@ -94,7 +94,7 @@ function App() {
             </NavLink>
 
             <NavLink to={"/sale/all"}>
-              <div className="sales box_link">Chegirmalar</div>
+              <div className="sales box_link">Sotuvlar</div>
             </NavLink>
 
             <NavLink to={"/expense/all"}>
