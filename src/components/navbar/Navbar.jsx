@@ -10,7 +10,7 @@ function Navbar({ user, setLogin, setToken, setCurUser }) {
     <nav>
       <div className="container">
         <h1>
-          <Link to={"/"}>Store</Link>
+          <Link to={"/"}>TelZone</Link>
         </h1>
         <div className="nav_left">
           <ul>
