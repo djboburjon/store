@@ -150,7 +150,9 @@ function Expenses({ token, setLoading }) {
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.type}</td>
-                <td>{item.price}</td>
+                <td>
+                  {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                </td>
                 <td>{item.date}</td>
                 <td className="editClient_btn">
                   <FaEdit
@@ -166,7 +168,7 @@ function Expenses({ token, setLoading }) {
           })}
         </tbody>
       </table>
-      <div className="client_count">{expenses?.count} ta mijoz</div>
+      <div className="client_count">{expenses?.count} ta xarajat</div>
 
       <div className="paginations">
         <div className="prev">

@@ -3,9 +3,18 @@ import "./AddExpense.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, setChanged }) {
+function AddExpense({
+  token,
+  setLoading,
+  addExpense,
+  setAddExpense,
+  changed,
+  setChanged,
+}) {
   const [type, setType] = useState("");
-  const [price, setPrice] = useState("");
+  const [displayValue, setDisplayValue] = useState("");
+  const [rawValue, setRawValue] = useState("");
+
   const createData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -13,7 +22,7 @@ function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, set
 
     const raw = JSON.stringify({
       type: type,
-      price: price,
+      price: rawValue,
     });
 
     const requestOptions = {
@@ -24,22 +33,29 @@ function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, set
     };
 
     fetch("https://telzone.pythonanywhere.com/expense/create/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setAddExpense(false);
           setChanged(!changed);
-          setLoading(false)
+          setLoading(false);
           notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify();
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        console.error(error);
+      });
   };
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -49,6 +65,14 @@ function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, set
       position: "top-right",
       autoClose: 2000,
     });
+  };
+
+  const handleChange = (e) => {
+    let inputValue = e.target.value.replace(/\s/g, ""); // Remove existing spaces
+    setRawValue(inputValue);
+
+    let formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // Add space before every three digits
+    setDisplayValue(formattedValue);
   };
   return (
     <div className="addClient">
@@ -66,7 +90,7 @@ function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, set
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             createData();
           }}
         >
@@ -80,10 +104,9 @@ function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, set
           />
           <h3>Narxi</h3>
           <input
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
-            type="number"
+            value={displayValue}
+            onChange={handleChange}
+            type="text"
             placeholder="Maxsulot Narxi"
           />
           <button>Xarajat Qo'shish</button>
