@@ -86,7 +86,7 @@ function AddExpense({ token, setLoading, addExpense, setAddExpense, changed, set
             type="number"
             placeholder="Maxsulot Narxi"
           />
-          <button>Maxsulot Qo'shish</button>
+          <button>Xarajat Qo'shish</button>
         </form>
       </div>
     </div>

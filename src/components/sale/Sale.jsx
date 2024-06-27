@@ -101,7 +101,7 @@ function Sale({ token, setLoading }) {
             setAddSale(true);
           }}
         >
-          CHEGIRMA QO'SHISH
+          SOTUV QO'SHISH
           <TiPlus />
         </button>
       </div>

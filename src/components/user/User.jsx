@@ -211,7 +211,7 @@ function User({ token, setLoading }) {
             setAddUser(true);
           }}
         >
-          USER QO'SHISH
+          FOYDALANUVCHI QO'SHISH
           <TiPlus />
         </button>
       </div>

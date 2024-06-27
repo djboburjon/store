@@ -152,7 +152,7 @@ function Clients({ token, setLoading }) {
             setAddClient(true);
           }}
         >
-          MIJOZ QO'SH
+          MIJOZ QO'SHISH
           <TiPlus />
         </button>
       </div>
