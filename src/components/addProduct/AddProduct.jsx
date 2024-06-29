@@ -35,22 +35,30 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
     };
 
     fetch("https://telzone.pythonanywhere.com/product/create/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setAddProduct(false);
           setChanged(!changed);
-          setLoading(false)
+          setLoading(false);
           notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify();
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.error(error);
+      });
   };
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -77,7 +85,7 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             createProduct();
           }}
         >
@@ -141,6 +149,7 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
               onChange={(e) => {
                 setImei(e.target.value);
               }}
+              required
               type="number"
               placeholder="123456789"
             />

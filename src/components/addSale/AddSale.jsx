@@ -97,7 +97,6 @@ function AddSale({
       }),
       info: info,
     });
-
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -106,22 +105,30 @@ function AddSale({
     };
 
     fetch("https://telzone.pythonanywhere.com/sale/create/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
-          setChanged(!changed);
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setAddSale(false);
-          setLoading(false)
+          setChanged(!changed);
+          setLoading(false);
           notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify();
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.error(error);
+      });
   };
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -192,7 +199,7 @@ function AddSale({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             createSale();
           }}
         >

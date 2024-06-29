@@ -124,7 +124,10 @@ function User({ token, setLoading }) {
           setExpenseView(result.permission_fields.expense_can_view);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        alert("Nimadir xato");
+      });
   };
 
   return (

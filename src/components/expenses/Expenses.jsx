@@ -77,7 +77,10 @@ function Expenses({ token, setLoading }) {
         setEditType(result.type);
         setEditPrice(result.price);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        alert("Nimadir xato");
+      });
   };
   return (
     <>

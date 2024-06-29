@@ -32,33 +32,37 @@ function AddClients({
     };
 
     fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
-          if (result.phone_number) {
-            throw new Error("xatolik");
-          }
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setAddClient(false);
           setChanged(!changed);
-          notifySuccess()
-          setLoading(false)
+          notifySuccess();
+          setLoading(false);
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
+        } else if (number.length != 9) {
+          setLoading(false);
+          notify("Nomerni to'g'ri kiriting");
+        } else if (response.status === 400) {
+          setLoading(false);
+          notify("Bu nomer orqali avval ro'yxatdan o'tilgan");
         } else {
-          notify();
-          setLoading(false)
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
+      .then((result) => {})
       .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
         console.error(error);
-        toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-        setLoading(false)
       });
   };
 
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -86,7 +90,7 @@ function AddClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             createData();
           }}
         >
@@ -95,6 +99,7 @@ function AddClients({
             onChange={(e) => {
               setName(e.target.value);
             }}
+            required
             type="text"
             placeholder="F.I.Sh kiriting"
           />
@@ -103,6 +108,7 @@ function AddClients({
             onChange={(e) => {
               setNumber(e.target.value);
             }}
+            required
             type="number"
             placeholder="91 123 45 67"
           />

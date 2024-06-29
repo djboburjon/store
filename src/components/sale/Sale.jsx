@@ -31,9 +31,11 @@ function Sale({ token, setLoading }) {
     fetch("https://telzone.pythonanywhere.com/sale/all/", requestOptions)
       .then((response) => response.json())
       .then((result) => setSales(result))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        alert("Nimadir xato");
+      });
   };
-  console.log(sales);
 
   useEffect(() => {
     getSale();
@@ -58,7 +60,10 @@ function Sale({ token, setLoading }) {
         setEditSoldPrice(result.sold_price);
         setEditInfo(result.info);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        alert("Nimadir xato");
+      });
   };
   return (
     <>
@@ -129,7 +134,7 @@ function Sale({ token, setLoading }) {
                 <td>{index + 1}</td>
                 <td>
                   {item.product.map((meti, index) => {
-                    return <span key={index} >{meti.name}, </span>;
+                    return <span key={index}>{meti.name}, </span>;
                   })}
                 </td>
                 <td>
@@ -137,7 +142,7 @@ function Sale({ token, setLoading }) {
                 </td>
                 <td>
                   {item.credit_base.map((meti, index) => {
-                    return <span key={index} >{meti.name}, </span>;
+                    return <span key={index}>{meti.name}, </span>;
                   })}
                 </td>
                 <td>{item.sold_price}</td>

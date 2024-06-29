@@ -51,32 +51,32 @@ function EditProduct({
       `https://telzone.pythonanywhere.com/product/update/?pk=${itemId}`,
       requestOptions
     )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
-          if (result.imei) {
-            throw new Error("xatolik");
-          }
+      .then((response) => {
+        response.json()
+        if(response.status === 200) {
           setEditProduct(false);
           setChanged(!changed);
           setLoading(false)
           notifySuccess();
+
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify();
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
+      .then((result) => {
+      })
       .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato")
         console.error(error);
-        setLoading(false)
-        toast.error("Bu imei orqali avval ro'yxatdan o'tilgan!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
       });
   };
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -177,6 +177,7 @@ function EditProduct({
               onChange={(e) => {
                 setEditImei(e.target.value);
               }}
+              required
               type="number"
               placeholder="123456789"
             />

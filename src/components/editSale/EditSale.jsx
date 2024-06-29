@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import "./EditSale.css";
 import Select from "react-select";
@@ -37,13 +36,16 @@ function EditSale({
   var oldNames;
   if (editProductName) {
     oldNames = editProductName?.map((item) => {
-      return { label: item.name, value: item.name, price: item.price, id:item.id };
+      return {
+        label: item.name,
+        value: item.name,
+        price: item.price,
+        id: item.id,
+      };
     });
   } else {
     oldNames = [];
   }
-
-
 
   var oldCredit;
   if (editCreditName) {
@@ -141,8 +143,6 @@ function EditSale({
   const clientOptions = transformDataToOptions1(newClient);
   const creditOptions = transformDataToOptions(credits);
 
-  
-
   useEffect(() => {
     getProduct();
     getClient();
@@ -152,23 +152,19 @@ function EditSale({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-const myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${token}`
-    );
-
+    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
-      product: editProductName.map((item)=>{
-      return item.id
-    }),
+      product: editProductName.map((item) => {
+        return item.id;
+      }),
       client: editClientName.id,
       sold_price: editSoldPrice,
-      credit_base: editCreditName.map((item)=>{
-      return item.id
-    }),
+      credit_base: editCreditName.map((item) => {
+        return item.id;
+      }),
       info: editInfo,
     });
 
@@ -183,24 +179,31 @@ const myHeaders = new Headers();
       `https://telzone.pythonanywhere.com/sale/update/?pk=${itemId}`,
       requestOptions
     )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        if (result.response == "Success") {
-          notifySuccess();
-          setChanged(!changed);
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setEditSale(false);
+          setChanged(!changed);
+          setLoading(false);
+          notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          notify();
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
-        
-
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.error(error);
+      });
   };
 
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -211,7 +214,6 @@ const myHeaders = new Headers();
       autoClose: 2000,
     });
   };
-
 
   return (
     <>
@@ -234,7 +236,7 @@ const myHeaders = new Headers();
                     setTotalPrice(0);
                     setEditProductName(e);
 
-var price = 0;
+                    var price = 0;
                     e.forEach((item) => {
                       price += item.price;
                     });

@@ -51,7 +51,10 @@ function App() {
           setUser(null);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        alert("Nimadir xato");
+      });
   };
 
   useEffect(() => {
@@ -78,7 +81,14 @@ function App() {
           />
         )}
         {loading && <Loader />}
-        {curUser && <CurUser token={token} setLoading={setLoading} curUser={curUser} setCurUser={setCurUser} />}
+        {curUser && (
+          <CurUser
+            token={token}
+            setLoading={setLoading}
+            curUser={curUser}
+            setCurUser={setCurUser}
+          />
+        )}
 
         <div className="container">
           <div className="main_left">

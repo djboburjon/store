@@ -54,6 +54,7 @@ function EditExpense({
       .then((result) => {})
       .catch((error) => {
         setLoading(false);
+        notify("Nimadir xato")
         console.error(error);
       });
   };
@@ -95,6 +96,7 @@ function EditExpense({
             onChange={(e) => {
               setEditType(e.target.value);
             }}
+            required
             type="text"
             placeholder="Xarajat Turi"
           />
@@ -104,6 +106,7 @@ function EditExpense({
             onChange={(e) => {
               setEditPrice(e.target.value);
             }}
+            required
             type="number"
             placeholder="Narxi"
           />

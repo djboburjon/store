@@ -26,22 +26,30 @@ function AddCredit({ token, setLoading, setAddCredit, changed, setChanged }) {
       "https://telzone.pythonanywhere.com/credit_base/create/",
       requestOptions
     )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setAddCredit(false);
           setChanged(!changed);
-          setLoading(false)
+          setLoading(false);
           notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify();
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.error(error);
+      });
   };
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri kiriting!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -68,7 +76,7 @@ function AddCredit({ token, setLoading, setAddCredit, changed, setChanged }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             createCredit();
           }}
         >
@@ -78,6 +86,7 @@ function AddCredit({ token, setLoading, setAddCredit, changed, setChanged }) {
               onChange={(e) => {
                 setName(e.target.value);
               }}
+              required
               type="text"
               placeholder="Credit Nomi"
             />

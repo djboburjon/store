@@ -40,24 +40,27 @@ function AddUser({
     };
 
     fetch("https://telzone.pythonanywhere.com/user/create/", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setAddUser(false);
           setChanged(!changed);
-          setLoading(false)
+          setLoading(false);
           notifySuccess();
-
-          // if (role == "worker") {
-          //   getItemData(15);
-          //   setEditUser(true);
-          // }
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify("Nimadir xato");
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
-      .catch((error) => console.log(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.log(error);
+      });
   };
 
   const notify = (text) => {
@@ -90,7 +93,7 @@ function AddUser({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             createUser();
           }}
         >
@@ -124,6 +127,7 @@ function AddUser({
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            required
             type="text"
             placeholder="Username kiriting"
           />
@@ -132,6 +136,7 @@ function AddUser({
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            required
             type="text"
             placeholder="Parol kiriting"
           />

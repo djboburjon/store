@@ -39,33 +39,37 @@ function EditClients({
       `https://telzone.pythonanywhere.com/client/update/?pk=${itemId}`,
       requestOptions
     )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
-          if (result.phone_number) {
-            throw new Error("xatolik")
-          }
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           setEditClient(false);
           setChanged(!changed);
+          setLoading(false);
+          notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
+        } else if(editNumber.length != 9) {
           setLoading(false)
-          notifySuccess()
+          notify("Nomerni to'g'ri kiriting")
+        } else if (response.status === 400) {
+          setLoading(false);
+          notify("Bu nomer orqali avval ro'yxatdan o'tilgan");
         } else {
-          setLoading(false)
-          notify()
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
+      .then((result) => {})
       .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
         console.error(error);
-        toast.error("Bu nomer orqali avval ro'yxatdan o'tilgan!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-        setLoading(false)
       });
   };
 
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -93,7 +97,7 @@ function EditClients({
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true)
+            setLoading(true);
             editData();
           }}
         >
@@ -103,6 +107,7 @@ function EditClients({
             onChange={(e) => {
               setEditName(e.target.value);
             }}
+            required
             type="text"
             placeholder="F.I.Sh kiriting"
           />
@@ -112,6 +117,7 @@ function EditClients({
             onChange={(e) => {
               setEditNumber(e.target.value);
             }}
+            required
             type="number"
             placeholder="Raqam kiriting"
           />

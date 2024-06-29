@@ -101,7 +101,8 @@ function Products({ token, setLoading }) {
         setEditCount(result.count);
         setEditImei(result.imei);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {console.error(error)
+      alert("Nimadir xato")});
   };
   return (
     <>

@@ -96,23 +96,31 @@ function EditUser({
       `https://telzone.pythonanywhere.com/user/update/?pk=${itemId}`,
       requestOptions
     )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.response == "Success") {
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
           if (userType == "worker") {
             editPermission();
           }
           setEditUserpassword("");
           setEditUser(false);
           setChanged(!changed);
-          setLoading(false)
+          setLoading(false);
           notifySuccess();
+        } else if (response.status === 403) {
+          setLoading(false);
+          notify("Sizga ruxsat etilmagan");
         } else {
-          setLoading(false)
-          notify()
+          setLoading(false);
+          notify("Ma'lumotlarni to'g'ri kiriting");
         }
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.error(error);
+      });
   };
 
   const editPermission = () => {
@@ -154,12 +162,16 @@ function EditUser({
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        setLoading(false);
+        notify("Nimadir xato");
+        console.error(error);
+      });
   };
 
-  const notify = () => {
-    toast.warning("Ma'lumotlarni to'g'ri tahrirlang!", {
+  const notify = (text) => {
+    toast.warning(text, {
       position: "top-right",
       autoClose: 3000,
     });
@@ -187,12 +199,8 @@ function EditUser({
             action=""
             onSubmit={(e) => {
               e.preventDefault();
-              setLoading(true)
-              if (editUsername.length != 0) {
-                editData();
-              } else {
-                notify();
-              }
+              setLoading(true);
+              editData();
             }}
           >
             <h3>Ism</h3>
@@ -228,6 +236,7 @@ function EditUser({
               onChange={(e) => {
                 setEditUsername(e.target.value);
               }}
+              required
               type="text"
               placeholder="Username kiriting"
             />
@@ -249,7 +258,7 @@ function EditUser({
             action=""
             onSubmit={(e) => {
               e.preventDefault();
-              setLoading(true)
+              setLoading(true);
               if (editUsername.length != 0) {
                 editData();
                 editPermission();
@@ -293,6 +302,7 @@ function EditUser({
                   onChange={(e) => {
                     setEditUsername(e.target.value);
                   }}
+                  required
                   type="text"
                   placeholder="Username kiriting"
                 />

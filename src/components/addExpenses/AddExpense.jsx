@@ -51,6 +51,7 @@ function AddExpense({
       .then((result) => {})
       .catch((error) => {
         setLoading(false);
+        notify("Nimadir xato")
         console.error(error);
       });
   };
@@ -99,6 +100,7 @@ function AddExpense({
             onChange={(e) => {
               setType(e.target.value);
             }}
+            required
             type="text"
             placeholder="Turi"
           />
@@ -106,6 +108,7 @@ function AddExpense({
           <input
             value={displayValue}
             onChange={handleChange}
+            required
             type="text"
             placeholder="Maxsulot Narxi"
           />
