@@ -249,14 +249,14 @@ function Products({ token, setLoading }) {
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
-                <td>{item.purchase_price}</td>
+                <td>{item.purchase_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
                 <td>
                   {Number.isInteger(item.percent)
                     ? item.percent
                     : item.percent.toFixed(2)}
                 </td>
-                <td>{item.price}</td>
-                <td>{item.count}</td>
+                <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                <td>{item.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
                 <td>{item.date}</td>
                 <td>{item.status == "on_sale" ? "Sotuvda" : "Sotilgan"}</td>
                 <td className="editClient_btn">

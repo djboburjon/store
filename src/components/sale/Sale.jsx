@@ -195,7 +195,7 @@ function Sale({ token, setLoading }) {
                     return <span key={index}>{meti.name}, </span>;
                   })}
                 </td>
-                <td>{item.sold_price}</td>
+                <td>{item.sold_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
                 <td>{item.sold_user?.username}</td>
                 <td>{item.date}</td>
                 <td className="editClient_btn">

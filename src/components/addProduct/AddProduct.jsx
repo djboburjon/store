@@ -12,6 +12,8 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
   const [imei, setImei] = useState("");
   const [date, setDate] = useState("");
   const [status, setStatus] = useState("");
+  const [displayValue, setDisplayValue] = useState("");
+  const [rawValue, setRawValue] = useState("");
 
   const createProduct = () => {
     const myHeaders = new Headers();
@@ -21,7 +23,7 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
     const raw = JSON.stringify({
       name: name,
       count: count,
-      purchase_price: prchPrice,
+      purchase_price: rawValue,
       percent: percent,
       price: price,
       imei: imei,
@@ -69,6 +71,14 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
       autoClose: 2000,
     });
   };
+
+  const handleChange = (e) => {
+    let inputValue = e.target.value.replace(/\s/g, ""); // Remove existing spaces
+    setRawValue(inputValue);
+
+    let formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, " "); // Add space before every three digits
+    setDisplayValue(formattedValue);
+  };
   return (
     <div className="addProduct">
       <div
@@ -100,10 +110,11 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
             />
             <h3>Olingan Narx</h3>
             <input
-              onChange={(e) => {
-                setPrchPrice(e.target.value);
-              }}
-              type="number"
+            value={displayValue}
+              onChange={
+                handleChange
+              }
+              type="text"
               placeholder="100000"
             />
             <h3>Ustama Foiz</h3>
