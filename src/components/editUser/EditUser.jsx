@@ -435,7 +435,7 @@ function EditUser({
                       setSaleCreate((prev) => !prev);
                     }}
                   >
-                    Chegirma qo'shish
+                    Sotuv qo'shish
                   </span>{" "}
                   <Checkbox
                     {...label}
@@ -451,7 +451,7 @@ function EditUser({
                       setSaleUpdate((prev) => !prev);
                     }}
                   >
-                    Chegirma tahrirlash
+                    Sotuv tahrirlash
                   </span>{" "}
                   <Checkbox
                     {...label}
@@ -467,7 +467,7 @@ function EditUser({
                       setSaleView((prev) => !prev);
                     }}
                   >
-                    Chegirma ko'rish
+                    Sotuv ko'rish
                   </span>{" "}
                   <Checkbox
                     {...label}

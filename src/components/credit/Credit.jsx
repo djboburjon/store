@@ -78,6 +78,50 @@ function Credit({ token, setLoading }) {
       })
       .catch((error) => console.error(error));
   };
+
+  const nextData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/credit_base/all/?limit=25&offset=25",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setCredits(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const prevData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/credit_base/all/?limit=25",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setCredits(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <>
       {addCredit && (
@@ -162,6 +206,7 @@ function Credit({ token, setLoading }) {
           {credits.previous ? (
             <button
               onClick={() => {
+                setLoading(true);
                 prevData();
               }}
             >
@@ -177,6 +222,7 @@ function Credit({ token, setLoading }) {
           {credits.next ? (
             <button
               onClick={() => {
+                setLoading(true);
                 nextData();
               }}
             >

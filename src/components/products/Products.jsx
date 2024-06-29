@@ -111,6 +111,50 @@ function Products({ token, setLoading }) {
         alert("Nimadir xato");
       });
   };
+
+  const nextData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/product/all/?limit=25&offset=25&status=${prodType}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setProducts(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const prevData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/product/all/?limit=25&status=${prodType}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setProducts(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <>
       {addProduct && (
@@ -237,6 +281,7 @@ function Products({ token, setLoading }) {
           {products.previous ? (
             <button
               onClick={() => {
+                setLoading(true);
                 prevData();
               }}
             >
@@ -252,6 +297,7 @@ function Products({ token, setLoading }) {
           {products.next ? (
             <button
               onClick={() => {
+                setLoading(true);
                 nextData();
               }}
             >

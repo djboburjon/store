@@ -70,6 +70,50 @@ function Sale({ token, setLoading }) {
         alert("Nimadir xato");
       });
   };
+
+  const nextData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/sale/all/?limit=25&offset=25",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setSales(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const prevData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/sale/all/?limit=25",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setSales(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <>
       {addSale && (
@@ -176,6 +220,7 @@ function Sale({ token, setLoading }) {
           {sales.previous ? (
             <button
               onClick={() => {
+                setLoading(true);
                 prevData();
               }}
             >
@@ -191,6 +236,7 @@ function Sale({ token, setLoading }) {
           {sales.next ? (
             <button
               onClick={() => {
+                setLoading(true);
                 nextData();
               }}
             >

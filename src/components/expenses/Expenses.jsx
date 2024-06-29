@@ -85,6 +85,50 @@ function Expenses({ token, setLoading }) {
         alert("Nimadir xato");
       });
   };
+
+  const nextData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/expense/all/?limit=25&offset=25",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setExpenses(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const prevData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://telzone.pythonanywhere.com/expense/all/?limit=25",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setExpenses(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <>
       {addExpense && (
@@ -182,6 +226,7 @@ function Expenses({ token, setLoading }) {
           {expenses.previous ? (
             <button
               onClick={() => {
+                setLoading(true);
                 prevData();
               }}
             >
@@ -197,6 +242,7 @@ function Expenses({ token, setLoading }) {
           {expenses.next ? (
             <button
               onClick={() => {
+                setLoading(true);
                 nextData();
               }}
             >

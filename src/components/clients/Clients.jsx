@@ -96,7 +96,10 @@ function Clients({ token, setLoading }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setNewClient(result))
+      .then((result) => {
+        setNewClient(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
 
@@ -115,7 +118,10 @@ function Clients({ token, setLoading }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setNewClient(result))
+      .then((result) => {
+        setNewClient(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
   return (
@@ -214,6 +220,7 @@ function Clients({ token, setLoading }) {
           {newClient.previous ? (
             <button
               onClick={() => {
+                setLoading(true);
                 prevData();
               }}
             >
@@ -229,6 +236,7 @@ function Clients({ token, setLoading }) {
           {newClient.next ? (
             <button
               onClick={() => {
+                setLoading(true);
                 nextData();
               }}
             >

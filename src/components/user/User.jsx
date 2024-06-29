@@ -133,6 +133,49 @@ function User({ token, setLoading }) {
       });
   };
 
+  const nextData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}&limit=25&offset=25`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setUser(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const prevData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}&limit=25`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setUser(result);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <>
       {editUser && (
@@ -278,6 +321,43 @@ function User({ token, setLoading }) {
           })}
         </tbody>
       </table>
+
+      <div className="client_count">{user?.count} ta mijoz</div>
+
+      <div className="paginations">
+        <div className="prev">
+          {user.previous ? (
+            <button
+              onClick={() => {
+                setLoading(true);
+                prevData();
+              }}
+            >
+              Ortga
+            </button>
+          ) : (
+            <button className="disabled_btn" disabled>
+              Ortga
+            </button>
+          )}
+        </div>
+        <div className="next">
+          {user.next ? (
+            <button
+              onClick={() => {
+                setLoading(true);
+                nextData();
+              }}
+            >
+              Keyingi
+            </button>
+          ) : (
+            <button className="disabled_btn" disabled>
+              Keyingi
+            </button>
+          )}
+        </div>
+      </div>
     </>
   );
 }
