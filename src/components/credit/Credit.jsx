@@ -26,7 +26,10 @@ function Credit({ token, setLoading }) {
 
     fetch("https://telzone.pythonanywhere.com/credit_base/all/", requestOptions)
       .then((response) => response.json())
-      .then((result) => setCredits(result))
+      .then((result) => {
+        setCredits(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
 
@@ -50,6 +53,7 @@ function Credit({ token, setLoading }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     getCredit();
   }, [token, changed]);
 
@@ -68,7 +72,10 @@ function Credit({ token, setLoading }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setEditName(result.name))
+      .then((result) => {
+        setEditName(result.name);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
   return (
@@ -136,6 +143,7 @@ function Credit({ token, setLoading }) {
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
+                      setLoading(true);
                       setEditCredit(true);
                       getItemData(item.id);
                       setItemId(item.id);

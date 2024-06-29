@@ -58,6 +58,7 @@ function Home({ token, setLoading }) {
     setToDate(e.target.value);
   };
   useEffect(() => {
+    setLoading(true);
     getData();
   }, [token]);
   return (
@@ -120,12 +121,18 @@ function Home({ token, setLoading }) {
             <div className="purchase_box">
               <p>Qoldiq Narx</p>
               <div className="purchasePrice">
-                {Number.isInteger(dashData.warehouse?.purchase_price) ? dashData.warehouse?.purchase_price : dashData.warehouse?.purchase_price.toFixed(2)}
+                {Number.isInteger(dashData.warehouse?.purchase_price)
+                  ? dashData.warehouse?.purchase_price
+                  : dashData.warehouse?.purchase_price.toFixed(2)}
               </div>
             </div>
             <div className="price_box">
               <p>Qoldiq Sotuv Narx</p>
-              <div className="price">{Number.isInteger(dashData.warehouse?.price) ? dashData.warehouse?.price : dashData.warehouse?.price.toFixed(2)}</div>
+              <div className="price">
+                {Number.isInteger(dashData.warehouse?.price)
+                  ? dashData.warehouse?.price
+                  : dashData.warehouse?.price.toFixed(2)}
+              </div>
             </div>
           </div>
         </div>

@@ -66,6 +66,7 @@ function User({ token, setLoading }) {
         //   setEditUser(true)
         //   console.log(itemId);
         // }
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -83,6 +84,7 @@ function User({ token, setLoading }) {
   }
 
   useEffect(() => {
+    setLoading(true);
     getUser();
   }, [token, changed, lastItem]);
 
@@ -123,6 +125,7 @@ function User({ token, setLoading }) {
           setExpenseUpdate(result.permission_fields.expense_can_update);
           setExpenseView(result.permission_fields.expense_can_view);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -263,6 +266,7 @@ function User({ token, setLoading }) {
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
+                      setLoading(true);
                       setEditUser(true);
                       getItemData(item.id);
                       setItemId(item.id);

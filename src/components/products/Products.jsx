@@ -39,7 +39,10 @@ function Products({ token, setLoading }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setProducts(result))
+      .then((result) => {
+        setProducts(result);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
 
@@ -75,6 +78,7 @@ function Products({ token, setLoading }) {
   }
 
   useEffect(() => {
+    setLoading(true);
     getProduct();
   }, [token, changed]);
 
@@ -100,9 +104,12 @@ function Products({ token, setLoading }) {
         setEditPrice(result.price);
         setEditCount(result.count);
         setEditImei(result.imei);
+        setLoading(false);
       })
-      .catch((error) => {console.error(error)
-      alert("Nimadir xato")});
+      .catch((error) => {
+        console.error(error);
+        alert("Nimadir xato");
+      });
   };
   return (
     <>
@@ -207,10 +214,11 @@ function Products({ token, setLoading }) {
                 <td>{item.price}</td>
                 <td>{item.count}</td>
                 <td>{item.date}</td>
-                <td>{item.status == "on_sale" ? "Sotuvda":"Sotilgan"}</td>
+                <td>{item.status == "on_sale" ? "Sotuvda" : "Sotilgan"}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
+                      setLoading(true);
                       setEditProduct(true);
                       getItemData(item.id);
                       setItemId(item.id);

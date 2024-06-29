@@ -4,7 +4,7 @@ import "./Loader.css"
 function Loader() {
   return (
     <div className='loader'>
-      <img src="../images/Loading.gif" alt="Loader" />
+      <img src="../images/Loader.gif" alt="Loader" />
     </div>
   )
 }

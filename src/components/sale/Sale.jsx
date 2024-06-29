@@ -30,7 +30,10 @@ function Sale({ token, setLoading }) {
 
     fetch("https://telzone.pythonanywhere.com/sale/all/", requestOptions)
       .then((response) => response.json())
-      .then((result) => setSales(result))
+      .then((result) => {
+        setSales(result);
+        setLoading(false);
+      })
       .catch((error) => {
         console.error(error);
         alert("Nimadir xato");
@@ -38,6 +41,7 @@ function Sale({ token, setLoading }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     getSale();
   }, [token, changed]);
 
@@ -59,6 +63,7 @@ function Sale({ token, setLoading }) {
         setEditCreditName(result.credit_base);
         setEditSoldPrice(result.sold_price);
         setEditInfo(result.info);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -124,6 +129,7 @@ function Sale({ token, setLoading }) {
             <th>Mijoz</th>
             <th>Nasiya Baza</th>
             <th>Narxi</th>
+            <th>Sotuvchi</th>
             <th>Sanasi</th>
           </tr>
         </thead>
@@ -146,10 +152,12 @@ function Sale({ token, setLoading }) {
                   })}
                 </td>
                 <td>{item.sold_price}</td>
+                <td>{item.sold_user?.username}</td>
                 <td>{item.date}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
+                      setLoading(true);
                       setEditSale(true);
                       getItemData(item.id);
                       setItemId(item.id);

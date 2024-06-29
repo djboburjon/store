@@ -29,6 +29,7 @@ function Expenses({ token, setLoading }) {
       .then((response) => response.json())
       .then((result) => {
         setExpenses(result);
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -55,6 +56,7 @@ function Expenses({ token, setLoading }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     getExpense();
   }, [token, changed]);
 
@@ -76,6 +78,7 @@ function Expenses({ token, setLoading }) {
       .then((result) => {
         setEditType(result.type);
         setEditPrice(result.price);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -160,6 +163,7 @@ function Expenses({ token, setLoading }) {
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
+                      setLoading(true);
                       setEditExpense(true);
                       getItemData(item.id);
                       setItemId(item.id);

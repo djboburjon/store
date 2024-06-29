@@ -309,7 +309,7 @@ function EditSale({
           </div>
         </div>
       ) : (
-        <h1>Loading...</h1>
+        setLoading(true)
       )}
     </>
   );

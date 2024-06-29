@@ -30,6 +30,7 @@ function Clients({ token, setLoading }) {
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -56,6 +57,7 @@ function Clients({ token, setLoading }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     getClient();
   }, [token, changed]);
 
@@ -74,6 +76,7 @@ function Clients({ token, setLoading }) {
       .then((result) => {
         setEditName(result.FIO);
         setEditNumber(result.phone_number);
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -192,6 +195,7 @@ function Clients({ token, setLoading }) {
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {
+                      setLoading(true);
                       setEditClient(true);
                       getItemData(item.id);
                       setItemId(item.id);
