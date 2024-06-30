@@ -40,6 +40,25 @@ function Sale({ token, setLoading }) {
       });
   };
 
+  const searchSale = (e) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/sale/all/?search=${e.target.value}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setSales(result))
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     setLoading(true);
     getSale();
@@ -160,9 +179,15 @@ function Sale({ token, setLoading }) {
         </button>
       </div>
       <div className="client_search">
-        <form action="">
+        <form
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            searchSale();
+          }}
+        >
           <FaSearch />
-          <input type="text" placeholder="Qidiruv..." />
+          <input type="text" onChange={searchSale} placeholder="Qidiruv..." />
         </form>
       </div>
       <table className="client_table">
@@ -195,7 +220,11 @@ function Sale({ token, setLoading }) {
                     return <span key={index}>{meti.name}, </span>;
                   })}
                 </td>
-                <td>{item.sold_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                <td>
+                  {item.sold_price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                </td>
                 <td>{item.sold_user?.username}</td>
                 <td>{item.date}</td>
                 <td className="editClient_btn">

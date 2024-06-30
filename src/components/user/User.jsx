@@ -83,6 +83,25 @@ function User({ token, setLoading }) {
     }
   }
 
+  const searchUser = (e) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}&search=${e.target.value}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setUser(result))
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     setLoading(true);
     getUser();
@@ -269,10 +288,11 @@ function User({ token, setLoading }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+            searchUser();
           }}
         >
           <FaSearch />
-          <input type="text" placeholder="Qidiruv..." />
+          <input onChange={searchUser} type="text" placeholder="Qidiruv..." />
         </form>
       </div>
 
