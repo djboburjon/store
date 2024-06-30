@@ -21,6 +21,8 @@ import User from "./components/user/User";
 import { ToastContainer } from "react-toastify";
 import Loader from "./components/loader/Loader";
 import CurUser from "./components/curUser/CurUser";
+import { IoMenu } from "react-icons/io5";
+import { FaTimes } from "react-icons/fa";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
   const [curUser, setCurUser] = useState(false);
+  const [menu, setMenu] = useState(false);
   const getUser = () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -53,7 +56,7 @@ function App() {
       })
       .catch((error) => {
         console.error(error);
-        alert("Nimadir xato");
+        alert("Nimadir xato saytni yangilang");
       });
   };
 
@@ -91,7 +94,20 @@ function App() {
         )}
 
         <div className="container">
-          <div className="main_left">
+          <div
+            className="menu"
+            onClick={() => {
+              setMenu(true);
+            }}
+          >
+            <IoMenu />
+          </div>
+          <div className={menu ? "menuExit" : "exitNull"} onClick={() => {
+            setMenu(false)
+          }}>
+            <FaTimes />
+          </div>
+          <div className={menu ? "main_left.active" : "main_left"}>
             <NavLink to={"/client/all"}>
               <div className="clients box_link">Mijozlar</div>
             </NavLink>
@@ -125,7 +141,12 @@ function App() {
                 path="/"
                 element={
                   token ? (
-                    <Home token={token} setLoading={setLoading} />
+                    <Home
+                      token={token}
+                      setLoading={setLoading}
+                      menu={menu}
+                      setMenu={setMenu}
+                    />
                   ) : (
                     <Navigate to="/login" />
                   )

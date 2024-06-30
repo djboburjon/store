@@ -3,7 +3,7 @@ import "./Home.css";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
-function Home({ token, setLoading }) {
+function Home({ token, setLoading, menu, setMenu }) {
   const [dashData, setDashData] = useState([]);
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -27,7 +27,11 @@ function Home({ token, setLoading }) {
         setDashData(result);
         setLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error)
+        setLoading(false)
+        alert("Nimadir xato")
+      });
   };
   const dateData = () => {
     const myHeaders = new Headers();
