@@ -31,11 +31,13 @@ function CurUser({ token, setLoading, curUser, setCurUser }) {
         setEditCurUserLastname(result.last_name);
         setEditCurUsername(result.username);
         setEditCurUserRole(result.role);
+        setLoading(false)
       })
       .catch((error) => console.error(error));
   };
 
   useEffect(() => {
+    setLoading(true)
     getData();
   }, [token, changed]);
   return (
@@ -71,13 +73,13 @@ function CurUser({ token, setLoading, curUser, setCurUser }) {
       <div className="container">
         {curData && (
           <div className="form">
-            <h3>Ism</h3>
+            <h3>Ism:</h3>
             <p>{curData.first_name}</p>
-            <h3>Familiya</h3>
+            <h3>Familiya:</h3>
             <p>{curData.last_name}</p>
-            <h3>Username</h3>
+            <h3>Username:</h3>
             <p>{curData.username}</p>
-            <h3>Rol</h3>
+            <h3>Rol:</h3>
             <p>{curData.role}</p>
             <div className="form_btn">
               <button

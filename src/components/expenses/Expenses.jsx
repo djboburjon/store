@@ -185,7 +185,7 @@ function Expenses({ token, setLoading }) {
           />
         </form>
       </div>
-      <table className="client_table">
+      <table className="client_table expense_table">
         <thead>
           <tr>
             <th>№</th>
@@ -203,7 +203,7 @@ function Expenses({ token, setLoading }) {
                 <td>
                   {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                 </td>
-                <td>{item.date}</td>
+                <td className="expenseDate">{item.date}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {

@@ -1,0 +1,14 @@
+/* Responsive for smartphones */
+
+@media screen and (max-width: 479px) {
+  .expense_table thead tr {
+    font-size: 14px;
+  }
+  .expense_table tbody tr {
+    font-size: 14px;
+  }
+
+  .expenseDate {
+    font-size: 12px;
+  }
+}

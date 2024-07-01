@@ -74,3 +74,29 @@
   pointer-events: none;
   background-color: #a6a6a6;
 }
+
+
+/* Responsive for smartphones */
+
+@media screen and (max-width: 479px) {
+  .addProduct .form {
+    width: 100%;
+    gap: 10px;
+    padding: 20px 10px;
+  }
+
+  .addProduct h3 {
+    font-size: 16px;
+  }
+
+  .addProduct .form input {
+    width: 140px;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .addProduct .form button {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+}

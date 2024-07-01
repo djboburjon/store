@@ -187,7 +187,7 @@
   }
 
   .menu {
-    display: block;
+    display: inline-block;
     font-size: 26px;
     margin-top: 10px;
   }
@@ -195,10 +195,11 @@
   .main_left {
     position: fixed;
     margin-left: -400px;
-    transition: all .5s ease;
+    transition: all 0.5s ease;
+    z-index: 99999;
   }
-  
-  .main_left\.active {
+
+  .main_left.active1 {
     margin-left: -20px;
     margin-right: 0;
     margin-top: -94px;
@@ -209,11 +210,18 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
     z-index: 99999;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
   }
 
-  .main_left\.active .box_link {
+  .main_left.active1 .box_link {
     padding: 15px 20px;
+    color: white;
+    background-color: #417690;
+  }
+
+  .main_left.active1 .active .box_link {
+    background-color: #fff;
+    color: #417690;
   }
 
   .menuExit {
@@ -225,8 +233,6 @@
     color: white;
     z-index: 999999;
   }
-
-  
 
   .main_right {
     margin-top: 0;
@@ -265,6 +271,7 @@
 
   .saleAndExpense {
     display: block;
+    margin-bottom: 0;
   }
   .saleAndExpense > div {
     margin-bottom: 20px;
@@ -274,6 +281,7 @@
 
   .warehouse {
     display: block;
+    padding-bottom: 10px;
   }
 
   .warehouse .purchase_box,
@@ -282,4 +290,19 @@
     width: 100%;
     border-radius: 20px;
   }
+
+  .client_table {
+    display: block;
+    max-width: fit-content;
+    overflow-x: auto;
+  }
+
+  .credit_table tr th:nth-child(2) {
+    width: 100%;
+  }
+
+  .paginations {
+    padding-bottom: 10px;
+  }
+
 }

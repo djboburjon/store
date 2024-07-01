@@ -225,7 +225,7 @@ function AddSale({
               value={selectedClient}
               name="clients"
               options={clientOptions}
-              className="basic-multi-select"
+              className="basic-multi-select clientSelect"
               classNamePrefix="select"
             />
             <h3>Nasiya Baza</h3>

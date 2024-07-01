@@ -74,3 +74,19 @@
   pointer-events: none;
   background-color: #a6a6a6;
 }
+
+/* Responsive for smartphones */
+
+@media screen and (max-width: 479px) {
+  .addCredit .form {
+    width: 100%;
+  }
+
+  .addCredit .form input {
+    width: 100%;
+  }
+
+  .addCredit .form button {
+    margin-left: 50px;
+  }
+}

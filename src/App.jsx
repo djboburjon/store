@@ -107,27 +107,39 @@ function App() {
           }}>
             <FaTimes />
           </div>
-          <div className={menu ? "main_left.active" : "main_left"}>
-            <NavLink to={"/client/all"}>
+          <div className={menu ? "main_left active1" : "main_left"}>
+            <NavLink to={"/client/all"} onClick={() => {
+              setMenu(false)
+            }}>
               <div className="clients box_link">Mijozlar</div>
             </NavLink>
-            <NavLink to={"/credit/all"}>
+            <NavLink to={"/credit/all"} onClick={() => {
+              setMenu(false)
+            }}>
               <div className="credit box_link">Credit baza</div>
             </NavLink>
 
-            <NavLink to={"/product/all"}>
+            <NavLink to={"/product/all"} onClick={() => {
+              setMenu(false)
+            }}>
               <div className="products box_link">Mahsulotlar</div>
             </NavLink>
 
-            <NavLink to={"/sale/all"}>
+            <NavLink to={"/sale/all"} onClick={() => {
+              setMenu(false)
+            }}>
               <div className="sales box_link">Sotuvlar</div>
             </NavLink>
 
-            <NavLink to={"/expense/all"}>
+            <NavLink to={"/expense/all"} onClick={() => {
+              setMenu(false)
+            }}>
               <div className="expenses box_link">Xarajatlar</div>
             </NavLink>
 
-            <NavLink to={"/user/all"}>
+            <NavLink to={"/user/all"} onClick={() => {
+              setMenu(false)
+            }}>
               <div className="users box_link">Foydalanuvchilar</div>
             </NavLink>
           </div>

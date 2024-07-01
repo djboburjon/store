@@ -316,6 +316,7 @@ function EditUser({
                   placeholder="Parol kiriting"
                 />
               </div>
+              <div className="editBox2And3">
               <div className="editBox2">
                 <p>
                   <span
@@ -624,6 +625,7 @@ function EditUser({
                   />
                 </p>
                 <button>Tahrirlash</button>
+              </div>
               </div>
             </div>
           </form>

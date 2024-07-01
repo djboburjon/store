@@ -190,7 +190,7 @@ function Sale({ token, setLoading }) {
           <input type="text" onChange={searchSale} placeholder="Qidiruv..." />
         </form>
       </div>
-      <table className="client_table">
+      <table className="client_table sale_table">
         <thead>
           <tr>
             <th>№</th>
@@ -226,7 +226,7 @@ function Sale({ token, setLoading }) {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                 </td>
                 <td>{item.sold_user?.username}</td>
-                <td>{item.date}</td>
+                <td className="saleDate">{item.date}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {

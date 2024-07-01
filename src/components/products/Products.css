@@ -1,0 +1,14 @@
+/* Responsive for smartphones */
+
+@media screen and (max-width: 479px) {
+  .product_table thead tr {
+    font-size: 14px;
+  }
+  .product_table tbody tr {
+    font-size: 14px;
+  }
+
+  .productDate {
+    font-size: 12px;
+  }
+}

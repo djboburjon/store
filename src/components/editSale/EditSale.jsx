@@ -259,7 +259,7 @@ function EditSale({
                   isMulti
                   name="clients"
                   options={clientOptions}
-                  className="basic-multi-select"
+                  className="basic-multi-select clientSelect"
                   classNamePrefix="select"
                   value={[
                     {

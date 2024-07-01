@@ -171,7 +171,7 @@ function Credit({ token, setLoading }) {
           <input type="text" onChange={searchCredit} placeholder="Qidiruv..." />
         </form>
       </div>
-      <table className="client_table">
+      <table className="client_table credit_table">
         <thead>
           <tr>
             <th>№</th>

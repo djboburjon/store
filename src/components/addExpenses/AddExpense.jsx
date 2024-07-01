@@ -76,7 +76,7 @@ function AddExpense({
     setDisplayValue(formattedValue);
   };
   return (
-    <div className="addClient">
+    <div className="addExpense">
       <div
         className="exit_btn"
         onClick={() => {

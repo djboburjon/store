@@ -1,0 +1,14 @@
+/* Responsive for smartphones */
+
+@media screen and (max-width: 479px) {
+  .sale_table thead tr {
+    font-size: 14px;
+  }
+  .sale_table tbody tr {
+    font-size: 14px;
+  }
+
+  .saleDate {
+    font-size: 12px;
+  }
+}

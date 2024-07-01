@@ -230,7 +230,7 @@ function Products({ token, setLoading }) {
         <span>Sotuvdagilar</span>
       </div>
 
-      <table className="client_table">
+      <table className="client_table product_table">
         <thead>
           <tr>
             <th>№</th>
@@ -257,7 +257,7 @@ function Products({ token, setLoading }) {
                 </td>
                 <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
                 <td>{item.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
-                <td>{item.date}</td>
+                <td className="productDate">{item.date}</td>
                 <td>{item.status == "on_sale" ? "Sotuvda" : "Sotilgan"}</td>
                 <td className="editClient_btn">
                   <FaEdit

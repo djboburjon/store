@@ -74,3 +74,11 @@
 .register_form input {
 	width: 300px !important;
 }
+
+/* Responsive for smartphones */
+
+@media screen and (max-width: 479px) {
+  .login .form {
+    width: 100%;
+  }
+}
