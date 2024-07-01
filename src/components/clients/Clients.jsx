@@ -124,6 +124,12 @@ function Clients({ token, setLoading }) {
       })
       .catch((error) => console.error(error));
   };
+
+  const formatNumber = (number) => {
+    const str = number.toString();
+    return `${str.slice(0, 2)} ${str.slice(2, 5)} ${str.slice(5, 7)} ${str.slice(7)}`;
+  };
+
   return (
     <>
       {addClient && (
@@ -193,11 +199,13 @@ function Clients({ token, setLoading }) {
         </thead>
         <tbody>
           {newClient?.results?.slice(0, 25).map((item, index) => {
+            const formattedNumber = formatNumber(item.phone_number);
+
             return (
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.FIO}</td>
-                <td>{item.phone_number}</td>
+                <td>{formattedNumber}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {

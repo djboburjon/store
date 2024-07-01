@@ -15,13 +15,14 @@ function AddClients({
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const createData = () => {
+    const numberWithoutSpaces = removeSpaces(number);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
 
     const raw = JSON.stringify({
       FIO: name,
-      phone_number: number,
+      phone_number: numberWithoutSpaces,
     });
 
     const requestOptions = {
@@ -74,6 +75,21 @@ function AddClients({
     });
   };
 
+  const formatNumber = (input) => {
+    const cleaned = ("" + input).replace(/\D/g, ""); // Remove non-digit characters
+    const match = cleaned.match(/^(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+    if (match) {
+      return [match[1], match[2], match[3], match[4]]
+        .filter((x) => x)
+        .join(" ");
+    }
+    return input;
+  };
+
+  const removeSpaces = (str) => {
+    return str.replace(/\s+/g, "");
+  };
+
   return (
     <div className="addClient">
       <div
@@ -105,12 +121,16 @@ function AddClients({
           />
           <h3>Telefon Raqam +998</h3>
           <input
+            value={number}
             onChange={(e) => {
-              setNumber(e.target.value);
+              const input = e.target.value;
+              const formattedInput = formatNumber(input);
+              setNumber(formattedInput);
             }}
             required
-            type="number"
+            type="text"
             placeholder="91 123 45 67"
+            maxLength="12"
           />
           <button>Mijoz Qo'shish</button>
         </form>
