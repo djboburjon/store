@@ -113,6 +113,10 @@
     font-size: 14px;
   }
 
+  .editUser .editBox2And3 {
+    display: block;
+  }
+
   .editUser .editBox2,
   .editUser .editBox3 {
     width: 120px;

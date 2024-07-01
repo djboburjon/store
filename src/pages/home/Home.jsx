@@ -28,9 +28,9 @@ function Home({ token, setLoading, menu, setMenu }) {
         setLoading(false);
       })
       .catch((error) => {
-        console.error(error)
-        setLoading(false)
-        alert("Nimadir xato")
+        console.error(error);
+        setLoading(false);
+        alert("Nimadir xato");
       });
   };
   const dateData = () => {
@@ -109,7 +109,12 @@ function Home({ token, setLoading, menu, setMenu }) {
               <div className="sales">
                 {Number.isInteger(dashData?.sales)
                   ? dashData?.sales
-                  : dashData?.sales?.toFixed(2)}
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  : dashData?.sales
+                      ?.toFixed(2)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
               </div>
             </div>
             <div className="expense_box">
@@ -117,7 +122,12 @@ function Home({ token, setLoading, menu, setMenu }) {
               <div className="expenses">
                 {Number.isInteger(dashData?.expenses)
                   ? dashData?.expenses
-                  : dashData?.expenses?.toFixed(2)}
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  : dashData?.expenses
+                      ?.toFixed(2)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
               </div>
             </div>
           </div>
@@ -127,7 +137,12 @@ function Home({ token, setLoading, menu, setMenu }) {
               <div className="purchasePrice">
                 {Number.isInteger(dashData.warehouse?.purchase_price)
                   ? dashData.warehouse?.purchase_price
-                  : dashData.warehouse?.purchase_price.toFixed(2)}
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  : dashData.warehouse?.purchase_price
+                      .toFixed(2)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
               </div>
             </div>
             <div className="price_box">
@@ -135,7 +150,12 @@ function Home({ token, setLoading, menu, setMenu }) {
               <div className="price">
                 {Number.isInteger(dashData.warehouse?.price)
                   ? dashData.warehouse?.price
-                  : dashData.warehouse?.price.toFixed(2)}
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  : dashData.warehouse?.price
+                      .toFixed(2)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
               </div>
             </div>
           </div>
