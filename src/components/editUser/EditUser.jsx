@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function EditUser({
+  baseUrl,
   token,
   setLoading,
   user,
@@ -93,7 +94,7 @@ function EditUser({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/user/update/?pk=${itemId}`,
+      `${baseUrl}user/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => {
@@ -158,7 +159,7 @@ function EditUser({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/user/update/permissions/?pk=${itemId}`,
+      `${baseUrl}user/update/permissions/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => response.json())

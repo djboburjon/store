@@ -25,6 +25,7 @@ import { IoMenu } from "react-icons/io5";
 import { FaTimes } from "react-icons/fa";
 
 function App() {
+  const baseUrl = "https://telzone.pythonanywhere.com/";
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -41,7 +42,7 @@ function App() {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/user/current/", requestOptions)
+    fetch(`${baseUrl}user/current/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.username) {
@@ -69,6 +70,7 @@ function App() {
       <BrowserRouter>
         <ToastContainer />
         <Login
+          baseUrl={baseUrl}
           token={token}
           setToken={setToken}
           login={login}
@@ -86,6 +88,7 @@ function App() {
         {loading && <Loader />}
         {curUser && (
           <CurUser
+            baseUrl={baseUrl}
             token={token}
             setLoading={setLoading}
             curUser={curUser}
@@ -102,44 +105,65 @@ function App() {
           >
             <IoMenu />
           </div>
-          <div className={menu ? "menuExit" : "exitNull"} onClick={() => {
-            setMenu(false)
-          }}>
+          <div
+            className={menu ? "menuExit" : "exitNull"}
+            onClick={() => {
+              setMenu(false);
+            }}
+          >
             <FaTimes />
           </div>
           <div className={menu ? "main_left active1" : "main_left"}>
-            <NavLink to={"/client/all"} onClick={() => {
-              setMenu(false)
-            }}>
+            <NavLink
+              to={"/client/all"}
+              onClick={() => {
+                setMenu(false);
+              }}
+            >
               <div className="clients box_link">Mijozlar</div>
             </NavLink>
-            <NavLink to={"/credit/all"} onClick={() => {
-              setMenu(false)
-            }}>
+            <NavLink
+              to={"/credit/all"}
+              onClick={() => {
+                setMenu(false);
+              }}
+            >
               <div className="credit box_link">Credit baza</div>
             </NavLink>
 
-            <NavLink to={"/product/all"} onClick={() => {
-              setMenu(false)
-            }}>
+            <NavLink
+              to={"/product/all"}
+              onClick={() => {
+                setMenu(false);
+              }}
+            >
               <div className="products box_link">Mahsulotlar</div>
             </NavLink>
 
-            <NavLink to={"/sale/all"} onClick={() => {
-              setMenu(false)
-            }}>
+            <NavLink
+              to={"/sale/all"}
+              onClick={() => {
+                setMenu(false);
+              }}
+            >
               <div className="sales box_link">Sotuvlar</div>
             </NavLink>
 
-            <NavLink to={"/expense/all"} onClick={() => {
-              setMenu(false)
-            }}>
+            <NavLink
+              to={"/expense/all"}
+              onClick={() => {
+                setMenu(false);
+              }}
+            >
               <div className="expenses box_link">Xarajatlar</div>
             </NavLink>
 
-            <NavLink to={"/user/all"} onClick={() => {
-              setMenu(false)
-            }}>
+            <NavLink
+              to={"/user/all"}
+              onClick={() => {
+                setMenu(false);
+              }}
+            >
               <div className="users box_link">Foydalanuvchilar</div>
             </NavLink>
           </div>
@@ -154,6 +178,7 @@ function App() {
                 element={
                   token ? (
                     <Home
+                    baseUrl={baseUrl}
                       token={token}
                       setLoading={setLoading}
                       menu={menu}
@@ -166,27 +191,27 @@ function App() {
               />
               <Route
                 path="/client/:type"
-                element={<Clients token={token} setLoading={setLoading} />}
+                element={<Clients baseUrl={baseUrl} token={token} setLoading={setLoading} />}
               />
               <Route
                 path="/product/:type"
-                element={<Products token={token} setLoading={setLoading} />}
+                element={<Products baseUrl={baseUrl} token={token} setLoading={setLoading} />}
               />
               <Route
                 path="/credit/:type"
-                element={<Credit token={token} setLoading={setLoading} />}
+                element={<Credit baseUrl={baseUrl} token={token} setLoading={setLoading} />}
               />
               <Route
                 path="/sale/:type"
-                element={<Sale token={token} setLoading={setLoading} />}
+                element={<Sale baseUrl={baseUrl} token={token} setLoading={setLoading} />}
               />
               <Route
                 path="/expense/:type"
-                element={<Expenses token={token} setLoading={setLoading} />}
+                element={<Expenses baseUrl={baseUrl} token={token} setLoading={setLoading} />}
               />
               <Route
                 path="/user/:type"
-                element={<User token={token} setLoading={setLoading} />}
+                element={<User baseUrl={baseUrl} token={token} setLoading={setLoading} />}
               />
             </Routes>
           </div>

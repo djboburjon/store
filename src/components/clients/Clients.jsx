@@ -7,7 +7,7 @@ import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import EditClients from "../editClients/EditClients";
 import AddClients from "../addClients/AddClients";
-function Clients({ token, setLoading }) {
+function Clients({baseUrl, token, setLoading }) {
   const [editName, setEditName] = useState("");
   const [editNumber, setEditNumber] = useState("");
   const [newClient, setNewClient] = useState([]);
@@ -26,7 +26,7 @@ function Clients({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/client/all/", requestOptions)
+    fetch(`${baseUrl}/client/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
@@ -46,7 +46,7 @@ function Clients({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/client/all/?search=${e.target.value}`,
+      `${baseUrl}client/all/?search=${e.target.value}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -71,7 +71,7 @@ function Clients({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(`https://telzone.pythonanywhere.com/client/?pk=${id}`, requestOptions)
+    fetch(`${baseUrl}client/?pk=${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setEditName(result.FIO);
@@ -92,7 +92,7 @@ function Clients({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/client/all/?limit=25&offset=25",
+      `${baseUrl}client/all/?limit=25&offset=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -114,7 +114,7 @@ function Clients({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/client/all/?limit=25",
+      `${baseUrl}client/all/?limit=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -134,6 +134,7 @@ function Clients({ token, setLoading }) {
     <>
       {addClient && (
         <AddClients
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           setNewClient={setNewClient}
@@ -145,6 +146,7 @@ function Clients({ token, setLoading }) {
       )}
       {editClient && (
         <EditClients
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           editClient={editClient}

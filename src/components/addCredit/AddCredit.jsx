@@ -3,7 +3,7 @@ import "./AddCredit.css";
 import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
-function AddCredit({ token, setLoading, setAddCredit, changed, setChanged }) {
+function AddCredit({ baseUrl, token, setLoading, setAddCredit, changed, setChanged }) {
   const [name, setName] = useState("");
 
   const createCredit = () => {
@@ -23,7 +23,7 @@ function AddCredit({ token, setLoading, setAddCredit, changed, setChanged }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/credit_base/create/",
+      `${baseUrl}credit_base/create/`,
       requestOptions
     )
       .then((response) => {

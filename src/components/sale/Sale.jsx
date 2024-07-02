@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AddSale from "../addSale/AddSale";
 import EditSale from "../editSale/EditSale";
 
-function Sale({ token, setLoading }) {
+function Sale({baseUrl, token, setLoading }) {
   const [sales, setSales] = useState([]);
   const [addSale, setAddSale] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -28,7 +28,7 @@ function Sale({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/sale/all/", requestOptions)
+    fetch(`${baseUrl}sale/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setSales(result);
@@ -51,7 +51,7 @@ function Sale({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/sale/all/?search=${e.target.value}`,
+      `${baseUrl}sale/all/?search=${e.target.value}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -74,7 +74,7 @@ function Sale({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(`https://telzone.pythonanywhere.com/sale/?pk=${id}`, requestOptions)
+    fetch(`${baseUrl}sale/?pk=${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setEditProductName(result.product);
@@ -101,7 +101,7 @@ function Sale({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/sale/all/?limit=25&offset=25",
+      `${baseUrl}ll/?limit=25&offset=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -123,7 +123,7 @@ function Sale({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/sale/all/?limit=25",
+      `${baseUrl}ll/?limit=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -137,6 +137,7 @@ function Sale({ token, setLoading }) {
     <>
       {addSale && (
         <AddSale
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           addSale={addSale}
@@ -147,6 +148,7 @@ function Sale({ token, setLoading }) {
       )}
       {editSale && (
         <EditSale
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           changed={changed}

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import EditExpense from "../editExpenses/EditExpense";
 import AddExpense from "../addExpenses/AddExpense";
 
-function Expenses({ token, setLoading }) {
+function Expenses({baseUrl, token, setLoading }) {
   const [expenses, setExpenses] = useState([]);
   const [addExpense, setAddExpense] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -25,7 +25,7 @@ function Expenses({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/expense/all/", requestOptions)
+    fetch(`${baseUrl}expense/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setExpenses(result);
@@ -45,7 +45,7 @@ function Expenses({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/expense/all/?search=${e.target.value}`,
+      `${baseUrl}expense/all/?search=${e.target.value}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -71,7 +71,7 @@ function Expenses({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/expense/?pk=${id}`,
+      `${baseUrl}expense/?pk=${id}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -97,7 +97,7 @@ function Expenses({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/expense/all/?limit=25&offset=25",
+      `${baseUrl}expense/all/?limit=25&offset=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -119,7 +119,7 @@ function Expenses({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/expense/all/?limit=25",
+      `${baseUrl}expense/all/?limit=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -133,6 +133,7 @@ function Expenses({ token, setLoading }) {
     <>
       {addExpense && (
         <AddExpense
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           addExpense={addExpense}
@@ -143,6 +144,7 @@ function Expenses({ token, setLoading }) {
       )}
       {editExpense && (
         <EditExpense
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           changed={changed}

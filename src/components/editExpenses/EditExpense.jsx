@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function EditExpense({
+  baseUrl,
   token,
   setLoading,
   changed,
@@ -33,7 +34,7 @@ function EditExpense({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/expense/update/?pk=${itemId}`,
+      `${baseUrl}expense/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => {

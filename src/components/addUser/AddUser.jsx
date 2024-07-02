@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function AddUser({
+  baseUrl,
   token,
   setLoading,
   addUser,
@@ -39,7 +40,7 @@ function AddUser({
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/user/create/", requestOptions)
+    fetch(`${baseUrl}user/create/`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 200) {

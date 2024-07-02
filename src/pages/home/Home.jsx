@@ -3,7 +3,7 @@ import "./Home.css";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
-function Home({ token, setLoading, menu, setMenu }) {
+function Home({baseUrl, token, setLoading, menu, setMenu }) {
   const [dashData, setDashData] = useState([]);
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -19,7 +19,7 @@ function Home({ token, setLoading, menu, setMenu }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/dashboard/payment/results/",
+      `${baseUrl}dashboard/payment/results/`,
       requestOptions
     )
       .then((response) => response.json())
@@ -44,7 +44,7 @@ function Home({ token, setLoading, menu, setMenu }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/dashboard/payment/results/?from_date=${fromDate}&to_date=${toDate}`,
+      `${baseUrl}dashboard/payment/results/?from_date=${fromDate}&to_date=${toDate}`,
       requestOptions
     )
       .then((response) => response.json())

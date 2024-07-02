@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
 function EditProduct({
+  baseUrl,
   token,
   setLoading,
   changed,
@@ -48,7 +49,7 @@ function EditProduct({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/update/?pk=${itemId}`,
+      `${baseUrl}product/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => {

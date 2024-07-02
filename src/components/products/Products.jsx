@@ -7,7 +7,7 @@ import AddProduct from "../addProduct/AddProduct";
 import EditProduct from "../editProduct/EditProduct";
 import { Switch } from "@mui/material";
 
-function Products({ token, setLoading }) {
+function Products({baseUrl, token, setLoading }) {
   const [products, setProducts] = useState([]);
   const [addProduct, setAddProduct] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -35,7 +35,7 @@ function Products({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/all/?status=${prodType}`,
+      `${baseUrl}product/all/?status=${prodType}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -57,7 +57,7 @@ function Products({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/all/?search=${e.target.value}&status=${prodType}`,
+      `${baseUrl}product/all/?search=${e.target.value}&status=${prodType}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -93,7 +93,7 @@ function Products({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/?pk=${id}`,
+      `${baseUrl}product/?pk=${id}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -123,7 +123,7 @@ function Products({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/all/?limit=25&offset=25&status=${prodType}`,
+      `${baseUrl}product/all/?limit=25&offset=25&status=${prodType}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -145,7 +145,7 @@ function Products({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/product/all/?limit=25&status=${prodType}`,
+      `${baseUrl}product/all/?limit=25&status=${prodType}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -159,6 +159,7 @@ function Products({ token, setLoading }) {
     <>
       {addProduct && (
         <AddProduct
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           addProduct={addProduct}
@@ -169,6 +170,7 @@ function Products({ token, setLoading }) {
       )}
       {editProduct && (
         <EditProduct
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           changed={changed}

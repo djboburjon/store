@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function AddExpense({
+  baseUrl,
   token,
   setLoading,
   addExpense,
@@ -32,7 +33,7 @@ function AddExpense({
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/expense/create/", requestOptions)
+    fetch(`${baseUrl}expense/create/`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 200) {

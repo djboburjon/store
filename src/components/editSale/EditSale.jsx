@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function EditSale({
+  baseUrl,
   token,
   setLoading,
   changed,
@@ -72,7 +73,7 @@ function EditSale({
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/product/all/?status=on_sale",
+      `${baseUrl}product/all/?status=on_sale`,
       requestOptions
     )
       .then((response) => response.json())
@@ -90,7 +91,7 @@ function EditSale({
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/client/all/", requestOptions)
+    fetch(`${baseUrl}client/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
@@ -108,7 +109,7 @@ function EditSale({
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/credit_base/all/", requestOptions)
+    fetch(`${baseUrl}credit_base/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => setCredits(result))
       .catch((error) => console.error(error));
@@ -176,7 +177,7 @@ function EditSale({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/sale/update/?pk=${itemId}`,
+      `${baseUrl}sale/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => {

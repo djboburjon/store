@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function AddClients({
+  baseUrl,
   token,
   setLoading,
   setNewClient,
@@ -32,7 +33,7 @@ function AddClients({
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/client/create/", requestOptions)
+    fetch(`${baseUrl}/client/create/`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 200) {

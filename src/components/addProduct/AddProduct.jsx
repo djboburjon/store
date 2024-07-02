@@ -3,7 +3,7 @@ import "./AddProduct.css";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
-function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
+function AddProduct({ baseUrl, token, setLoading, setAddProduct, changed, setChanged }) {
   const [name, setName] = useState("");
   const [prchPrice, setPrchPrice] = useState("");
   const [percent, setPercent] = useState("0");
@@ -36,7 +36,7 @@ function AddProduct({ token, setLoading, setAddProduct, changed, setChanged }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/product/create/", requestOptions)
+    fetch(`${baseUrl}product/create/`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 200) {

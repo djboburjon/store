@@ -3,7 +3,7 @@ import "./Login.css";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function Login({ login, setLogin, token, setToken, setLoading }) {
+function Login({baseUrl, login, setLogin, token, setToken, setLoading }) {
   const [userLogin, setUserLogin] = useState();
   const [userPassword, setUserPassword] = useState();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Login({ login, setLogin, token, setToken, setLoading }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/api/token/", requestOptions)
+    fetch(`${baseUrl}api/token/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.access) {

@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
 function EditCredit({
+  baseUrl,
   token,
   setLoading,
   changed,
@@ -31,7 +32,7 @@ function EditCredit({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/credit_base/update/?pk=${itemId}`,
+      `${baseUrl}credit_base/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => {

@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 function EditCurUser({
+  baseUrl,
   token,
   setLoading,
   editCurUser,
@@ -47,7 +48,7 @@ function EditCurUser({
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/user/current/update/",
+      `${baseUrl}user/current/update/`,
       requestOptions
     )
       .then((response) => response.json())

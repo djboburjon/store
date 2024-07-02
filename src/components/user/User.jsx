@@ -7,7 +7,7 @@ import { TiPlus } from "react-icons/ti";
 import Switch from "@mui/material/Switch";
 import AddUser from "../addUser/AddUser";
 
-function User({ token, setLoading }) {
+function User({baseUrl, token, setLoading }) {
   const [user, setUser] = useState([]);
   const [addUser, setAddUser] = useState(false);
   const [editUser, setEditUser] = useState(false);
@@ -54,7 +54,7 @@ function User({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}`,
+      `${baseUrl}user/all/?enum=${userType}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -94,7 +94,7 @@ function User({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}&search=${e.target.value}`,
+      `${baseUrl}user/all/?enum=${userType}&search=${e.target.value}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -117,7 +117,7 @@ function User({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(`https://telzone.pythonanywhere.com/user/?pk=${id}`, requestOptions)
+    fetch(`${baseUrl}user/?pk=${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setEditUsername(result.username);
@@ -163,7 +163,7 @@ function User({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}&limit=25&offset=25`,
+      `${baseUrl}user/all/?enum=${userType}&limit=25&offset=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -185,7 +185,7 @@ function User({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/user/all/?enum=${userType}&limit=25`,
+      `${baseUrl}user/all/?enum=${userType}&limit=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -199,6 +199,7 @@ function User({ token, setLoading }) {
     <>
       {editUser && (
         <EditUser
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           user={user}
@@ -261,6 +262,7 @@ function User({ token, setLoading }) {
       )}
       {addUser && (
         <AddUser
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           addUser={addUser}

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 
 function EditClients({
+  baseUrl,
   token,
   setLoading,
   editClient,
@@ -36,7 +37,7 @@ function EditClients({
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/client/update/?pk=${itemId}`,
+      `${baseUrl}client/update/?pk=${itemId}`,
       requestOptions
     )
       .then((response) => {

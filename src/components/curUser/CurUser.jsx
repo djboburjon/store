@@ -3,7 +3,7 @@ import "./CurUser.css";
 import { FaTimes } from "react-icons/fa";
 import EditCurUser from "../editCurUser/EditCurUser";
 
-function CurUser({ token, setLoading, curUser, setCurUser }) {
+function CurUser({baseUrl, token, setLoading, curUser, setCurUser }) {
   const [curData, setCurData] = useState([]);
   const [editCurUser, setEditCurUser] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -23,7 +23,7 @@ function CurUser({ token, setLoading, curUser, setCurUser }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/user/current/", requestOptions)
+    fetch(`${baseUrl}user/current/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setCurData(result);
@@ -44,6 +44,7 @@ function CurUser({ token, setLoading, curUser, setCurUser }) {
     <div className="getCurrentUser">
       {editCurUser && (
         <EditCurUser
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           editCurUser={editCurUser}

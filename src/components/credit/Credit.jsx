@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AddCredit from "../addCredit/AddCredit";
 import EditCredit from "../editCredit/EditCredit";
 
-function Credit({ token, setLoading }) {
+function Credit({baseUrl, token, setLoading }) {
   const [credits, setCredits] = useState([]);
   const [addCredit, setAddCredit] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -24,7 +24,7 @@ function Credit({ token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch("https://telzone.pythonanywhere.com/credit_base/all/", requestOptions)
+    fetch(`${baseUrl}credit_base/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setCredits(result);
@@ -44,7 +44,7 @@ function Credit({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/credit_base/all/?search=${e.target.value}`,
+      `${baseUrl}credit_base/all/?search=${e.target.value}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -68,7 +68,7 @@ function Credit({ token, setLoading }) {
     };
 
     fetch(
-      `https://telzone.pythonanywhere.com/credit_base/?pk=${id}`,
+      `${baseUrl}credit_base/?pk=${id}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -90,7 +90,7 @@ function Credit({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/credit_base/all/?limit=25&offset=25",
+      `${baseUrl}credit_base/all/?limit=25&offset=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -112,7 +112,7 @@ function Credit({ token, setLoading }) {
     };
 
     fetch(
-      "https://telzone.pythonanywhere.com/credit_base/all/?limit=25",
+      `${baseUrl}credit_base/all/?limit=25`,
       requestOptions
     )
       .then((response) => response.json())
@@ -126,6 +126,7 @@ function Credit({ token, setLoading }) {
     <>
       {addCredit && (
         <AddCredit
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           addCredit={addCredit}
@@ -136,6 +137,7 @@ function Credit({ token, setLoading }) {
       )}
       {editCredit && (
         <EditCredit
+          baseUrl={baseUrl}
           token={token}
           setLoading={setLoading}
           changed={changed}
