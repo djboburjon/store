@@ -325,10 +325,10 @@ function Sale({ baseUrl, token, setLoading }) {
             <th>Imei</th>
             <th>Mijoz</th>
             <th>Nasiya Baza</th>
-            <th>Narxi</th>
+            <th>Olingan Narx</th>
+            <th>Sotilgan Narx</th>
             <th>Chegirma</th>
             <th>Sotuvchi</th>
-            <th>Sanasi</th>
           </tr>
         </thead>
         <tbody>
@@ -355,6 +355,11 @@ function Sale({ baseUrl, token, setLoading }) {
                   })}
                 </td>
                 <td>
+                  {item.bought_price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                </td>
+                <td>
                   {item.sold_price
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
@@ -365,7 +370,6 @@ function Sale({ baseUrl, token, setLoading }) {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                 </td>
                 <td>{item.sold_user?.username}</td>
-                <td className="saleDate">{item.date}</td>
                 <td className="editClient_btn">
                   <FaEdit
                     onClick={() => {

@@ -34,6 +34,9 @@ function EditSale({
   const [creditBaze, setCreditBaze] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [editedNames, setEditedname] = useState(null);
+  // const [firstInput, setFirstInput] = useState(editSoldPrice);
+  // const [secondInput, setSecondInput] = useState(editDiscountPrice);
+  const [newValue, setNewValue] = useState()
 
   var oldNames;
   if (editProductName) {
@@ -153,7 +156,6 @@ function EditSale({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -164,10 +166,10 @@ function EditSale({
       }),
       client: editClientName.id,
       sold_price: (editSoldPrice - editDiscountPrice),
+      discount: editDiscountPrice,
       credit_base: editCreditName.map((item) => {
         return item.id;
       }),
-      dicount: editDiscountPrice,
       info: editInfo,
     });
 
@@ -217,6 +219,12 @@ function EditSale({
       autoClose: 2000,
     });
   };
+  // const handleChangeInput = (e) => {
+  //   const newValue = (e.target.value);
+  //   const diff =  newValue - secondInput;
+  //   setFirstInput(firstInput - diff);
+  //   setSecondInput(newValue)
+  // }
 
   return (
     <>
@@ -288,18 +296,18 @@ function EditSale({
                 <h3>Narxi</h3>
                 <input
                   value={editSoldPrice}
-                  name="priceName"
                   onChange={(e) => {
-                    setEditSoldPrice(e.target.value);
+                    setEditSoldPrice(e.target.value)
                   }}
                   type="number"
                   placeholder="Mahsulot Narxi"
                 />
                 <h3>Chegirma narxi</h3>
                 <input
+                  value={editDiscountPrice}
                   name="discountName"
                   onChange={(e) => {
-                    setEditDiscountPrice(e.target.value);
+                    setEditDiscountPrice(e.target.value)
                   }}
                   type="number"
                   placeholder="Chegirma"
