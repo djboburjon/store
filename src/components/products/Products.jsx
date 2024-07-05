@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Products.css";
+import axios from "axios";
+import { saveAs } from "file-saver";
 import { Link } from "react-router-dom";
 import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
@@ -155,6 +157,26 @@ function Products({baseUrl, token, setLoading }) {
       })
       .catch((error) => console.error(error));
   };
+
+  const downloadFile = async (userId) => {
+    try {
+      const response = await axios({
+        url: `${baseUrl}product/export/`,
+        method: "GET",
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(blob, "downloaded_file.xlsx");
+    } catch (error) {
+      console.error("Error exporting sales to Excel:", error);
+    }
+  };
   return (
     <>
       {addProduct && (
@@ -204,7 +226,7 @@ function Products({baseUrl, token, setLoading }) {
           <TiPlus />
         </button>
       </div>
-      <div className="client_search">
+      <div className="client_search productSearch">
         <form
           action=""
           onSubmit={(e) => {
@@ -219,6 +241,12 @@ function Products({baseUrl, token, setLoading }) {
             placeholder="Qidiruv..."
           />
         </form>
+        <div
+            className="downloadBtn"
+            onClick={downloadFile}
+          >
+            Yuklash
+          </div>
       </div>
 
       <div className="adminOrWorker">

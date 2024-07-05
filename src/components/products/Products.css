@@ -1,6 +1,26 @@
+.productSearch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* Responsive for smartphones */
 
 @media screen and (max-width: 479px) {
+  .productSearch form{
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .productSearch {
+    flex-direction: column;
+  }
+
+  .productSearch .downloadBtn {
+    margin-top: 10px;
+  }
+
   .product_table thead tr {
     font-size: 14px;
   }
