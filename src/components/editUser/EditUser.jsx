@@ -44,6 +44,8 @@ function EditUser({
   setSaleCreate,
   saleUpdate,
   setSaleUpdate,
+  saleDelete,
+  setSaleDelete,
   saleView,
   setSaleView,
   creditCreate,
@@ -138,6 +140,7 @@ function EditUser({
       client_can_view: clientView,
       sale_can_create: saleCreate,
       sale_can_update: saleUpdate,
+      sale_can_delete: saleDelete,
       sale_can_view: saleView,
       credit_base_can_create: creditCreate,
       credit_base_can_update: creditUpdate,
@@ -460,6 +463,22 @@ function EditUser({
                     checked={saleUpdate}
                     onChange={(e) => {
                       setSaleUpdate(e.target.checked);
+                    }}
+                  />
+                </p>
+                <p>
+                  <span
+                    onClick={() => {
+                      setSaleDelete((prev) => !prev);
+                    }}
+                  >
+                    Sotuv o'chirish
+                  </span>{" "}
+                  <Checkbox
+                    {...label}
+                    checked={saleDelete}
+                    onChange={(e) => {
+                      setSaleDelete(e.target.checked);
                     }}
                   />
                 </p>

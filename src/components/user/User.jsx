@@ -29,6 +29,7 @@ function User({baseUrl, token, setLoading }) {
   const [clientView, setClientView] = useState(true);
   const [saleCreate, setSaleCreate] = useState(false);
   const [saleUpdate, setSaleUpdate] = useState(false);
+  const [saleDelete, setSaleDelete] = useState(false);
   const [saleView, setSaleView] = useState(true);
   const [creditCreate, setCreditCreate] = useState(false);
   const [creditUpdate, setCreditUpdate] = useState(false);
@@ -133,6 +134,7 @@ function User({baseUrl, token, setLoading }) {
           setClientView(result.permission_fields.client_can_view);
           setSaleCreate(result.permission_fields.sale_can_create);
           setSaleUpdate(result.permission_fields.sale_can_update);
+          setSaleDelete(result.permission_fields.sale_can_delete)
           setSaleView(result.permission_fields.sale_can_view);
           setCreditCreate(result.permission_fields.credit_base_can_create);
           setCreditUpdate(result.permission_fields.credit_base_can_update);
@@ -238,6 +240,8 @@ function User({baseUrl, token, setLoading }) {
           setSaleCreate={setSaleCreate}
           saleUpdate={saleUpdate}
           setSaleUpdate={setSaleUpdate}
+          saleDelete={saleDelete}
+          setSaleDelete={setSaleDelete}
           saleView={saleView}
           setSaleView={setSaleView}
           creditCreate={creditCreate}
