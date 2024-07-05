@@ -21,6 +21,7 @@ function AddSale({
   const [newClient, setNewClient] = useState([]);
   const [credits, setCredits] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [discountPrice, setDiscountPrice] = useState(0)
   const [selected, setselected] = useState([]);
   const [selectedClient, setSelectedClient] = useState([]);
 
@@ -92,10 +93,11 @@ function AddSale({
         return item.id;
       }),
       client: selectedClient.id,
-      sold_price: totalPrice,
+      sold_price: (totalPrice - discountPrice),
       credit_base: creditBaze?.map((item) => {
         return item.id;
       }),
+      discount: discountPrice,
       info: info,
     });
     const requestOptions = {
@@ -251,6 +253,15 @@ function AddSale({
               value={totalPrice}
               type="number"
               placeholder="Mahsulot Narxi"
+            />
+            <h3>Chegirma narxi</h3>
+            <input
+              name="discountName"
+              onChange={(e) => {
+                setDiscountPrice(e.target.value);
+              }}
+              type="number"
+              placeholder="Chegirma"
             />
             <h3>Izoh</h3>
             <textarea

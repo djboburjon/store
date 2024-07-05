@@ -17,6 +17,7 @@ function Sale({ baseUrl, token, setLoading }) {
   const [editClientName, setEditClientName] = useState("");
   const [editCreditName, setEditCreditName] = useState("");
   const [editSoldPrice, setEditSoldPrice] = useState("");
+  const [editDiscountPrice, setEditDiscountPrice] = useState("");
   const [editInfo, setEditInfo] = useState("");
   const [itemId, setItemId] = useState("0");
   const [fromDate, setFromDate] = useState("");
@@ -106,6 +107,7 @@ function Sale({ baseUrl, token, setLoading }) {
         setEditClientName(result.client);
         setEditCreditName(result.credit_base);
         setEditSoldPrice(result.sold_price);
+        setEditDiscountPrice(result.discount);
         setEditInfo(result.info);
         setLoading(false);
       })
@@ -235,6 +237,8 @@ function Sale({ baseUrl, token, setLoading }) {
           setEditCreditName={setEditCreditName}
           editSoldPrice={editSoldPrice}
           setEditSoldPrice={setEditSoldPrice}
+          editDiscountPrice={editDiscountPrice}
+          setEditDiscountPrice={setEditDiscountPrice}
           editInfo={editInfo}
           setEditInfo={setEditInfo}
           itemId={itemId}
@@ -322,6 +326,7 @@ function Sale({ baseUrl, token, setLoading }) {
             <th>Mijoz</th>
             <th>Nasiya Baza</th>
             <th>Narxi</th>
+            <th>Chegirma</th>
             <th>Sotuvchi</th>
             <th>Sanasi</th>
           </tr>
@@ -351,6 +356,11 @@ function Sale({ baseUrl, token, setLoading }) {
                 </td>
                 <td>
                   {item.sold_price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                </td>
+                <td>
+                  {item.discount
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
                 </td>

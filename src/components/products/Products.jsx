@@ -237,6 +237,7 @@ function Products({baseUrl, token, setLoading }) {
           <tr>
             <th>№</th>
             <th>Nomi</th>
+            <th>Imei</th>
             <th>Olingan Narx</th>
             <th>Foiz</th>
             <th>Sotish Narxi</th>
@@ -251,6 +252,7 @@ function Products({baseUrl, token, setLoading }) {
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
+                <td>{item.imei}</td>
                 <td>{item.purchase_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
                 <td>
                   {Number.isInteger(item.percent)

@@ -20,6 +20,8 @@ function EditSale({
   setEditCreditName,
   editSoldPrice,
   setEditSoldPrice,
+  editDiscountPrice,
+  setEditDiscountPrice,
   editInfo,
   setEditInfo,
   itemId,
@@ -31,7 +33,6 @@ function EditSale({
   const [selectedClient, setSelectedClient] = useState([]);
   const [creditBaze, setCreditBaze] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [editedNames, setEditedname] = useState(null);
 
   var oldNames;
@@ -162,10 +163,11 @@ function EditSale({
         return item.id;
       }),
       client: editClientName.id,
-      sold_price: editSoldPrice,
+      sold_price: (editSoldPrice - editDiscountPrice),
       credit_base: editCreditName.map((item) => {
         return item.id;
       }),
+      dicount: editDiscountPrice,
       info: editInfo,
     });
 
@@ -292,6 +294,15 @@ function EditSale({
                   }}
                   type="number"
                   placeholder="Mahsulot Narxi"
+                />
+                <h3>Chegirma narxi</h3>
+                <input
+                  name="discountName"
+                  onChange={(e) => {
+                    setEditDiscountPrice(e.target.value);
+                  }}
+                  type="number"
+                  placeholder="Chegirma"
                 />
                 <h3>Izoh</h3>
                 <textarea
