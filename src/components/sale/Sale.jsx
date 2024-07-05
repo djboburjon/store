@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Sale.css";
-import { FaEdit, FaSearch } from "react-icons/fa";
+import { FaEdit, FaSearch, FaTimes } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import AddSale from "../addSale/AddSale";
 import EditSale from "../editSale/EditSale";
+import { MdDelete } from "react-icons/md";
+import DownloadSale from "../downloadSale/DownloadSale";
 
-function Sale({baseUrl, token, setLoading }) {
+function Sale({ baseUrl, token, setLoading }) {
   const [sales, setSales] = useState([]);
   const [addSale, setAddSale] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -17,6 +19,11 @@ function Sale({baseUrl, token, setLoading }) {
   const [editSoldPrice, setEditSoldPrice] = useState("");
   const [editInfo, setEditInfo] = useState("");
   const [itemId, setItemId] = useState("0");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [userAll, setUserAll] = useState([]);
+  const [onUser, setOnUser] = useState("");
+  const [download, setDownload] = useState(false);
 
   const getSale = () => {
     const myHeaders = new Headers();
@@ -50,18 +57,36 @@ function Sale({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}sale/all/?search=${e.target.value}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}sale/all/?search=${e.target.value}`, requestOptions)
       .then((response) => response.json())
       .then((result) => setSales(result))
+      .catch((error) => console.error(error));
+  };
+
+  const userSelect = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`${baseUrl}user/select/?search=${onUser}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setUserAll(result);
+        setChanged(!changed);
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   };
 
   useEffect(() => {
     setLoading(true);
     getSale();
+    dateData();
   }, [token, changed]);
 
   const getItemData = (id) => {
@@ -100,10 +125,7 @@ function Sale({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}ll/?limit=25&offset=25`,
-      requestOptions
-    )
+    fetch(`${baseUrl}ll/?limit=25&offset=25`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setSales(result);
@@ -122,10 +144,7 @@ function Sale({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}ll/?limit=25`,
-      requestOptions
-    )
+    fetch(`${baseUrl}ll/?limit=25`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setSales(result);
@@ -133,6 +152,59 @@ function Sale({baseUrl, token, setLoading }) {
       })
       .catch((error) => console.error(error));
   };
+
+  const dateData = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    if (onUser.length === 0) {
+      fetch(
+        `${baseUrl}sale/all/?from_date=${fromDate}&to_date=${toDate}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          setSales(result);
+          setLoading(false);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      fetch(
+        `${baseUrl}sale/all/?from_date=${fromDate}&to_date=${toDate}&user=${userAll[0].id}`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          setSales(result);
+          setLoading(false);
+        })
+        .catch((error) => console.error(error));
+    }
+  };
+
+  const deleteData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`${baseUrl}sale/delete/?pk=${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setChanged(!changed);
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <>
       {addSale && (
@@ -168,6 +240,16 @@ function Sale({baseUrl, token, setLoading }) {
           itemId={itemId}
         />
       )}
+
+      {download && (
+        <DownloadSale
+          baseUrl={baseUrl}
+          token={token}
+          setDownload={setDownload}
+          setLoading={setLoading}
+        />
+      )}
+
       <div className="main_right-head">
         <h3>O'zgartirish uchun qalamchani tanlang</h3>
         <button
@@ -182,6 +264,7 @@ function Sale({baseUrl, token, setLoading }) {
       </div>
       <div className="client_search">
         <form
+          className="form0"
           action=""
           onSubmit={(e) => {
             e.preventDefault();
@@ -191,12 +274,51 @@ function Sale({baseUrl, token, setLoading }) {
           <FaSearch />
           <input type="text" onChange={searchSale} placeholder="Qidiruv..." />
         </form>
+        <form
+          className="form1"
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            userSelect();
+            setLoading(true);
+          }}
+        >
+          <input
+            type="date"
+            onChange={(e) => {
+              setFromDate(e.target.value);
+            }}
+          />
+          <input
+            type="date"
+            onChange={(e) => {
+              setToDate(e.target.value);
+            }}
+          />
+          <input
+            type="text"
+            onChange={(e) => {
+              setOnUser(e.target.value);
+            }}
+            placeholder="Username kiriting"
+          />
+          <button>Filtrlash</button>
+          <div
+            className="downloadBtn"
+            onClick={() => {
+              setDownload(true);
+            }}
+          >
+            Yuklash
+          </div>
+        </form>
       </div>
       <table className="client_table sale_table">
         <thead>
           <tr>
             <th>№</th>
             <th>Mahsulot</th>
+            <th>Imei</th>
             <th>Mijoz</th>
             <th>Nasiya Baza</th>
             <th>Narxi</th>
@@ -212,6 +334,11 @@ function Sale({baseUrl, token, setLoading }) {
                 <td>
                   {item.product.map((meti, index) => {
                     return <span key={index}>{meti.name}, </span>;
+                  })}
+                </td>
+                <td>
+                  {item.product.map((meti, index) => {
+                    return <span key={index}>{meti.imei}, </span>;
                   })}
                 </td>
                 <td>
@@ -236,6 +363,15 @@ function Sale({baseUrl, token, setLoading }) {
                       setEditSale(true);
                       getItemData(item.id);
                       setItemId(item.id);
+                    }}
+                  />
+                </td>
+                <td className="deleteClient_btn">
+                  <MdDelete
+                    onClick={() => {
+                      if (confirm("Sotuv o'chiriladi!")) {
+                        deleteData(item.id);
+                      }
                     }}
                   />
                 </td>

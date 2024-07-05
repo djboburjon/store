@@ -3,7 +3,7 @@ import "./Home.css";
 import { TiPlus } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
-function Home({baseUrl, token, setLoading, menu, setMenu }) {
+function Home({ baseUrl, token, setLoading, menu, setMenu }) {
   const [dashData, setDashData] = useState([]);
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -18,10 +18,7 @@ function Home({baseUrl, token, setLoading, menu, setMenu }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}dashboard/payment/results/`,
-      requestOptions
-    )
+    fetch(`${baseUrl}dashboard/payment/results/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setDashData(result);
@@ -81,20 +78,20 @@ function Home({baseUrl, token, setLoading, menu, setMenu }) {
             }}
           >
             <div className="dateFrom">
-              <p>yil-oy-kun</p>
+              <p>oy-kun-yil</p>
               <input
                 required
                 onChange={handleFromDate}
-                type="text"
+                type="date"
                 placeholder="...dan"
               />
             </div>
             <div className="dateTo">
-              <p>yil-oy-kun</p>
+              <p>oy-kun-yil</p>
               <input
                 required
                 onChange={handleToDate}
-                type="text"
+                type="date"
                 placeholder="...gacha"
               />
             </div>
