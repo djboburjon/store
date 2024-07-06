@@ -25,7 +25,6 @@ import { IoMenu } from "react-icons/io5";
 import { FaTimes } from "react-icons/fa";
 
 function App() {
-  // const baseUrl = "http://apis.tel-zone.uz/";
   const baseUrl = "https://telzone.pythonanywhere.com/";
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(false);
