@@ -137,7 +137,7 @@ function Home({ baseUrl, token, setLoading, menu, setMenu }) {
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   : dashData.warehouse?.purchase_price
-                      .toFixed(2)
+                      ?.toFixed(2)
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
               </div>
@@ -150,7 +150,7 @@ function Home({ baseUrl, token, setLoading, menu, setMenu }) {
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   : dashData.warehouse?.price
-                      .toFixed(2)
+                      ?.toFixed(2)
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
               </div>

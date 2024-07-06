@@ -26,7 +26,7 @@ function Clients({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(`${baseUrl}/client/all/`, requestOptions)
+    fetch(`${baseUrl}client/all/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
