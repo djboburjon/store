@@ -20,7 +20,8 @@
   width: 400px;
 }
 
-.download .form input {
+.download .form input,
+.download .form select {
   margin-top: 10px;
   margin-bottom: 30px;
   padding: 10px 12px;
@@ -69,6 +70,15 @@
 
 @media screen and (max-width: 479px) {
   .download .form {
+    padding: 20px 20px;
     width: 100%;
+  }
+
+  .download .form select {
+    margin-bottom: 20px;
+  }
+
+  .download .form button {
+    margin-bottom: 0;
   }
 }

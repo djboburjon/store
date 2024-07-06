@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DownloadSale.css";
 import axios from "axios";
 import { saveAs } from "file-saver";
@@ -20,27 +20,19 @@ function DownloadSale({ baseUrl, token, setDownload, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(`${baseUrl}user/select/?search=${onUser}`, requestOptions)
+    fetch(`${baseUrl}user/select/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUserAll(result);
         setLoading(false);
-        if (result.length > 0) {
-          downloadFile(result[0].id);
-        } else {
-          console.error("No users found");
-        }
       })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
-        setLoading(false);
-      });
+      .catch((error) => console.error(error));
   };
 
-  const downloadFile = async (userId) => {
+  const downloadFile = async () => {
     try {
       const response = await axios({
-        url: `${baseUrl}sale/export/?from_date=${fromDate}&pk=${userId}&to_date=${toDate}`,
+        url: `${baseUrl}sale/export/?from_date=${fromDate}&pk=${onUser}&to_date=${toDate}`,
         method: "GET",
         responseType: "blob",
         headers: {
@@ -53,10 +45,17 @@ function DownloadSale({ baseUrl, token, setDownload, setLoading }) {
       });
       saveAs(blob, "downloaded_file.xlsx");
       setDownload(false);
+      setLoading(false)
     } catch (error) {
+      alert("Nimadir xato")
       console.error("Error exporting sales to Excel:", error);
+      setLoading(false)
     }
   };
+
+  useEffect(()=>{
+    userSelect();
+  }, [token])
 
   return (
     <div className="download">
@@ -75,7 +74,7 @@ function DownloadSale({ baseUrl, token, setDownload, setLoading }) {
           onSubmit={(e) => {
             e.preventDefault();
             setLoading(true);
-            userSelect();
+            downloadFile();
           }}
         >
           <h3>Boshlanish sanasi</h3>
@@ -95,13 +94,20 @@ function DownloadSale({ baseUrl, token, setDownload, setLoading }) {
             type="date"
           />
           <h3>Foydalanuvchining ismi</h3>
-          <input
+          <select
             onChange={(e) => {
               setOnUser(e.target.value);
             }}
-            type="text"
-            placeholder="Username"
-          />
+          >
+            <option value="">-----</option>
+            {userAll?.map((item) => {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.username}
+                </option>
+              );
+            })}
+          </select>
           <button>Faylni yuklash</button>
         </form>
       </div>

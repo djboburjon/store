@@ -74,11 +74,10 @@ function Sale({ baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(`${baseUrl}user/select/?search=${onUser}`, requestOptions)
+    fetch(`${baseUrl}user/select/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUserAll(result);
-        setChanged(!changed);
         setLoading(false);
       })
       .catch((error) => console.error(error));
@@ -87,7 +86,7 @@ function Sale({ baseUrl, token, setLoading }) {
   useEffect(() => {
     setLoading(true);
     getSale();
-    dateData();
+    userSelect();
   }, [token, changed]);
 
   const getItemData = (id) => {
@@ -158,7 +157,6 @@ function Sale({ baseUrl, token, setLoading }) {
   const dateData = () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
-
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
@@ -174,10 +172,13 @@ function Sale({ baseUrl, token, setLoading }) {
           setSales(result);
           setLoading(false);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          alert("Nimadir xato");
+          console.error(error);
+        });
     } else {
       fetch(
-        `${baseUrl}sale/all/?from_date=${fromDate}&to_date=${toDate}&user=${userAll[0].id}`,
+        `${baseUrl}sale/all/?from_date=${fromDate}&to_date=${toDate}&user=${onUser}`,
         requestOptions
       )
         .then((response) => response.json())
@@ -185,7 +186,10 @@ function Sale({ baseUrl, token, setLoading }) {
           setSales(result);
           setLoading(false);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          alert("Nimadir xato");
+          console.error(error);
+        });
     }
   };
 
@@ -283,8 +287,8 @@ function Sale({ baseUrl, token, setLoading }) {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
-            userSelect();
             setLoading(true);
+            dateData();
           }}
         >
           <input
@@ -299,13 +303,20 @@ function Sale({ baseUrl, token, setLoading }) {
               setToDate(e.target.value);
             }}
           />
-          <input
-            type="text"
+          <select
             onChange={(e) => {
               setOnUser(e.target.value);
             }}
-            placeholder="Username kiriting"
-          />
+          >
+            <option value="">-----</option>
+            {userAll?.map((item) => {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.username}
+                </option>
+              );
+            })}
+          </select>
           <button>Filtrlash</button>
           <div
             className="downloadBtn"
