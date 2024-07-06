@@ -8,7 +8,6 @@ function AddProduct({ baseUrl, token, setLoading, setAddProduct, changed, setCha
   const [prchPrice, setPrchPrice] = useState("");
   const [percent, setPercent] = useState("0");
   const [price, setPrice] = useState("0");
-  const [count, setCount] = useState("");
   const [imei, setImei] = useState("");
   const [date, setDate] = useState("");
   const [status, setStatus] = useState("");
@@ -22,7 +21,6 @@ function AddProduct({ baseUrl, token, setLoading, setAddProduct, changed, setCha
 
     const raw = JSON.stringify({
       name: name,
-      count: count,
       purchase_price: rawValue,
       percent: percent,
       price: price,
@@ -147,14 +145,6 @@ function AddProduct({ baseUrl, token, setLoading, setAddProduct, changed, setCha
               type="number"
               placeholder="130000"
             />
-            <h3>Mahsulot Soni</h3>
-            <input
-              onChange={(e) => {
-                setCount(e.target.value);
-              }}
-              type="number"
-              placeholder="50"
-            />
             <h3>Mahsulot Imei</h3>
             <input
               onChange={(e) => {
@@ -164,7 +154,7 @@ function AddProduct({ baseUrl, token, setLoading, setAddProduct, changed, setCha
               type="number"
               placeholder="123456789"
             />
-            <button>Mahsulot Qo'shish</button>
+            <button>Qo'shish</button>
           </div>
         </form>
       </div>

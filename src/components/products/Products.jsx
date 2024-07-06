@@ -18,7 +18,6 @@ function Products({baseUrl, token, setLoading }) {
   const [editPrchPrice, setEditPrchPrice] = useState("");
   const [editPrecent, setEditPrecent] = useState("");
   const [editPrice, setEditPrice] = useState("");
-  const [editCount, setEditCount] = useState("");
   const [editImei, setEditImei] = useState("");
   const [itemId, setItemId] = useState(0);
   const [prodType, setProdType] = useState("on_sale");
@@ -104,7 +103,6 @@ function Products({baseUrl, token, setLoading }) {
         setEditPrchPrice(result.purchase_price);
         setEditPrecent(result.percent);
         setEditPrice(result.price);
-        setEditCount(result.count);
         setEditImei(result.imei);
         setLoading(false);
       })
@@ -207,8 +205,6 @@ function Products({baseUrl, token, setLoading }) {
           setEditPrecent={setEditPrecent}
           editPrice={editPrice}
           setEditPrice={setEditPrice}
-          editCount={editCount}
-          setEditCount={setEditCount}
           editImei={editImei}
           setEditImei={setEditImei}
           itemId={itemId}
@@ -269,7 +265,6 @@ function Products({baseUrl, token, setLoading }) {
             <th>Olingan Narx</th>
             <th>Foiz</th>
             <th>Sotish Narxi</th>
-            <th>Soni</th>
             <th>Sana</th>
             <th>Holati</th>
           </tr>
@@ -288,7 +283,6 @@ function Products({baseUrl, token, setLoading }) {
                     : item.percent.toFixed(2)}
                 </td>
                 <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
-                <td>{item.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
                 <td className="productDate">{item.date}</td>
                 <td>{item.status == "on_sale" ? "Sotuvda" : "Sotilgan"}</td>
                 <td className="editClient_btn">

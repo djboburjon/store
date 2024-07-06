@@ -19,8 +19,6 @@ function EditProduct({
   setEditPrecent,
   editPrice,
   setEditPrice,
-  editCount,
-  setEditCount,
   editImei,
   setEditImei,
   itemId,
@@ -34,7 +32,6 @@ function EditProduct({
 
     const raw = JSON.stringify({
       name: editName,
-      count: editCount,
       purchase_price: editPrchPrice,
       percent: editPrecent,
       price: editPrice,
@@ -65,7 +62,7 @@ function EditProduct({
           notify("Sizga ruxsat etilmagan");
         } else {
           setLoading(false);
-          notify("Ma'lumotlarni to'g'ri kiriting");
+          notify("O'zgartirib bo'lmadi");
         }
       })
       .then((result) => {
@@ -162,15 +159,6 @@ function EditProduct({
               }}
               type="number"
               placeholder="0"
-            />
-            <h3>Mahsulot Soni</h3>
-            <input
-              value={editCount}
-              onChange={(e) => {
-                setEditCount(e.target.value);
-              }}
-              type="number"
-              placeholder="50"
             />
             <h3>Mahsulot Imei</h3>
             <input
