@@ -342,7 +342,7 @@ function EditUser({
                         setProdCreate((prev) => !prev);
                       }}
                     >
-                      Mahsulot qo'shishish
+                      Mahsulot qo'shish
                     </span>{" "}
                     <Checkbox
                       {...label}
