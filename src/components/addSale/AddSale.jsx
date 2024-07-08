@@ -21,7 +21,7 @@ function AddSale({
   const [newClient, setNewClient] = useState([]);
   const [credits, setCredits] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [discountPrice, setDiscountPrice] = useState("0")
+  const [discountPrice, setDiscountPrice] = useState("0");
   const [selected, setselected] = useState([]);
   const [selectedClient, setSelectedClient] = useState([]);
 
@@ -35,21 +35,39 @@ function AddSale({
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}product/all/?status=on_sale`,
-      requestOptions
-    )
+    fetch(`${baseUrl}product/select/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setProducts(result);
         setLoading(false);
       })
       .catch((error) => console.error(error));
+
+    // const myHeaders = new Headers();
+    // myHeaders.append("Authorization", `Bearer ${token}`);
+
+    // const requestOptions = {
+    //   method: "GET",
+    //   headers: myHeaders,
+    //   redirect: "follow",
+    // };
+
+    // fetch(`${baseUrl}product/all/?status=on_sale`, requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     setProducts(result);
+    //     setLoading(false);
+    //     console.log(result);
+    //   })
+    //   .catch((error) => console.error(error));
   };
 
   const getClient = () => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append(
+      "Authorization",
+      `Bearer ${token}`
+    );
 
     const requestOptions = {
       method: "GET",
@@ -57,13 +75,30 @@ function AddSale({
       redirect: "follow",
     };
 
-    fetch(`${baseUrl}client/all/`, requestOptions)
+    fetch(`${baseUrl}client/select/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
         setLoading(false);
       })
       .catch((error) => console.error(error));
+
+    // const myHeaders = new Headers();
+    // myHeaders.append("Authorization", `Bearer ${token}`);
+
+    // const requestOptions = {
+    //   method: "GET",
+    //   headers: myHeaders,
+    //   redirect: "follow",
+    // };
+
+    // fetch(`${baseUrl}client/all/`, requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     setNewClient(result);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => console.error(error));
   };
 
   const getCredit = () => {
@@ -93,7 +128,7 @@ function AddSale({
         return item.id;
       }),
       client: selectedClient.id,
-      sold_price: (totalPrice - discountPrice),
+      sold_price: totalPrice - discountPrice,
       credit_base: creditBaze?.map((item) => {
         return item.id;
       }),
@@ -144,8 +179,8 @@ function AddSale({
   };
 
   const trans = (products) => {
-    return products?.results?.map((item) => ({
-      value: item.name.toLowerCase().replace(/\s/g, "-"),
+    return products?.map((item) => ({
+      value: `${item.name.toLowerCase().replace(/\s/g, "-")}+${item.imei}`,
       label: item.name,
       price: item.price,
       id: item.id,
@@ -159,7 +194,7 @@ function AddSale({
     }));
   };
   const transformDataToOptions1 = (newClient) => {
-    return newClient?.results?.map((item) => ({
+    return newClient?.map((item) => ({
       value: `${item.FIO.toLowerCase().replace(/\s/g, "-")}-${
         item.phone_number
       }`,
