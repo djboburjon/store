@@ -7,6 +7,7 @@ import AddSale from "../addSale/AddSale";
 import EditSale from "../editSale/EditSale";
 import { MdDelete } from "react-icons/md";
 import DownloadSale from "../downloadSale/DownloadSale";
+import { toast } from "react-toastify";
 
 function Sale({ baseUrl, token, setLoading }) {
   const [sales, setSales] = useState([]);
@@ -204,11 +205,36 @@ function Sale({ baseUrl, token, setLoading }) {
     };
 
     fetch(`${baseUrl}sale/delete/?pk=${id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        setChanged(!changed);
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
+          setChanged(!changed);
+          notify("Sotuv o'chirildi");
+        } else if (response.status === 403) {
+          notify("Sizga ruxsat etilmagan");
+        } else {
+          notify("Nimadir xato");
+        }
       })
-      .catch((error) => console.error(error));
+      .then((result) => {})
+      .catch((error) => {
+        console.error(error);
+        notify("Nimadir xato");
+      });
+  };
+
+  const notify = (text) => {
+    toast.warning(text, {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  };
+
+  const notifySuccess = (text) => {
+    toast.success(text, {
+      position: "top-right",
+      autoClose: 2000,
+    });
   };
 
   return (

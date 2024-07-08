@@ -66,6 +66,10 @@ function EditUser({
   setExpenseUpdate,
   expenseView,
   setExpenseView,
+  prodDelete,
+  setProdDelete,
+  clientDelete,
+  setClientDelete,
 }) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const editData = () => {
@@ -95,10 +99,7 @@ function EditUser({
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}user/update/?pk=${itemId}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}user/update/?pk=${itemId}`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 200) {
@@ -161,10 +162,7 @@ function EditUser({
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}user/update/permissions/?pk=${itemId}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}user/update/permissions/?pk=${itemId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {})
       .catch((error) => {
@@ -321,331 +319,363 @@ function EditUser({
                 />
               </div>
               <div className="editBox2And3">
-              <div className="editBox2">
-                <p>
-                  <span
-                    onClick={() => {
-                      setDashboardView((prev) => !prev);
-                    }}
-                  >
-                    Dashboard ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={dashboardView}
-                    onChange={(e) => {
-                      setDashboardView(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setProdCreate((prev) => !prev);
-                    }}
-                  >
-                    Mahsulot qo'shishish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={prodCreate}
-                    onChange={(e) => {
-                      setProdCreate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setProdUpdate((prev) => !prev);
-                    }}
-                  >
-                    Mahsulot tahrirlash
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={prodUpdate}
-                    onChange={(e) => {
-                      setProdUpdate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setProdView((prev) => !prev);
-                    }}
-                  >
-                    Mahsulot ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={prodView}
-                    onChange={(e) => {
-                      setProdView(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setClientCreate((prev) => !prev);
-                    }}
-                  >
-                    Mijoz qo'shish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={clientCreate}
-                    onChange={(e) => {
-                      setClientCreate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setClientUpdate((prev) => !prev);
-                    }}
-                  >
-                    Mijoz tahrirlash
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={clientUpdate}
-                    onChange={(e) => {
-                      setClientUpdate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setClientView((prev) => !prev);
-                    }}
-                  >
-                    Mijoz ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={clientView}
-                    onChange={(e) => {
-                      setClientView(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setSaleCreate((prev) => !prev);
-                    }}
-                  >
-                    Sotuv qo'shish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={saleCreate}
-                    onChange={(e) => {
-                      setSaleCreate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setSaleUpdate((prev) => !prev);
-                    }}
-                  >
-                    Sotuv tahrirlash
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={saleUpdate}
-                    onChange={(e) => {
-                      setSaleUpdate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setSaleDelete((prev) => !prev);
-                    }}
-                  >
-                    Sotuv o'chirish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={saleDelete}
-                    onChange={(e) => {
-                      setSaleDelete(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setSaleView((prev) => !prev);
-                    }}
-                  >
-                    Sotuv ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={saleView}
-                    onChange={(e) => {
-                      setSaleView(e.target.checked);
-                    }}
-                  />
-                </p>
-              </div>
-              <div className="editBox3">
-                <p>
-                  <span
-                    onClick={() => {
-                      setCreditCreate((prev) => !prev);
-                    }}
-                  >
-                    Kredit qo'shish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={creditCreate}
-                    onChange={(e) => {
-                      setCreditCreate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setCreditUpdate((prev) => !prev);
-                    }}
-                  >
-                    Kredit tahrirlash
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={creditUpdate}
-                    onChange={(e) => {
-                      setCreditUpdate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setCreditView((prev) => !prev);
-                    }}
-                  >
-                    Kredit ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={creditView}
-                    onChange={(e) => {
-                      setCreditView(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setUserCreate((prev) => !prev);
-                    }}
-                  >
-                    User qo'shish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={userCreate}
-                    onChange={(e) => {
-                      setUserCreate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setUserUpdate((prev) => !prev);
-                    }}
-                  >
-                    User tahrirlash
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={userUpdate}
-                    onChange={(e) => {
-                      setUserUpdate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setUserView((prev) => !prev);
-                    }}
-                  >
-                    User ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={userView}
-                    onChange={(e) => {
-                      setUserView(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setExpenseCreate((prev) => !prev);
-                    }}
-                  >
-                    Xarajat qo'shish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={expenseCreate}
-                    onChange={(e) => {
-                      setExpenseCreate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setExpenseUpdate((prev) => !prev);
-                    }}
-                  >
-                    Xarajat tahrirlash
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={expenseUpdate}
-                    onChange={(e) => {
-                      setExpenseUpdate(e.target.checked);
-                    }}
-                  />
-                </p>
-                <p>
-                  <span
-                    onClick={() => {
-                      setExpenseView((prev) => !prev);
-                    }}
-                  >
-                    Xarajat ko'rish
-                  </span>{" "}
-                  <Checkbox
-                    {...label}
-                    checked={expenseView}
-                    onChange={(e) => {
-                      setExpenseView(e.target.checked);
-                    }}
-                  />
-                </p>
-                <button>Tahrirlash</button>
-              </div>
+                <div className="editBox2">
+                  <p>
+                    <span
+                      onClick={() => {
+                        setDashboardView((prev) => !prev);
+                      }}
+                    >
+                      Dashboard ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={dashboardView}
+                      onChange={(e) => {
+                        setDashboardView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setProdCreate((prev) => !prev);
+                      }}
+                    >
+                      Mahsulot qo'shishish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={prodCreate}
+                      onChange={(e) => {
+                        setProdCreate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setProdUpdate((prev) => !prev);
+                      }}
+                    >
+                      Mahsulot tahrirlash
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={prodUpdate}
+                      onChange={(e) => {
+                        setProdUpdate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setProdDelete((prev) => !prev);
+                      }}
+                    >
+                      Mahsulot o'chirish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={prodDelete}
+                      onChange={(e) => {
+                        setProdDelete(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setProdView((prev) => !prev);
+                      }}
+                    >
+                      Mahsulot ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={prodView}
+                      onChange={(e) => {
+                        setProdView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setClientCreate((prev) => !prev);
+                      }}
+                    >
+                      Mijoz qo'shish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={clientCreate}
+                      onChange={(e) => {
+                        setClientCreate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setClientUpdate((prev) => !prev);
+                      }}
+                    >
+                      Mijoz tahrirlash
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={clientUpdate}
+                      onChange={(e) => {
+                        setClientUpdate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setClientDelete((prev) => !prev);
+                      }}
+                    >
+                      Mijoz o'chirish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={clientDelete}
+                      onChange={(e) => {
+                        setClientDelete(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setClientView((prev) => !prev);
+                      }}
+                    >
+                      Mijoz ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={clientView}
+                      onChange={(e) => {
+                        setClientView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setSaleCreate((prev) => !prev);
+                      }}
+                    >
+                      Sotuv qo'shish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={saleCreate}
+                      onChange={(e) => {
+                        setSaleCreate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setSaleUpdate((prev) => !prev);
+                      }}
+                    >
+                      Sotuv tahrirlash
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={saleUpdate}
+                      onChange={(e) => {
+                        setSaleUpdate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setSaleDelete((prev) => !prev);
+                      }}
+                    >
+                      Sotuv o'chirish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={saleDelete}
+                      onChange={(e) => {
+                        setSaleDelete(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setSaleView((prev) => !prev);
+                      }}
+                    >
+                      Sotuv ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={saleView}
+                      onChange={(e) => {
+                        setSaleView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                </div>
+                <div className="editBox3">
+                  <p>
+                    <span
+                      onClick={() => {
+                        setCreditCreate((prev) => !prev);
+                      }}
+                    >
+                      Kredit qo'shish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={creditCreate}
+                      onChange={(e) => {
+                        setCreditCreate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setCreditUpdate((prev) => !prev);
+                      }}
+                    >
+                      Kredit tahrirlash
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={creditUpdate}
+                      onChange={(e) => {
+                        setCreditUpdate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setCreditView((prev) => !prev);
+                      }}
+                    >
+                      Kredit ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={creditView}
+                      onChange={(e) => {
+                        setCreditView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setUserCreate((prev) => !prev);
+                      }}
+                    >
+                      User qo'shish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={userCreate}
+                      onChange={(e) => {
+                        setUserCreate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setUserUpdate((prev) => !prev);
+                      }}
+                    >
+                      User tahrirlash
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={userUpdate}
+                      onChange={(e) => {
+                        setUserUpdate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setUserView((prev) => !prev);
+                      }}
+                    >
+                      User ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={userView}
+                      onChange={(e) => {
+                        setUserView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setExpenseCreate((prev) => !prev);
+                      }}
+                    >
+                      Xarajat qo'shish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={expenseCreate}
+                      onChange={(e) => {
+                        setExpenseCreate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setExpenseUpdate((prev) => !prev);
+                      }}
+                    >
+                      Xarajat tahrirlash
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={expenseUpdate}
+                      onChange={(e) => {
+                        setExpenseUpdate(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <p>
+                    <span
+                      onClick={() => {
+                        setExpenseView((prev) => !prev);
+                      }}
+                    >
+                      Xarajat ko'rish
+                    </span>{" "}
+                    <Checkbox
+                      {...label}
+                      checked={expenseView}
+                      onChange={(e) => {
+                        setExpenseView(e.target.checked);
+                      }}
+                    />
+                  </p>
+                  <button>Tahrirlash</button>
+                </div>
               </div>
             </div>
           </form>

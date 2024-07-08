@@ -7,7 +7,8 @@ import { TiPlus } from "react-icons/ti";
 import { FaEdit, FaSearch } from "react-icons/fa";
 import EditClients from "../editClients/EditClients";
 import AddClients from "../addClients/AddClients";
-function Clients({baseUrl, token, setLoading }) {
+import { MdDelete } from "react-icons/md";
+function Clients({ baseUrl, token, setLoading }) {
   const [editName, setEditName] = useState("");
   const [editNumber, setEditNumber] = useState("");
   const [newClient, setNewClient] = useState([]);
@@ -45,10 +46,7 @@ function Clients({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}client/all/?search=${e.target.value}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}client/all/?search=${e.target.value}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
@@ -91,10 +89,7 @@ function Clients({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}client/all/?limit=25&offset=25`,
-      requestOptions
-    )
+    fetch(`${baseUrl}client/all/?limit=25&offset=25`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
@@ -113,10 +108,7 @@ function Clients({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}client/all/?limit=25`,
-      requestOptions
-    )
+    fetch(`${baseUrl}client/all/?limit=25`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setNewClient(result);
@@ -127,7 +119,56 @@ function Clients({baseUrl, token, setLoading }) {
 
   const formatNumber = (number) => {
     const str = number.toString();
-    return `${str.slice(0, 2)} ${str.slice(2, 5)} ${str.slice(5, 7)} ${str.slice(7)}`;
+    return `${str.slice(0, 2)} ${str.slice(2, 5)} ${str.slice(
+      5,
+      7
+    )} ${str.slice(7)}`;
+  };
+
+  const deleteData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://telzone.pythonanywhere.com/client/delete/?pk=${id}`,
+      requestOptions
+    )
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
+          setChanged(!changed);
+          notifySuccess("Mijoz o'chirildi");
+        } else if (response.status === 403) {
+          notify("Sizga ruxsat etilmagan");
+        } else {
+          notify("Nimadir xato");
+        }
+      })
+      .then((result) => {})
+      .catch((error) => {
+        console.error(error);
+        notify("Nimadir xato");
+      });
+  };
+
+  const notify = (text) => {
+    toast.warning(text, {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  };
+
+  const notifySuccess = (text) => {
+    toast.success(text, {
+      position: "top-right",
+      autoClose: 2000,
+    });
   };
 
   return (
@@ -215,6 +256,15 @@ function Clients({baseUrl, token, setLoading }) {
                       setEditClient(true);
                       getItemData(item.id);
                       setItemId(item.id);
+                    }}
+                  />
+                </td>
+                <td className="deleteClient_btn">
+                  <MdDelete
+                    onClick={() => {
+                      if (confirm("Sotuv o'chiriladi!")) {
+                        deleteData(item.id);
+                      }
                     }}
                   />
                 </td>

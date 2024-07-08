@@ -8,8 +8,10 @@ import { FaEdit, FaSearch } from "react-icons/fa";
 import AddProduct from "../addProduct/AddProduct";
 import EditProduct from "../editProduct/EditProduct";
 import { Switch } from "@mui/material";
+import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
-function Products({baseUrl, token, setLoading }) {
+function Products({ baseUrl, token, setLoading }) {
   const [products, setProducts] = useState([]);
   const [addProduct, setAddProduct] = useState(false);
   const [changed, setChanged] = useState(false);
@@ -35,10 +37,7 @@ function Products({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}product/all/?status=${prodType}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}product/all/?status=${prodType}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setProducts(result);
@@ -93,10 +92,7 @@ function Products({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}product/?pk=${id}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}product/?pk=${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setEditName(result.name);
@@ -144,10 +140,7 @@ function Products({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}product/all/?limit=25&status=${prodType}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}product/all/?limit=25&status=${prodType}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setProducts(result);
@@ -174,6 +167,48 @@ function Products({baseUrl, token, setLoading }) {
     } catch (error) {
       console.error("Error exporting sales to Excel:", error);
     }
+  };
+
+  const deleteData = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`${baseUrl}product/delete/?pk=${id}`, requestOptions)
+      .then((response) => {
+        response.json();
+        if (response.status === 200) {
+          setChanged(!changed);
+          notifySuccess("Mijoz o'chirildi");
+        } else if (response.status === 403) {
+          notify("Sizga ruxsat etilmagan");
+        } else {
+          notify("Nimadir xato");
+        }
+      })
+      .then((result) => {})
+      .catch((error) => {
+        console.error(error);
+        notify("Nimadir xato");
+      });
+  };
+
+  const notify = (text) => {
+    toast.warning(text, {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  };
+  const notifySuccess = (text) => {
+    toast.success(text, {
+      position: "top-right",
+      autoClose: 2000,
+    });
   };
   return (
     <>
@@ -237,12 +272,9 @@ function Products({baseUrl, token, setLoading }) {
             placeholder="Qidiruv..."
           />
         </form>
-        <div
-            className="downloadBtn"
-            onClick={downloadFile}
-          >
-            Yuklash
-          </div>
+        <div className="downloadBtn" onClick={downloadFile}>
+          Yuklash
+        </div>
       </div>
 
       <div className="adminOrWorker">
@@ -276,13 +308,19 @@ function Products({baseUrl, token, setLoading }) {
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.imei}</td>
-                <td>{item.purchase_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                <td>
+                  {item.purchase_price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                </td>
                 <td>
                   {Number.isInteger(item.percent)
                     ? item.percent
                     : item.percent.toFixed(2)}
                 </td>
-                <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                <td>
+                  {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                </td>
                 <td className="productDate">{item.date}</td>
                 <td>{item.status == "on_sale" ? "Sotuvda" : "Sotilgan"}</td>
                 <td className="editClient_btn">
@@ -292,6 +330,15 @@ function Products({baseUrl, token, setLoading }) {
                       setEditProduct(true);
                       getItemData(item.id);
                       setItemId(item.id);
+                    }}
+                  />
+                </td>
+                <td className="deleteClient_btn">
+                  <MdDelete
+                    onClick={() => {
+                      if (confirm("Sotuv o'chiriladi!")) {
+                        deleteData(item.id);
+                      }
                     }}
                   />
                 </td>

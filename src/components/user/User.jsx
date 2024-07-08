@@ -7,7 +7,7 @@ import { TiPlus } from "react-icons/ti";
 import Switch from "@mui/material/Switch";
 import AddUser from "../addUser/AddUser";
 
-function User({baseUrl, token, setLoading }) {
+function User({ baseUrl, token, setLoading }) {
   const [user, setUser] = useState([]);
   const [addUser, setAddUser] = useState(false);
   const [editUser, setEditUser] = useState(false);
@@ -23,9 +23,11 @@ function User({baseUrl, token, setLoading }) {
   const [dashboardView, setDashboardView] = useState(true);
   const [prodCreate, setProdCreate] = useState(false);
   const [prodUpdate, setProdUpdate] = useState(false);
+  const [prodDelete, setProdDelete] = useState(false);
   const [prodView, setProdView] = useState(true);
   const [clientCreate, setClientCreate] = useState(false);
   const [clientUpdate, setClientUpdate] = useState(false);
+  const [clientDelete, setClientDelete] = useState(false);
   const [clientView, setClientView] = useState(true);
   const [saleCreate, setSaleCreate] = useState(false);
   const [saleUpdate, setSaleUpdate] = useState(false);
@@ -54,10 +56,7 @@ function User({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}user/all/?enum=${userType}`,
-      requestOptions
-    )
+    fetch(`${baseUrl}user/all/?enum=${userType}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUser(result);
@@ -128,13 +127,15 @@ function User({baseUrl, token, setLoading }) {
         if (userType == "worker") {
           setProdCreate(result.permission_fields.product_can_create);
           setProdUpdate(result.permission_fields.product_can_update);
+          setProdDelete(result.permission_fields.product_can_delete);
           setProdView(result.permission_fields.product_can_view);
           setClientCreate(result.permission_fields.client_can_create);
           setClientUpdate(result.permission_fields.client_can_update);
+          setClientDelete(result.permission_fields.client_can_delete);
           setClientView(result.permission_fields.client_can_view);
           setSaleCreate(result.permission_fields.sale_can_create);
           setSaleUpdate(result.permission_fields.sale_can_update);
-          setSaleDelete(result.permission_fields.sale_can_delete)
+          setSaleDelete(result.permission_fields.sale_can_delete);
           setSaleView(result.permission_fields.sale_can_view);
           setCreditCreate(result.permission_fields.credit_base_can_create);
           setCreditUpdate(result.permission_fields.credit_base_can_update);
@@ -186,10 +187,7 @@ function User({baseUrl, token, setLoading }) {
       redirect: "follow",
     };
 
-    fetch(
-      `${baseUrl}user/all/?enum=${userType}&limit=25`,
-      requestOptions
-    )
+    fetch(`${baseUrl}user/all/?enum=${userType}&limit=25`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUser(result);
@@ -228,12 +226,16 @@ function User({baseUrl, token, setLoading }) {
           setProdCreate={setProdCreate}
           prodUpdate={prodUpdate}
           setProdUpdate={setProdUpdate}
+          prodDelete={prodDelete}
+          setProdDelete={setProdDelete}
           prodView={prodView}
           setProdView={setProdView}
           clientCreate={clientCreate}
           setClientCreate={setClientCreate}
           clientUpdate={clientUpdate}
           setClientUpdate={setClientUpdate}
+          clientDelete={clientDelete}
+          setClientDelete={setClientDelete}
           clientView={clientView}
           setClientView={setClientView}
           saleCreate={saleCreate}
