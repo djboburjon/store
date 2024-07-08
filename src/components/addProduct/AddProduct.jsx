@@ -6,8 +6,8 @@ import { FaTimes } from "react-icons/fa";
 function AddProduct({ baseUrl, token, setLoading, setAddProduct, changed, setChanged }) {
   const [name, setName] = useState("");
   const [prchPrice, setPrchPrice] = useState("");
-  const [percent, setPercent] = useState("0");
-  const [price, setPrice] = useState("0");
+  const [percent, setPercent] = useState(0);
+  const [price, setPrice] = useState(0);
   const [imei, setImei] = useState("");
   const [date, setDate] = useState("");
   const [status, setStatus] = useState("");

@@ -21,7 +21,7 @@ function AddSale({
   const [newClient, setNewClient] = useState([]);
   const [credits, setCredits] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [discountPrice, setDiscountPrice] = useState(0)
+  const [discountPrice, setDiscountPrice] = useState("0")
   const [selected, setselected] = useState([]);
   const [selectedClient, setSelectedClient] = useState([]);
 

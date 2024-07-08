@@ -33,7 +33,7 @@ function AddClients({
       redirect: "follow",
     };
 
-    fetch(`${baseUrl}/client/create/`, requestOptions)
+    fetch(`${baseUrl}client/create/`, requestOptions)
       .then((response) => {
         response.json();
         if (response.status === 200) {
